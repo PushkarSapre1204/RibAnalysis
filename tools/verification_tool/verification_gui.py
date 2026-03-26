@@ -8,12 +8,15 @@ Provides an interactive interface to:
 - Optionally save plots to disk
 """
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import Verification as rdv
-from pathlib import Path
+from ribs_core import data_loader as rdv
 import traceback
 
 class ResearchVisualizerGUI:
@@ -151,7 +154,9 @@ class ResearchVisualizerGUI:
             self.status_var.set("Loading data from Rib Data.xlsx...")
             self.root.update()
             
-            self.df = rdv.load_research_data('Rib Data.xlsx')
+            # Resolve data file path relative to this script's location
+            data_file = Path(__file__).parent.parent.parent / 'data' / 'Rib Data.xlsx'
+            self.df = rdv.load_research_data(str(data_file))
             self.batches = rdv.create_hierarchical_batches(self.df)
             
             # Build paper mapping with pre-analyzed axes
