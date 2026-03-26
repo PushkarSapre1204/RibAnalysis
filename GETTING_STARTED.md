@@ -131,7 +131,7 @@ Use `N/A` for missing values.
 ### Run the Script
 
 ```powershell
-python -c "from research_data_visualizer import process_research_data; process_research_data('your_file.xlsx', 'my_plots')"
+python -c "from Verification import process_research_data; process_research_data('your_file.xlsx', 'my_plots')"
 ```
 
 Replace:
@@ -181,7 +181,7 @@ Your plots are ready! 📊
 
 ## Optional: Customize Behavior
 
-Edit `research_data_visualizer.py` to customize:
+Edit `Verification.py` to customize:
 
 ```python
 # Change colors
@@ -301,7 +301,7 @@ pip install -r requirements.txt
 python example_usage.py
 
 # Run with your data
-python -c "from research_data_visualizer import process_research_data; process_research_data('your_file.xlsx')"
+python -c "from Verification import process_research_data; process_research_data('your_file.xlsx')"
 
 # Run unit tests
 python test_visualizer.py

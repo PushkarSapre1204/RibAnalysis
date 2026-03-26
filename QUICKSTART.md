@@ -23,7 +23,7 @@ Use `N/A` for missing parameter values.
 
 ### Step 3: Run the Script
 ```bash
-python -c "from research_data_visualizer import process_research_data; process_research_data('your_data.xlsx')"
+python -c "from Verification import process_research_data; process_research_data('your_data.xlsx')"
 ```
 
 **Output**: PNG files in `./plots/` directory

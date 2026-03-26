@@ -8,7 +8,7 @@ sample data for testing.
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from research_data_visualizer import process_research_data
+from Verification import process_research_data
 
 
 def create_sample_data(output_file: str = 'master_research_data.xlsx') -> str:
@@ -179,7 +179,7 @@ def demonstrate_with_custom_data():
     2. Use N/A for missing parameter values (or leave cells empty)
     
     3. Call the function:
-       from research_data_visualizer import process_research_data
+       from Verification import process_research_data
        process_research_data('your_file.xlsx', 'output_folder')
     
     The script will:

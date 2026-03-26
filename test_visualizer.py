@@ -1,5 +1,5 @@
 """
-Unit tests and validation examples for research_data_visualizer.py
+Unit tests and validation examples for Verification.py
 
 Run tests with:
     python test_visualizer.py
@@ -10,7 +10,7 @@ import numpy as np
 from pathlib import Path
 import tempfile
 import unittest
-from research_data_visualizer import (
+from Verification import (
     analyze_parameter_variability,
     select_axes,
     check_need_log_scale,

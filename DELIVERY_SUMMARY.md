@@ -247,7 +247,7 @@ process_research_data('master_research_data.xlsx', './plots')
 
 ### Advanced
 ```python
-from research_data_visualizer import *
+from Verification import *
 
 # Load data
 df = load_research_data('data.xlsx')

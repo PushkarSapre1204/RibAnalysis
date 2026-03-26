@@ -105,7 +105,7 @@ process_research_data('your_master_data.xlsx', output_directory='./output_plots'
 ### Command Line
 
 ```bash
-python -c "from research_data_visualizer import process_research_data; process_research_data('your_file.xlsx')"
+python -c "from Verification import process_research_data; process_research_data('your_file.xlsx')"
 ```
 
 ## Algorithm: Dynamic Axis Selection
