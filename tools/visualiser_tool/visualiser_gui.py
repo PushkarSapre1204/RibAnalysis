@@ -1,0 +1,972 @@
+"""
+GUI Module for Exploratory Data Visualiser
+
+Provides interactive Tkinter interface with 4 main panels:
+- MultiPaperSelector: Select papers and merge data
+- AxisConfigPanel: Configure plot axes and type
+- BinningPanel: Configure binning parameters
+- PlotDisplayPanel: Display and save plots
+"""
+
+import tkinter as tk
+from tkinter import ttk, messagebox, filedialog
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import pandas as pd
+import numpy as np
+from pathlib import Path
+import sys
+
+# Add parent directory to path for ribs_core imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+from ribs_core import data_loader
+from ribs_core.config import MARKERS
+
+# Define a set of distinct colors for binning visualization
+COLORS = {
+    'C0': '#1f77b4', 'C1': '#ff7f0e', 'C2': '#2ca02c', 'C3': '#d62728',
+    'C4': '#9467bd', 'C5': '#8c564b', 'C6': '#e377c2', 'C7': '#7f7f7f',
+    'C8': '#bcbd22', 'C9': '#17becf'
+}
+
+# ============================================================================
+# HELPER FUNCTIONS FOR PLOTTING (placed here as per plan)
+# ============================================================================
+
+def apply_custom_binning(df, bin_param, method='quantile', n_bins=4):
+    """
+    Apply binning to a dataframe for visualization.
+    
+    Args:
+        df: DataFrame to bin
+        bin_param: Column name to bin on
+        method: 'quantile' or 'manual'
+        n_bins: Number of bins for quantile method
+    
+    Returns:
+        DataFrame with new 'Bin' column
+    """
+    df_copy = df.copy()
+    
+    if bin_param not in df_copy.columns:
+        return df_copy
+    
+    if method == 'quantile':
+        df_copy['Bin'] = pd.qcut(df_copy[bin_param], q=n_bins, labels=False, duplicates='drop')
+    elif method == 'manual':
+        # This would need manual bin ranges - for now use quantile
+        df_copy['Bin'] = pd.qcut(df_copy[bin_param], q=n_bins, labels=False, duplicates='drop')
+    
+    return df_copy
+
+
+def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None):
+    """Create 2D scatter plot."""
+    fig = Figure(figsize=(8, 6), dpi=100)
+    ax = fig.add_subplot(111)
+    
+    if bin_col is None or bin_col not in df.columns:
+        ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
+    else:
+        bins = df[bin_col].unique()
+        colors_list = list(COLORS.values())
+        for i, bin_val in enumerate(sorted(bins)):
+            mask = df[bin_col] == bin_val
+            color = colors_list[i % len(colors_list)]
+            ax.scatter(df[mask][x_axis], df[mask][y_axis], 
+                      label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
+        ax.legend()
+    
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
+    ax.set_title(f'{x_axis} vs {y_axis}')
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    
+    return fig
+
+
+def create_custom_2d_line(df, x_axis, y_axis, bin_col=None):
+    """Create 2D line plot."""
+    fig = Figure(figsize=(8, 6), dpi=100)
+    ax = fig.add_subplot(111)
+    
+    # Sort by x_axis for sensible line
+    df_sorted = df.sort_values(x_axis)
+    
+    if bin_col is None or bin_col not in df.columns:
+        ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)
+    else:
+        bins = df_sorted[bin_col].unique()
+        colors_list = list(COLORS.values())
+        for i, bin_val in enumerate(sorted(bins)):
+            mask = df_sorted[bin_col] == bin_val
+            color = colors_list[i % len(colors_list)]
+            subset = df_sorted[mask].sort_values(x_axis)
+            ax.plot(subset[x_axis], subset[y_axis], 
+                   label=f'Bin {int(bin_val)}', marker='o', alpha=0.6, color=color)
+        ax.legend()
+    
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
+    ax.set_title(f'{x_axis} vs {y_axis} (Line)')
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+    
+    return fig
+
+
+def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None):
+    """Create 3D scatter plot."""
+    from mpl_toolkits.mplot3d import Axes3D
+    
+    fig = Figure(figsize=(10, 8), dpi=100)
+    ax = fig.add_subplot(111, projection='3d')
+    
+    if bin_col is None or bin_col not in df.columns:
+        ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
+    else:
+        bins = df[bin_col].unique()
+        colors_list = list(COLORS.values())
+        for i, bin_val in enumerate(sorted(bins)):
+            mask = df[bin_col] == bin_val
+            color = colors_list[i % len(colors_list)]
+            ax.scatter(df[mask][x_axis], df[mask][y_axis], df[mask][z_axis],
+                      label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
+        ax.legend()
+    
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
+    ax.set_zlabel(z_axis)
+    ax.set_title(f'3D Scatter: {x_axis}, {y_axis}, {z_axis}')
+    fig.tight_layout()
+    
+    return fig
+
+
+def create_custom_3d_surface(df, x_axis, y_axis, z_axis):
+    """Create 3D surface plot using triangulation."""
+    from mpl_toolkits.mplot3d import Axes3D
+    from scipy.interpolate import griddata
+    
+    fig = Figure(figsize=(10, 8), dpi=100)
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Create grid
+    x = df[x_axis].values
+    y = df[y_axis].values
+    z = df[z_axis].values
+    
+    # Create regular grid
+    xi = np.linspace(x.min(), x.max(), 20)
+    yi = np.linspace(y.min(), y.max(), 20)
+    xi, yi = np.meshgrid(xi, yi)
+    
+    # Interpolate z values
+    zi = griddata((x, y), z, (xi, yi), method='linear')
+    
+    # Plot surface
+    ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
+    ax.scatter(x, y, z, color='red', s=50, alpha=0.5)
+    
+    ax.set_xlabel(x_axis)
+    ax.set_ylabel(y_axis)
+    ax.set_zlabel(z_axis)
+    ax.set_title(f'3D Surface: {x_axis}, {y_axis}, {z_axis}')
+    fig.tight_layout()
+    
+    return fig
+
+
+# ============================================================================
+# GUI PANELS
+# ============================================================================
+
+class MultiPaperSelector(ttk.Frame):
+    """Panel for selecting and managing multiple papers."""
+    
+    def __init__(self, parent, on_selection_change=None):
+        """
+        Initialize paper selector.
+        
+        Args:
+            parent: Parent widget
+            on_selection_change: Callback when selection changes
+        """
+        super().__init__(parent)
+        self.on_selection_change = on_selection_change
+        self.selected_papers = []
+        self.all_papers = []
+        
+        self._create_widgets()
+    
+    def _create_widgets(self):
+        """Create GUI widgets for paper selection."""
+        # Title
+        title = ttk.Label(self, text="Paper Selection", font=("Arial", 10, "bold"))
+        title.pack(pady=5)
+        
+        # Paper dropdown with search
+        frame_dropdown = ttk.Frame(self)
+        frame_dropdown.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Label(frame_dropdown, text="Available Papers:").pack(side=tk.LEFT)
+        self.paper_var = tk.StringVar()
+        self.paper_dropdown = ttk.Combobox(frame_dropdown, textvariable=self.paper_var, 
+                                           state="readonly", width=40)
+        self.paper_dropdown.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        self.paper_dropdown.bind("<<ComboboxSelected>>", self._on_paper_selected)
+        
+        # Buttons frame
+        frame_buttons = ttk.Frame(self)
+        frame_buttons.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Button(frame_buttons, text="Add", 
+                  command=self._add_paper).pack(side=tk.LEFT, padx=2)
+        ttk.Button(frame_buttons, text="Add All", 
+                  command=self._add_all_papers).pack(side=tk.LEFT, padx=2)
+        ttk.Button(frame_buttons, text="Remove", 
+                  command=self._remove_paper).pack(side=tk.LEFT, padx=2)
+        ttk.Button(frame_buttons, text="Clear All", 
+                  command=self._clear_all).pack(side=tk.LEFT, padx=2)
+        
+        # Selected papers listbox
+        ttk.Label(self, text="Selected Papers:").pack(anchor=tk.W, padx=5, pady=(5, 0))
+        
+        frame_listbox = ttk.Frame(self)
+        frame_listbox.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        scrollbar = ttk.Scrollbar(frame_listbox)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.selected_listbox = tk.Listbox(frame_listbox, yscrollcommand=scrollbar.set, 
+                                           height=6)
+        self.selected_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.selected_listbox.yview)
+    
+    def set_available_papers(self, papers):
+        """Set list of available papers."""
+        self.all_papers = sorted(papers)
+        self.paper_dropdown['values'] = self.all_papers
+    
+    def _on_paper_selected(self, event):
+        """Handle paper selection from dropdown."""
+        pass
+    
+    def _add_paper(self):
+        """Add selected paper to list."""
+        paper = self.paper_var.get()
+        if paper and paper not in self.selected_papers:
+            self.selected_papers.append(paper)
+            self._update_listbox()
+            if self.on_selection_change:
+                self.on_selection_change()
+    
+    def _add_all_papers(self):
+        """Add all papers to selection."""
+        self.selected_papers = self.all_papers.copy()
+        self._update_listbox()
+        if self.on_selection_change:
+            self.on_selection_change()
+    
+    def _remove_paper(self):
+        """Remove selected paper from list."""
+        selection = self.selected_listbox.curselection()
+        if selection:
+            idx = selection[0]
+            self.selected_papers.pop(idx)
+            self._update_listbox()
+            if self.on_selection_change:
+                self.on_selection_change()
+    
+    def _clear_all(self):
+        """Clear all selected papers."""
+        self.selected_papers = []
+        self._update_listbox()
+        if self.on_selection_change:
+            self.on_selection_change()
+    
+    def _update_listbox(self):
+        """Update the listbox display."""
+        self.selected_listbox.delete(0, tk.END)
+        for i, paper in enumerate(self.selected_papers, 1):
+            self.selected_listbox.insert(tk.END, f"{i}. {paper}")
+    
+    def get_selected_papers(self):
+        """Get list of selected papers."""
+        return self.selected_papers.copy()
+
+
+class AxisConfigPanel(ttk.Frame):
+    """Panel for configuring plot axes and type."""
+    
+    def __init__(self, parent, on_config_change=None):
+        """
+        Initialize axis configuration panel.
+        
+        Args:
+            parent: Parent widget
+            on_config_change: Callback when configuration changes
+        """
+        super().__init__(parent)
+        self.on_config_change = on_config_change
+        self.available_columns = []
+        
+        self._create_widgets()
+    
+    def _create_widgets(self):
+        """Create GUI widgets for axis configuration."""
+        # Title
+        title = ttk.Label(self, text="Plot Configuration", font=("Arial", 10, "bold"))
+        title.pack(pady=5)
+        
+        # Plot type frame
+        frame_type = ttk.LabelFrame(self, text="Plot Type", padding=5)
+        frame_type.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.plot_type_var = tk.StringVar(value="2d_scatter")
+        ttk.Radiobutton(frame_type, text="2D", variable=self.plot_type_var, 
+                       value="2d", command=self._on_plot_type_change).pack(anchor=tk.W)
+        ttk.Radiobutton(frame_type, text="3D", variable=self.plot_type_var, 
+                       value="3d", command=self._on_plot_type_change).pack(anchor=tk.W)
+        
+        # Plot mode frame
+        frame_mode = ttk.LabelFrame(self, text="Plot Mode", padding=5)
+        frame_mode.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.plot_mode_var = tk.StringVar(value="scatter")
+        self.mode_buttons = {}
+        
+        self.mode_buttons['scatter'] = ttk.Radiobutton(frame_mode, text="Scatter", 
+                                                        variable=self.plot_mode_var, 
+                                                        value="scatter")
+        self.mode_buttons['scatter'].pack(anchor=tk.W)
+        
+        self.mode_buttons['line'] = ttk.Radiobutton(frame_mode, text="Line", 
+                                                     variable=self.plot_mode_var, 
+                                                     value="line")
+        self.mode_buttons['line'].pack(anchor=tk.W)
+        
+        self.mode_buttons['surface'] = ttk.Radiobutton(frame_mode, text="Surface", 
+                                                        variable=self.plot_mode_var, 
+                                                        value="surface", state=tk.DISABLED)
+        self.mode_buttons['surface'].pack(anchor=tk.W)
+        
+        # Axis selection frame
+        frame_axes = ttk.LabelFrame(self, text="Axes Selection", padding=5)
+        frame_axes.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # X axis
+        ttk.Label(frame_axes, text="X Axis:").grid(row=0, column=0, sticky=tk.W, pady=3)
+        self.x_axis_var = tk.StringVar()
+        self.x_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.x_axis_var, 
+                                            state="readonly", width=20)
+        self.x_axis_dropdown.grid(row=0, column=1, sticky=tk.EW, padx=5)
+        
+        # Y axis
+        ttk.Label(frame_axes, text="Y Axis:").grid(row=1, column=0, sticky=tk.W, pady=3)
+        self.y_axis_var = tk.StringVar()
+        self.y_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.y_axis_var, 
+                                            state="readonly", width=20)
+        self.y_axis_dropdown.grid(row=1, column=1, sticky=tk.EW, padx=5)
+        
+        # Z axis (3D only)
+        ttk.Label(frame_axes, text="Z Axis:").grid(row=2, column=0, sticky=tk.W, pady=3)
+        self.z_axis_var = tk.StringVar()
+        self.z_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.z_axis_var, 
+                                            state="readonly", width=20)
+        self.z_axis_dropdown.grid(row=2, column=1, sticky=tk.EW, padx=5)
+        self.z_axis_dropdown.config(state=tk.DISABLED)
+        
+        frame_axes.columnconfigure(1, weight=1)
+    
+    def _on_plot_type_change(self):
+        """Handle plot type change (2D vs 3D)."""
+        is_3d = self.plot_type_var.get() == "3d"
+        
+        # Enable/disable Z axis
+        self.z_axis_dropdown.config(state=tk.NORMAL if is_3d else tk.DISABLED)
+        
+        # Update mode buttons
+        self.mode_buttons['line'].config(state=tk.NORMAL if not is_3d else tk.DISABLED)
+        self.mode_buttons['surface'].config(state=tk.NORMAL if is_3d else tk.DISABLED)
+        
+        # Reset mode if needed
+        if is_3d and self.plot_mode_var.get() == "line":
+            self.plot_mode_var.set("scatter")
+        elif not is_3d and self.plot_mode_var.get() == "surface":
+            self.plot_mode_var.set("scatter")
+        
+        if self.on_config_change:
+            self.on_config_change()
+    
+    def set_available_columns(self, columns):
+        """Set list of available columns for axes."""
+        self.available_columns = sorted(columns)
+        self.x_axis_dropdown['values'] = self.available_columns
+        self.y_axis_dropdown['values'] = self.available_columns
+        self.z_axis_dropdown['values'] = self.available_columns
+        
+        # Set defaults
+        if len(self.available_columns) > 0:
+            self.x_axis_dropdown.current(0)
+        if len(self.available_columns) > 1:
+            self.y_axis_dropdown.current(1)
+        if len(self.available_columns) > 2:
+            self.z_axis_dropdown.current(2)
+    
+    def get_config(self):
+        """Get current plot configuration."""
+        return {
+            'plot_type': self.plot_type_var.get(),
+            'plot_mode': self.plot_mode_var.get(),
+            'x_axis': self.x_axis_var.get(),
+            'y_axis': self.y_axis_var.get(),
+            'z_axis': self.z_axis_var.get(),
+        }
+
+
+class BinningPanel(ttk.Frame):
+    """Panel for configuring binning parameters."""
+    
+    def __init__(self, parent, on_binning_change=None):
+        """
+        Initialize binning panel.
+        
+        Args:
+            parent: Parent widget
+            on_binning_change: Callback when binning config changes
+        """
+        super().__init__(parent)
+        self.on_binning_change = on_binning_change
+        self.available_columns = []
+        
+        self._create_widgets()
+    
+    def _create_widgets(self):
+        """Create GUI widgets for binning configuration."""
+        # Title
+        title = ttk.Label(self, text="Binning Configuration", font=("Arial", 10, "bold"))
+        title.pack(pady=5)
+        
+        # Enable binning checkbox
+        self.binning_enabled_var = tk.BooleanVar(value=False)
+        ttk.Checkbutton(self, text="Enable Binning", 
+                       variable=self.binning_enabled_var,
+                       command=self._on_binning_toggle).pack(anchor=tk.W, padx=5, pady=5)
+        
+        # Binning options frame
+        self.frame_options = ttk.LabelFrame(self, text="Binning Options", padding=5)
+        self.frame_options.pack(fill=tk.X, padx=5, pady=5)
+        
+        # Binning parameter
+        ttk.Label(self.frame_options, text="Bin by Parameter:").pack(anchor=tk.W, pady=3)
+        self.bin_param_var = tk.StringVar()
+        self.bin_param_dropdown = ttk.Combobox(self.frame_options, 
+                                               textvariable=self.bin_param_var,
+                                               state="disabled", width=25)
+        self.bin_param_dropdown.pack(fill=tk.X, padx=5, pady=3)
+        
+        # Binning method
+        ttk.Label(self.frame_options, text="Method:").pack(anchor=tk.W, pady=(10, 3))
+        self.binning_method_var = tk.StringVar(value="quantile")
+        self.method_quantile_btn = ttk.Radiobutton(self.frame_options, text="Quantile", 
+                       variable=self.binning_method_var, value="quantile", state=tk.DISABLED)
+        self.method_quantile_btn.pack(anchor=tk.W, padx=20)
+        self.method_manual_btn = ttk.Radiobutton(self.frame_options, text="Manual", 
+                       variable=self.binning_method_var, value="manual", state=tk.DISABLED)
+        self.method_manual_btn.pack(anchor=tk.W, padx=20)
+        
+        # Number of bins
+        ttk.Label(self.frame_options, text="Number of Bins:").pack(anchor=tk.W, pady=(10, 3))
+        self.n_bins_var = tk.StringVar(value="4")
+        self.n_bins_spinbox = ttk.Spinbox(self.frame_options, from_=2, to=10, textvariable=self.n_bins_var, 
+                   width=10, state=tk.DISABLED)
+        self.n_bins_spinbox.pack(anchor=tk.W, padx=20, pady=3)
+    
+    def _on_binning_toggle(self):
+        """Handle binning enable/disable toggle."""
+        is_enabled = self.binning_enabled_var.get()
+        new_state = tk.NORMAL if is_enabled else tk.DISABLED
+        
+        # Disable/enable the specific widgets we created
+        self.bin_param_dropdown.config(state="readonly" if is_enabled else tk.DISABLED)
+        self.method_quantile_btn.config(state=new_state)
+        self.method_manual_btn.config(state=new_state)
+        self.n_bins_spinbox.config(state=new_state)
+        
+        if self.on_binning_change:
+            self.on_binning_change()
+    
+    def set_available_columns(self, columns):
+        """Set list of available columns for binning."""
+        self.available_columns = sorted(columns)
+        self.bin_param_dropdown['values'] = self.available_columns
+        
+        if len(self.available_columns) > 0:
+            self.bin_param_dropdown.current(0)
+    
+    def get_config(self):
+        """Get current binning configuration."""
+        return {
+            'enabled': self.binning_enabled_var.get(),
+            'parameter': self.bin_param_var.get(),
+            'method': self.binning_method_var.get(),
+            'n_bins': int(self.n_bins_var.get()),
+        }
+
+
+class PlotDisplayPanel(ttk.Frame):
+    """Panel for displaying plots and save/clear buttons."""
+    
+    def __init__(self, parent):
+        """
+        Initialize plot display panel.
+        
+        Args:
+            parent: Parent widget
+        """
+        super().__init__(parent)
+        self.current_fig = None
+        self.canvas = None
+        
+        self._create_widgets()
+    
+    def _create_widgets(self):
+        """Create GUI widgets for plot display."""
+        # Canvas frame
+        self.canvas_frame = ttk.Frame(self)
+        self.canvas_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+    
+    def display_plot(self, fig):
+        """Display a matplotlib figure."""
+        self.current_fig = fig
+        
+        # Clear previous canvas
+        if self.canvas is not None:
+            self.canvas.get_tk_widget().destroy()
+        
+        # Create new canvas
+        self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    
+    def clear_plot(self):
+        """Clear the displayed plot."""
+        if self.canvas is not None:
+            self.canvas.get_tk_widget().destroy()
+            self.canvas = None
+        self.current_fig = None
+    
+    def _on_generate_click(self):
+        """Handle generate plot button click."""
+        # This will be called by the main app
+        pass
+    
+    def _on_save_click(self):
+        """Handle save plot button click."""
+        if self.current_fig is None:
+            messagebox.showwarning("No Plot", "Please generate a plot first.")
+            return
+        
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".png",
+            filetypes=[("PNG files", "*.png"), ("PDF files", "*.pdf"), ("All files", "*.*")]
+        )
+        
+        if file_path:
+            try:
+                # Save at 300 DPI for publication quality
+                self.current_fig.savefig(file_path, dpi=300, bbox_inches='tight')
+                messagebox.showinfo("Success", f"Plot saved to:\n{file_path}")
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save plot:\n{str(e)}")
+
+
+# ============================================================================
+# MAIN APPLICATION
+# ============================================================================
+
+class VisualisierApp(tk.Tk):
+    """Main application window."""
+    
+    def __init__(self):
+        """Initialize the application."""
+        super().__init__()
+        self.title("Exploratory Data Visualiser")
+        self.geometry("1400x900")
+        
+        # Data
+        self.df = None
+        self.data_file = None
+        self.selected_papers = []
+        self.all_papers = []
+        
+        # Find data file
+        self._find_data_file()
+        
+        # Create main layout
+        self._create_layout()
+        
+        # Load initial data
+        self._load_initial_data()
+    
+    def _find_data_file(self):
+        """Find the research data file."""
+        # Try to find Rib Data.xlsx or similar
+        workspace_root = Path(__file__).parent.parent.parent
+        
+        possible_files = [
+            workspace_root / "data" / "Rib Data.xlsx",
+            workspace_root / "data" / "rib_data.xlsx",
+            workspace_root / "data" / "Rib_Data.xlsx",
+        ]
+        
+        for file_path in possible_files:
+            if file_path.exists():
+                self.data_file = str(file_path)
+                return
+        
+        # If not found, try to look in data directory
+        data_dir = workspace_root / "data"
+        if data_dir.exists():
+            xlsx_files = list(data_dir.glob("*.xlsx"))
+            if xlsx_files:
+                self.data_file = str(xlsx_files[0])
+                return
+    
+    def _create_layout(self):
+        """Create the main application layout with ribbon toolbar."""
+        # Main container
+        main_frame = ttk.Frame(self)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        # ====== RIBBON TOOLBAR (TOP) ======
+        ribbon = ttk.LabelFrame(main_frame, text="Controls", padding=10)
+        ribbon.pack(fill=tk.X, padx=0, pady=(0, 10))
+        
+        # Create a container for left controls and right selected papers list
+        ribbon_container = ttk.Frame(ribbon)
+        ribbon_container.pack(fill=tk.BOTH, expand=True)
+        
+        # Configure columns for equal widths
+        ribbon_container.columnconfigure(0, weight=1, minsize=200)  # Left panel
+        ribbon_container.columnconfigure(1, weight=1, minsize=200)  # Right panel
+        ribbon_container.rowconfigure(0, weight=1)
+        
+        # LEFT SIDE: All controls
+        left_side = ttk.Frame(ribbon_container)
+        left_side.grid(row=0, column=0, sticky='nsew', padx=(0, 5))
+        
+        # Row 1: Paper Selection
+        row1 = ttk.Frame(left_side)
+        row1.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(row1, text="Papers:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        
+        self.paper_var = tk.StringVar()
+        self.paper_dropdown = ttk.Combobox(row1, textvariable=self.paper_var, 
+                                           state="readonly")
+        self.paper_dropdown.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
+        
+        ttk.Button(row1, text="Add", command=self._add_paper).pack(side=tk.LEFT, padx=2)
+        ttk.Button(row1, text="Remove", command=self._remove_paper).pack(side=tk.LEFT, padx=2)
+        ttk.Button(row1, text="Add All", command=self._add_all_papers).pack(side=tk.LEFT, padx=2)
+        ttk.Button(row1, text="Clear", command=self._clear_papers).pack(side=tk.LEFT, padx=2)
+        
+        # ====== Row 2: Plot Type and Binning Enable ======
+        row2 = ttk.Frame(left_side)
+        row2.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(row2, text="Plot Type:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.plot_type_var = tk.StringVar(value="2d")
+        ttk.Radiobutton(row2, text="2D", variable=self.plot_type_var, 
+                       value="2d", command=self._on_plot_type_change).pack(side=tk.LEFT, padx=5)
+        ttk.Radiobutton(row2, text="3D", variable=self.plot_type_var, 
+                       value="3d", command=self._on_plot_type_change).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Separator(row2, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        
+        ttk.Label(row2, text="Mode:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.plot_mode_var = tk.StringVar(value="scatter")
+        ttk.Radiobutton(row2, text="Scatter", variable=self.plot_mode_var, 
+                       value="scatter").pack(side=tk.LEFT, padx=5)
+        self.mode_line_button = ttk.Radiobutton(row2, text="Line", variable=self.plot_mode_var, 
+                       value="line")
+        self.mode_line_button.pack(side=tk.LEFT, padx=5)
+        self.mode_surface_button = ttk.Radiobutton(row2, text="Surface", variable=self.plot_mode_var, 
+                       value="surface", state=tk.DISABLED)
+        self.mode_surface_button.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Separator(row2, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
+        
+        self.binning_enabled_var = tk.BooleanVar(value=False)
+        ttk.Checkbutton(row2, text="Enable Binning", 
+                       variable=self.binning_enabled_var,
+                       command=self._on_binning_toggle).pack(side=tk.LEFT, padx=5)
+        
+        # ====== Row 3: Axes Configuration ======
+        row3 = ttk.Frame(left_side)
+        row3.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(row3, text="X Axis:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.x_axis_var = tk.StringVar()
+        self.x_axis_dropdown = ttk.Combobox(row3, textvariable=self.x_axis_var, 
+                                            state="readonly", width=15)
+        self.x_axis_dropdown.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Label(row3, text="Y Axis:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.y_axis_var = tk.StringVar()
+        self.y_axis_dropdown = ttk.Combobox(row3, textvariable=self.y_axis_var, 
+                                            state="readonly", width=15)
+        self.y_axis_dropdown.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Label(row3, text="Z Axis:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.z_axis_var = tk.StringVar()
+        self.z_axis_dropdown = ttk.Combobox(row3, textvariable=self.z_axis_var, 
+                                            state="readonly", width=15)
+        self.z_axis_dropdown.config(state=tk.DISABLED)
+        self.z_axis_dropdown.pack(side=tk.LEFT, padx=5)
+        
+        # ====== Row 4: Binning Configuration ======
+        row4 = ttk.Frame(left_side)
+        row4.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(row4, text="Bin Param:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.bin_param_var = tk.StringVar()
+        self.bin_param_dropdown = ttk.Combobox(row4, textvariable=self.bin_param_var,
+                                               state="disabled", width=15)
+        self.bin_param_dropdown.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Label(row4, text="Method:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.binning_method_var = tk.StringVar(value="quantile")
+        ttk.Radiobutton(row4, text="Quantile", variable=self.binning_method_var, 
+                       value="quantile", state=tk.DISABLED).pack(side=tk.LEFT, padx=5)
+        ttk.Radiobutton(row4, text="Manual", variable=self.binning_method_var, 
+                       value="manual", state=tk.DISABLED).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Label(row4, text="N Bins:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        self.n_bins_var = tk.StringVar(value="4")
+        self.n_bins_spinbox = ttk.Spinbox(row4, from_=2, to=10, textvariable=self.n_bins_var, 
+                                          width=5, state=tk.DISABLED)
+        self.n_bins_spinbox.pack(side=tk.LEFT, padx=5)
+        
+        # ====== Row 5: Action Buttons ======
+        row5 = ttk.Frame(left_side)
+        row5.pack(fill=tk.X, pady=5)
+        
+        ttk.Button(row5, text="Generate Plot", command=self._generate_plot).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Save Plot", command=self._save_plot).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Clear", command=self._clear_plot).pack(side=tk.LEFT, padx=5)
+        
+        # RIGHT SIDE: Selected Papers List
+        right_side = ttk.LabelFrame(ribbon_container, text="Selected Papers", padding=5)
+        right_side.grid(row=0, column=1, sticky='nsew', padx=(5, 0), ipadx=5)
+        
+        # Create scrollable listbox for selected papers
+        scrollbar = ttk.Scrollbar(right_side)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.selected_papers_listbox = tk.Listbox(right_side, yscrollcommand=scrollbar.set, 
+                                                   height=8)
+        self.selected_papers_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.selected_papers_listbox.yview)
+        
+        # Store references to binning controls for toggle
+        self.binning_controls = [
+            self.bin_param_dropdown,
+            self.n_bins_spinbox
+        ]
+        self.binning_radio_buttons = row4.winfo_children()
+        
+        # ====== PLOT DISPLAY AREA (BOTTOM, FULL WIDTH) ======
+        self.plot_display = PlotDisplayPanel(main_frame)
+        self.plot_display.pack(fill=tk.BOTH, expand=True)
+    
+    def _add_paper(self):
+        """Add selected paper to list."""
+        paper = self.paper_var.get()
+        if paper and paper not in self.selected_papers:
+            self.selected_papers.append(paper)
+            self._update_selected_papers_display_listbox()
+    
+    def _remove_paper(self):
+        """Remove last selected paper from list."""
+        if self.selected_papers:
+            self.selected_papers.pop()
+            self._update_selected_papers_display_listbox()
+    
+    def _add_all_papers(self):
+        """Add all papers to selection."""
+        self.selected_papers = self.all_papers.copy()
+        self._update_selected_papers_display_listbox()
+    
+    def _clear_papers(self):
+        """Clear all selected papers."""
+        self.selected_papers = []
+        self._update_selected_papers_display_listbox()
+    
+    def _update_selected_papers_display_listbox(self):
+        """Update the listbox display of selected papers."""
+        self.selected_papers_listbox.delete(0, tk.END)
+        for i, paper in enumerate(self.selected_papers, 1):
+            self.selected_papers_listbox.insert(tk.END, f"{i}. {paper}")
+    
+    def _on_plot_type_change(self):
+        """Handle plot type change (2D vs 3D)."""
+        is_3d = self.plot_type_var.get() == "3d"
+        
+        # Enable/disable Z axis
+        self.z_axis_dropdown.config(state=tk.NORMAL if is_3d else tk.DISABLED)
+        
+        # Enable/disable plot mode buttons based on plot type
+        if is_3d:
+            # For 3D: enable Surface, disable Line
+            self.mode_line_button.config(state=tk.DISABLED)
+            self.mode_surface_button.config(state=tk.NORMAL)
+        else:
+            # For 2D: enable Line, disable Surface
+            self.mode_line_button.config(state=tk.NORMAL)
+            self.mode_surface_button.config(state=tk.DISABLED)
+        
+        # Reset mode if needed
+        if is_3d and self.plot_mode_var.get() == "line":
+            self.plot_mode_var.set("scatter")
+        elif not is_3d and self.plot_mode_var.get() == "surface":
+            self.plot_mode_var.set("scatter")
+    
+    def _on_binning_toggle(self):
+        """Handle binning enable/disable toggle."""
+        is_enabled = self.binning_enabled_var.get()
+        new_state = tk.NORMAL if is_enabled else tk.DISABLED
+        
+        self.bin_param_dropdown.config(state="readonly" if is_enabled else tk.DISABLED)
+        self.n_bins_spinbox.config(state=new_state)
+        
+        # Update radio buttons state
+        for widget in self.binning_radio_buttons:
+            if isinstance(widget, ttk.Radiobutton):
+                widget.config(state=new_state)
+    
+    def _save_plot(self):
+        """Save the current plot."""
+        self.plot_display._on_save_click()
+    
+    def _clear_plot(self):
+        """Clear the current plot."""
+        self.plot_display.clear_plot()
+    
+    def _load_initial_data(self):
+        """Load initial data and populate UI."""
+        if not self.data_file:
+            messagebox.showwarning("No Data", 
+                                   "Could not find research data file.\n"
+                                   "Please ensure Rib Data.xlsx is in the data/ directory.")
+            return
+        
+        try:
+            self.df = data_loader.load_research_data(self.data_file)
+            
+            # Get available papers
+            if 'Paper Title' in self.df.columns:
+                self.all_papers = sorted(self.df['Paper Title'].unique().tolist())
+                self.paper_dropdown['values'] = self.all_papers
+            
+            # Get numeric columns
+            numeric_cols = self.df.select_dtypes(include=[np.number]).columns.tolist()
+            self.x_axis_dropdown['values'] = numeric_cols
+            self.y_axis_dropdown['values'] = numeric_cols
+            self.z_axis_dropdown['values'] = numeric_cols
+            self.bin_param_dropdown['values'] = numeric_cols
+            
+            # Set defaults
+            if len(numeric_cols) > 0:
+                self.x_axis_dropdown.current(0)
+            if len(numeric_cols) > 1:
+                self.y_axis_dropdown.current(1)
+            if len(numeric_cols) > 2:
+                self.z_axis_dropdown.current(2)
+                self.bin_param_dropdown.current(0)
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load data:\n{str(e)}")
+    
+    def _on_config_change(self):
+        """Handle configuration changes."""
+        # Could enable/disable generate button based on validation
+        pass
+    
+    def _generate_plot(self):
+        """Generate plot based on current configuration."""
+        try:
+            # Get selected papers
+            if not self.selected_papers:
+                messagebox.showwarning("No Papers", "Please select at least one paper.")
+                return
+            
+            # Filter data
+            filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
+            
+            # Get axes configuration
+            x_axis = self.x_axis_var.get()
+            y_axis = self.y_axis_var.get()
+            z_axis = self.z_axis_var.get()
+            plot_type = self.plot_type_var.get()
+            plot_mode = self.plot_mode_var.get()
+            
+            # Validate axes
+            if not x_axis or not y_axis:
+                messagebox.showwarning("Missing Axes", 
+                                       "Please select X and Y axes.")
+                return
+            
+            if plot_type == '3d' and not z_axis:
+                messagebox.showwarning("Missing Axis", 
+                                       "Please select Z axis for 3D plots.")
+                return
+            
+            # Apply binning if enabled
+            bin_col = None
+            if self.binning_enabled_var.get():
+                bin_param = self.bin_param_var.get()
+                binning_method = self.binning_method_var.get()
+                n_bins = int(self.n_bins_var.get())
+                
+                if bin_param:
+                    filtered_df = apply_custom_binning(
+                        filtered_df,
+                        bin_param,
+                        binning_method,
+                        n_bins
+                    )
+                    bin_col = 'Bin'
+            
+            # Generate plot
+            if plot_type == '2d':
+                if plot_mode == 'scatter':
+                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, bin_col)
+                else:  # line
+                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, bin_col)
+            else:  # 3d
+                if plot_mode == 'scatter':
+                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, bin_col)
+                else:  # surface
+                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis)
+            
+            # Display plot
+            self.plot_display.display_plot(fig)
+            
+        except Exception as e:
+            messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
+
+
+def main():
+    """Main entry point."""
+    app = VisualisierApp()
+    app.mainloop()
+
+
+if __name__ == "__main__":
+    main()
