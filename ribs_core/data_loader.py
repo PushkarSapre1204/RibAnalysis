@@ -117,6 +117,52 @@ def get_variables_in_batch(batch_df: pd.DataFrame) -> List[str]:
     return sorted(batch_df['Variable'].unique())
 
 
+def get_available_symbols(df: pd.DataFrame, papers: List[str]) -> List[str]:
+    """
+    Get unique output variable symbols (from Variable column) for selected papers.
+    
+    Args:
+        df: Input DataFrame
+        papers: List of selected paper titles
+        
+    Returns:
+        Sorted list of unique symbols (e.g., ['Nu', 'f', 'St'])
+    """
+    if not papers:
+        return []
+    
+    filtered_df = df[df['Paper Title'].isin(papers)]
+    symbols = sorted(filtered_df['Variable'].dropna().unique().tolist())
+    return symbols
+
+
+def build_axis_dropdown_list() -> Tuple[List[str], Dict[str, str]]:
+    """
+    Build combined axis dropdown list with input and output variables.
+    
+    Returns:
+        Tuple of (display_list, mapping_dict)
+        - display_list: Formatted list for dropdown display
+        - mapping_dict: Maps display names to actual column names
+    """
+    input_vars = [
+        'Reynolds number (Re)',
+        'P/e',
+        'e/D',
+        'Alpha',
+        'Aspect ratio',
+        'Number of ribbed walls'
+    ]
+    
+    display_list = ['INPUT VARIABLES:'] + input_vars + ['', 'OUTPUT VARIABLES:']
+    mapping = {col: col for col in input_vars}
+    
+    # Output variables (symbols) will be added dynamically in GUI
+    # They'll be added after the separator
+    
+    return display_list, mapping
+
+
 # ============================================================================
 # VARIABILITY ANALYSIS (Dynamic Axis Selection)
 # ============================================================================

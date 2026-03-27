@@ -62,10 +62,14 @@ def apply_custom_binning(df, bin_param, method='quantile', n_bins=4):
     return df_copy
 
 
-def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None):
+def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None, x_label=None, y_label=None):
     """Create 2D scatter plot."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
+    
+    # Use display labels if provided, otherwise use column names
+    x_display = x_label if x_label else x_axis
+    y_display = y_label if y_label else y_axis
     
     if bin_col is None or bin_col not in df.columns:
         ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
@@ -79,19 +83,23 @@ def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None):
                       label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
         ax.legend()
     
-    ax.set_xlabel(x_axis)
-    ax.set_ylabel(y_axis)
-    ax.set_title(f'{x_axis} vs {y_axis}')
+    ax.set_xlabel(x_display)
+    ax.set_ylabel(y_display)
+    ax.set_title(f'{x_display} vs {y_display}')
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
     
     return fig
 
 
-def create_custom_2d_line(df, x_axis, y_axis, bin_col=None):
+def create_custom_2d_line(df, x_axis, y_axis, bin_col=None, x_label=None, y_label=None):
     """Create 2D line plot."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
+    
+    # Use display labels if provided, otherwise use column names
+    x_display = x_label if x_label else x_axis
+    y_display = y_label if y_label else y_axis
     
     # Sort by x_axis for sensible line
     df_sorted = df.sort_values(x_axis)
@@ -109,18 +117,23 @@ def create_custom_2d_line(df, x_axis, y_axis, bin_col=None):
                    label=f'Bin {int(bin_val)}', marker='o', alpha=0.6, color=color)
         ax.legend()
     
-    ax.set_xlabel(x_axis)
-    ax.set_ylabel(y_axis)
-    ax.set_title(f'{x_axis} vs {y_axis} (Line)')
+    ax.set_xlabel(x_display)
+    ax.set_ylabel(y_display)
+    ax.set_title(f'{x_display} vs {y_display} (Line)')
     ax.grid(True, alpha=0.3)
     fig.tight_layout()
     
     return fig
 
 
-def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None):
+def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None, x_label=None, y_label=None, z_label=None):
     """Create 3D scatter plot."""
     from mpl_toolkits.mplot3d import Axes3D
+    
+    # Use display labels if provided, otherwise use column names
+    x_display = x_label if x_label else x_axis
+    y_display = y_label if y_label else y_axis
+    z_display = z_label if z_label else z_axis
     
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
@@ -137,19 +150,24 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None):
                       label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
         ax.legend()
     
-    ax.set_xlabel(x_axis)
-    ax.set_ylabel(y_axis)
-    ax.set_zlabel(z_axis)
-    ax.set_title(f'3D Scatter: {x_axis}, {y_axis}, {z_axis}')
+    ax.set_xlabel(x_display)
+    ax.set_ylabel(y_display)
+    ax.set_zlabel(z_display)
+    ax.set_title(f'3D Scatter: {x_display}, {y_display}, {z_display}')
     fig.tight_layout()
     
     return fig
 
 
-def create_custom_3d_surface(df, x_axis, y_axis, z_axis):
+def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None):
     """Create 3D surface plot using triangulation."""
     from mpl_toolkits.mplot3d import Axes3D
     from scipy.interpolate import griddata
+    
+    # Use display labels if provided, otherwise use column names
+    x_display = x_label if x_label else x_axis
+    y_display = y_label if y_label else y_axis
+    z_display = z_label if z_label else z_axis
     
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
@@ -171,10 +189,10 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis):
     ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
     ax.scatter(x, y, z, color='red', s=50, alpha=0.5)
     
-    ax.set_xlabel(x_axis)
-    ax.set_ylabel(y_axis)
-    ax.set_zlabel(z_axis)
-    ax.set_title(f'3D Surface: {x_axis}, {y_axis}, {z_axis}')
+    ax.set_xlabel(x_display)
+    ax.set_ylabel(y_display)
+    ax.set_zlabel(z_display)
+    ax.set_title(f'3D Surface: {x_display}, {y_display}, {z_display}')
     fig.tight_layout()
     
     return fig
@@ -603,6 +621,7 @@ class VisualisierApp(tk.Tk):
         self.data_file = None
         self.selected_papers = []
         self.all_papers = []
+        self.axis_mapping = {}  # Maps display names to actual column names or symbols
         
         # Find data file
         self._find_data_file()
@@ -874,20 +893,52 @@ class VisualisierApp(tk.Tk):
                 self.all_papers = sorted(self.df['Paper Title'].unique().tolist())
                 self.paper_dropdown['values'] = self.all_papers
             
-            # Get numeric columns
-            numeric_cols = self.df.select_dtypes(include=[np.number]).columns.tolist()
-            self.x_axis_dropdown['values'] = numeric_cols
-            self.y_axis_dropdown['values'] = numeric_cols
-            self.z_axis_dropdown['values'] = numeric_cols
-            self.bin_param_dropdown['values'] = numeric_cols
+            # Build combined axis dropdown list with input and output variables
+            input_vars = [
+                'Reynolds number (Re)',
+                'P/e',
+                'e/D',
+                'Alpha',
+                'Aspect ratio',
+                'Number of ribbed walls'
+            ]
+            
+            # Get output variables (symbols) from the data
+            output_vars = data_loader.get_available_symbols(self.df, self.all_papers)
+            
+            # Build combined display list with sections
+            axis_display_list = (
+                ['INPUT VARIABLES:'] + 
+                input_vars + 
+                ['─────────────────'] +  # Separator
+                ['OUTPUT VARIABLES:'] + 
+                output_vars
+            )
+            
+            # Build mapping from display names to actual column names
+            self.axis_mapping = {col: col for col in input_vars}
+            # Output variables map to themselves (we'll handle them specially in plotting)
+            for symbol in output_vars:
+                self.axis_mapping[symbol] = ('symbol', symbol)  # Tuple to indicate it's a symbol
+            
+            # Set axis dropdowns with combined list
+            self.x_axis_dropdown['values'] = axis_display_list
+            self.y_axis_dropdown['values'] = axis_display_list
+            self.z_axis_dropdown['values'] = axis_display_list
+            self.bin_param_dropdown['values'] = input_vars  # Binning only works with numeric columns
             
             # Set defaults
-            if len(numeric_cols) > 0:
-                self.x_axis_dropdown.current(0)
-            if len(numeric_cols) > 1:
-                self.y_axis_dropdown.current(1)
-            if len(numeric_cols) > 2:
-                self.z_axis_dropdown.current(2)
+            if len(input_vars) > 0:
+                self.x_axis_dropdown.current(1)  # Skip header
+            if len(input_vars) > 1:
+                self.y_axis_dropdown.current(2)  # Skip header and first item
+            if len(input_vars) > 2 and len(output_vars) > 0:
+                # Set Z axis to first output variable
+                z_idx = len(input_vars) + 2  # After input vars and separator
+                if z_idx < len(axis_display_list):
+                    self.z_axis_dropdown.current(z_idx)
+            
+            if len(input_vars) > 0:
                 self.bin_param_dropdown.current(0)
             
         except Exception as e:
@@ -906,25 +957,57 @@ class VisualisierApp(tk.Tk):
                 messagebox.showwarning("No Papers", "Please select at least one paper.")
                 return
             
-            # Filter data
+            # Filter data by selected papers
             filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
             
-            # Get axes configuration
-            x_axis = self.x_axis_var.get()
-            y_axis = self.y_axis_var.get()
-            z_axis = self.z_axis_var.get()
+            # Get axes configuration (display values)
+            x_axis_display = self.x_axis_var.get()
+            y_axis_display = self.y_axis_var.get()
+            z_axis_display = self.z_axis_var.get()
             plot_type = self.plot_type_var.get()
             plot_mode = self.plot_mode_var.get()
             
             # Validate axes
-            if not x_axis or not y_axis:
+            if not x_axis_display or not y_axis_display:
                 messagebox.showwarning("Missing Axes", 
                                        "Please select X and Y axes.")
                 return
             
-            if plot_type == '3d' and not z_axis:
+            if plot_type == '3d' and not z_axis_display:
                 messagebox.showwarning("Missing Axis", 
                                        "Please select Z axis for 3D plots.")
+                return
+            
+            # Resolve axis display names to actual column names
+            x_axis, x_is_symbol = self._resolve_axis(x_axis_display)
+            y_axis, y_is_symbol = self._resolve_axis(y_axis_display)
+            z_axis, z_is_symbol = self._resolve_axis(z_axis_display) if z_axis_display else (None, False)
+            
+            if not x_axis or not y_axis:
+                messagebox.showwarning("Invalid Axis", "Please select valid axes (not section headers).")
+                return
+            
+            # Prepare display labels (to preserve original names in plot titles)
+            x_label = x_axis_display if x_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else x_axis
+            y_label = y_axis_display if y_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else y_axis
+            z_label = z_axis_display if z_axis_display and z_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else (z_axis if z_axis else None)
+            
+            # Filter by symbols if selected
+            if x_is_symbol:
+                filtered_df = filtered_df[filtered_df['Variable'] == x_axis].copy()
+                x_axis = 'Value'
+            
+            if y_is_symbol:
+                filtered_df = filtered_df[filtered_df['Variable'] == y_axis].copy()
+                y_axis = 'Value'
+            
+            if z_axis and z_is_symbol:
+                filtered_df = filtered_df[filtered_df['Variable'] == z_axis].copy()
+                z_axis = 'Value'
+            
+            # Validate that we have data after filtering
+            if filtered_df.empty:
+                messagebox.showwarning("No Data", "No data available for selected papers and symbols.")
                 return
             
             # Apply binning if enabled
@@ -934,7 +1017,7 @@ class VisualisierApp(tk.Tk):
                 binning_method = self.binning_method_var.get()
                 n_bins = int(self.n_bins_var.get())
                 
-                if bin_param:
+                if bin_param and bin_param in filtered_df.columns:
                     filtered_df = apply_custom_binning(
                         filtered_df,
                         bin_param,
@@ -946,20 +1029,45 @@ class VisualisierApp(tk.Tk):
             # Generate plot
             if plot_type == '2d':
                 if plot_mode == 'scatter':
-                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, bin_col)
+                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, bin_col, x_label, y_label)
                 else:  # line
-                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, bin_col)
+                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, bin_col, x_label, y_label)
             else:  # 3d
                 if plot_mode == 'scatter':
-                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, bin_col)
+                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, bin_col, x_label, y_label, z_label)
                 else:  # surface
-                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis)
+                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
             
             # Display plot
             self.plot_display.display_plot(fig)
             
         except Exception as e:
             messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
+    
+    def _resolve_axis(self, axis_display):
+        """
+        Resolve axis display name to actual column name.
+        
+        Args:
+            axis_display: Display name from dropdown
+            
+        Returns:
+            Tuple of (actual_column_name, is_symbol)
+            - is_symbol: True if it's an output variable (symbol), False if input variable
+        """
+        if axis_display in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:']:
+            return None, False
+        
+        if axis_display in self.axis_mapping:
+            mapping = self.axis_mapping[axis_display]
+            if isinstance(mapping, tuple):
+                # It's a symbol: ('symbol', 'Nu')
+                return mapping[1], True
+            else:
+                # It's a regular column name
+                return mapping, False
+        
+        return axis_display, False
 
 
 def main():
