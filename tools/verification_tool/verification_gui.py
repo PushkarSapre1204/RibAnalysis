@@ -8,15 +8,12 @@ Provides an interactive interface to:
 - Optionally save plots to disk
 """
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from ribs_core import data_loader as rdv
+from pathlib import Path
 import traceback
 
 class ResearchVisualizerGUI:
