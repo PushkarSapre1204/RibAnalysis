@@ -168,3 +168,98 @@ VALUE_MAX = None
 # outside this range. Use None for no limit.
 X_AXIS_MIN = None
 X_AXIS_MAX = None
+
+# ============================================================================
+# PREPROCESSOR CONFIGURATION (Meta-Analysis Pipeline)
+# ============================================================================
+
+# Raw data CSV schema (15 columns expected from Staging/[paper]/ directories)
+PREPROCESSOR_RAW_DATA_COLUMNS = {
+    'core_data': ['Paper Title', 'Figure Number', 'Point ID', 'Variable', 'Value'],
+    'parameters': ['Reynolds number (Re)', 'Geometry', 'P/e', 'e/D', 'Alpha', 
+                   'Aspect ratio', 'Number of ribbed walls'],
+    'test_conditions': ['Reading on', 'Constant factor'],
+    'additional': ['Dittus-Boelter Value'],
+}
+
+# Geometric parameters that can be derived
+PREPROCESSOR_DERIVABLE_PARAMETERS = {
+    'Aspect ratio': {
+        'formula': 'W / H',
+        'atomic_components': ['W', 'H'],
+        'description': 'Channel width to height ratio'
+    },
+    'e/D': {
+        'formula': 'e / D_h',
+        'atomic_components': ['e', 'D_h'],
+        'description': 'Rib height to hydraulic diameter ratio',
+        'fallback_d_h': '2 * W * H / (W + H)'  # Calculate D_h if needed
+    },
+    'P/e': {
+        'formula': 'P / e',
+        'atomic_components': ['P', 'e'],
+        'description': 'Pitch to rib height ratio'
+    },
+}
+
+# Baseline correlation methods for normalization
+PREPROCESSOR_BASELINE_METHODS = {
+    'Dittus-Boelert': {
+        'variable': 'Nu',
+        'formula': '0.023 * Re^0.8 * Pr^0.4',
+        'description': 'Standard Dittus-Boelert correlation for Nu',
+        'is_standard': True,
+    },
+    'Blasius': {
+        'variable': 'f',
+        'formula': '0.316 * Re^-0.25',
+        'description': 'Blasius correlation for friction factor',
+        'is_standard': True,
+    },
+    'Petukhov': {
+        'variable': 'f',
+        'formula': '(0.79 * ln(Re) - 1.64)^-2',
+        'description': 'Petukhov correlation for friction factor',
+        'is_standard': False,
+    },
+    'Gnielinski': {
+        'variable': 'Nu',
+        'formula': '((f/8) * (Re - 1000) * Pr) / (1 + 12.7 * sqrt(f/8) * (Pr^(2/3) - 1))',
+        'description': 'Gnielinski correlation for Nu',
+        'is_standard': False,
+    },
+}
+
+# Source tracking values for processed parameters
+PREPROCESSOR_SOURCE_VALUES = ['raw', 'metadata', 'derived', 'unfilled']
+
+# Output columns for clean_data.csv per paper
+PREPROCESSOR_OUTPUT_COLUMNS = {
+    'core': ['Paper Title', 'Figure Number', 'Point ID', 'Variable', 'Value'],
+    'parameters': ['Reynolds number (Re)', 'Geometry', 'P/e', 'e/D', 'Alpha', 
+                   'Aspect ratio', 'Number of ribbed walls'],
+    'source_tracking': ['P/e_Source', 'e/D_Source', 'Alpha_Source', 
+                        'Geometry_Source', 'Aspect_Ratio_Source'],
+    'normalized': ['Standard_Ratio', 'Standard_Ratio_Method', 'Standard_Baseline_Type'],
+    'test_conditions': ['Reading on', 'Constant factor'],
+    'metadata': ['Prandtl', 'Dittus-Boelter Value'],
+}
+
+# Prandtl number default (for air at room temperature)
+PREPROCESSOR_PRANDTL_DEFAULT = 0.71
+
+# Smoothing baseline identification (case-insensitive keywords)
+PREPROCESSOR_SMOOTH_BASELINE_KEYWORDS = ['smooth', 'baseline', 'smooth side', '0', 'none']
+
+# Ribbed performance identification (case-insensitive keywords)
+PREPROCESSOR_RIBBED_PERFORM_KEYWORDS = ['ribbed', 'rib', 'textured', 'rough', '1', 'wall']
+
+# Default output naming
+PREPROCESSOR_CLEAN_DATA_FILENAME = 'clean_data.csv'
+PREPROCESSOR_MASTER_OUTPUT_FILENAME = 'clean_data_master.csv'
+PREPROCESSOR_MASTER_OUTPUT_DIR = './data'
+
+# Logging configuration for preprocessor
+PREPROCESSOR_LOGGING_DIR = './preprocessing_logs'
+PREPROCESSOR_LOG_DECISION_JSON = True  # Save per-paper JSON decision logs
+PREPROCESSOR_LOG_VERBOSITY = 'normal'  # 'quiet', 'normal', 'verbose'

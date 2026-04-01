@@ -148,6 +148,93 @@ Your plots are ready! 📊
 
 ---
 
+## Meta-Analysis Preprocessing Pipeline
+
+Before using the visualization pipeline, you may need to preprocess raw research data from multiple papers. The preprocessing pipeline:
+
+1. **Processes geometric parameters** — Derives missing values (e.g., Aspect Ratio, e/D) from atomic components
+2. **Normalizes baselines** — Converts author-reported ratios to standard baselines (Dittus-Boelert for Nu, Blasius for f)
+3. **Aggregates papers** — Combines individual paper datasets into a master CSV
+
+### Setup: Create Staging Directory Structure
+
+Create a `Staging` folder with the following structure for each paper:
+
+```
+Staging/
+├── paper_name_1/
+│   ├── raw_data.csv      # 15-column CSV with experimental data (see DATA_SCHEMA.md)
+│   └── manifest.json     # Metadata about experimental setup (see Staging/README.md)
+├── paper_name_2/
+│   ├── raw_data.csv
+│   └── manifest.json
+└── ...
+```
+
+For detailed template, see: `Staging/README.md`
+
+### Running the Preprocessor
+
+Once you have staged all paper directories, run:
+
+```powershell
+python -m ribs_core.preprocessor ./Staging --verbose
+```
+
+The preprocessor will:
+1. Process each paper in `Staging/`
+2. Generate `clean_data.csv` locally in each paper directory
+3. Create `data/clean_data_master.csv` with all papers aggregated
+4. Save decision logs in `preprocessing_logs/`
+
+**Output files:**
+- `Staging/[paper_name]/clean_data.csv` — Processed data for each paper
+- `data/clean_data_master.csv` — Master file ready for visualization
+- `preprocessing_logs/master_preprocessing_log.json` — Summary of all processing decisions
+- `preprocessing_logs/[paper_name]/processing_decisions.json` — Per-paper details
+
+### Preprocessor Features
+
+**Safety Trigger**: Protects against auto-filling when parameters were varied
+- If a parameter is listed as "varied" in manifest, it won't be auto-filled with N/A values
+
+**Geometric Derivations**: Automatically calculates missing parameters  
+- Aspect Ratio: $W/H$
+- Relative Roughness: $e/D_h$ (with fallback to $D_h = \frac{2WH}{W+H}$)
+- Pitch-to-Height: $P/e$
+
+**Source Tracking**: Every parameter gets a `[Param]_Source` column showing:
+- `raw` — Value from raw_data.csv
+- `metadata` — Value from manifest.json
+- `derived` — Calculated from atomic components
+- `unfilled` — Could not be filled (Missing atomic components or Safety Trigger blocked it)
+
+**Baseline Normalization**: Converts to standard correlations
+- If author used standard baseline (Dittus-Boelert, Blasius) → keeps as-is
+- If author used non-standard method (Petukhov, Gnielinski, Experimental) → "Uncover & Reconvert":
+  1. Back-calculates raw Nu/f using author's formula
+  2. Recalculates using standard correlation
+  3. Generates new standard ratio
+
+### Example: Complete Workflow
+
+```powershell
+# 1. Stage your papers
+mkdir Staging\Paper_Smith_2024
+# Copy raw_data.csv and manifest.json into Paper_Smith_2024/
+
+# 2. Run preprocessing
+python -m ribs_core.preprocessor ./Staging
+
+# 3. Check results
+Get-Content data/clean_data_master.csv | Select-Object -First 5
+
+# 4. Use with visualization
+python -c "from ribs_core.data_loader import process_research_data; process_research_data('./data/clean_data_master.csv')"
+```
+
+---
+
 ## Troubleshooting
 
 ### Issue: "python: command not found"
