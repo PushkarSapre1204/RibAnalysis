@@ -307,6 +307,23 @@ class MetaAnalysisPreprocessor:
             with open(manifest_path, 'r') as f:
                 manifest = json.load(f)
             
+            # Add paper_number field to manifest with folder name
+            try:
+                paper_id = manifest.get('Paper Identification', {})
+                if not isinstance(paper_id, dict):
+                    paper_id = {}
+                paper_id['paper_number'] = paper_dir.name  # Folder name as paper_number
+                manifest['Paper Identification'] = paper_id
+                
+                # Save updated manifest
+                with open(manifest_path, 'w') as f:
+                    json.dump(manifest, f, indent=2)
+                
+                if self.verbose:
+                    logger.info(f"Added paper_number '{paper_dir.name}' to manifest")
+            except Exception as e:
+                logger.warning(f"Could not update manifest paper_number for {paper_dir.name}: {e}")
+            
             # Step 3: Baseline normalization
             df, base_log, base_error = self.process_paper_baseline(
                 df,

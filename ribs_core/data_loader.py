@@ -72,6 +72,25 @@ def load_research_data(file_path: str) -> pd.DataFrame:
     # Convert 'N/A' strings to NaN for easier handling
     df = df.replace('N/A', np.nan)
     
+    # Convert parameter columns to numeric types (handle invalid values by converting to NaN)
+    parameter_columns = [
+        'Reynolds number (Re)',
+        'P/e',
+        'e/D',
+        'Alpha',
+        'Aspect ratio',
+        'Number of ribbed walls'
+    ]
+    
+    for col in parameter_columns:
+        if col in df.columns:
+            # Convert to numeric, coercing errors to NaN
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+    
+    # Also convert 'Value' column to numeric (for output variables)
+    if 'Value' in df.columns:
+        df['Value'] = pd.to_numeric(df['Value'], errors='coerce')
+    
     print(f"Loaded data: {df.shape[0]} rows, {df.shape[1]} columns")
     print(f"Columns: {list(df.columns)}")
     
@@ -119,21 +138,33 @@ def get_variables_in_batch(batch_df: pd.DataFrame) -> List[str]:
 
 def get_available_symbols(df: pd.DataFrame, papers: List[str]) -> List[str]:
     """
-    Get unique output variable symbols (from Variable column) for selected papers.
+    Get output variable symbols (from Variable column) that are available in ALL selected papers.
     
     Args:
         df: Input DataFrame
         papers: List of selected paper titles
         
     Returns:
-        Sorted list of unique symbols (e.g., ['Nu', 'f', 'St'])
+        Sorted list of symbols present in all selected papers (e.g., ['Nu', 'f', 'St'])
     """
     if not papers:
         return []
     
-    filtered_df = df[df['Paper Title'].isin(papers)]
-    symbols = sorted(filtered_df['Variable'].dropna().unique().tolist())
-    return symbols
+    # Get symbols available in each paper
+    paper_symbols = []
+    for paper in papers:
+        paper_df = df[df['Paper Title'] == paper]
+        symbols = set(paper_df['Variable'].dropna().unique().tolist())
+        paper_symbols.append(symbols)
+    
+    # Find intersection of symbols across all papers
+    if paper_symbols:
+        common_symbols = paper_symbols[0]
+        for symbols_set in paper_symbols[1:]:
+            common_symbols = common_symbols.intersection(symbols_set)
+        return sorted(list(common_symbols))
+    
+    return []
 
 
 def build_axis_dropdown_list() -> Tuple[List[str], Dict[str, str]]:

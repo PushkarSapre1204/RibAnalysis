@@ -271,6 +271,7 @@ class MultiPaperSelector(ttk.Frame):
     
     def _on_paper_selected(self, event):
         """Handle paper selection from dropdown."""
+        # Paper is selected from dropdown, user can add it with the Add button
         pass
     
     def _add_paper(self):
@@ -810,28 +811,73 @@ class VisualisierApp(tk.Tk):
         if paper and paper not in self.selected_papers:
             self.selected_papers.append(paper)
             self._update_selected_papers_display_listbox()
+            self._refresh_axis_dropdowns()
     
     def _remove_paper(self):
         """Remove last selected paper from list."""
         if self.selected_papers:
             self.selected_papers.pop()
             self._update_selected_papers_display_listbox()
+            self._refresh_axis_dropdowns()
     
     def _add_all_papers(self):
         """Add all papers to selection."""
         self.selected_papers = self.all_papers.copy()
         self._update_selected_papers_display_listbox()
+        self._refresh_axis_dropdowns()
     
     def _clear_papers(self):
         """Clear all selected papers."""
         self.selected_papers = []
         self._update_selected_papers_display_listbox()
+        self._refresh_axis_dropdowns()
     
     def _update_selected_papers_display_listbox(self):
         """Update the listbox display of selected papers."""
         self.selected_papers_listbox.delete(0, tk.END)
         for i, paper in enumerate(self.selected_papers, 1):
             self.selected_papers_listbox.insert(tk.END, f"{i}. {paper}")
+    
+    def _refresh_axis_dropdowns(self):
+        """Refresh axis dropdowns based on currently selected papers."""
+        if not self.selected_papers:
+            # No papers selected - show all symbols from all papers
+            papers_for_symbols = self.all_papers
+        else:
+            # Papers are selected - show only symbols common to selected papers
+            papers_for_symbols = self.selected_papers
+        
+        # Get input variables (same for all configurations)
+        input_vars = [
+            'Reynolds number (Re)',
+            'P/e',
+            'e/D',
+            'Alpha',
+            'Aspect ratio',
+            'Number of ribbed walls'
+        ]
+        
+        # Get output variables (symbols) from selected/all papers
+        output_vars = data_loader.get_available_symbols(self.df, papers_for_symbols)
+        
+        # Build combined display list with sections
+        axis_display_list = (
+            ['INPUT VARIABLES:'] + 
+            input_vars + 
+            ['─────────────────'] +  # Separator
+            ['OUTPUT VARIABLES:'] + 
+            output_vars
+        )
+        
+        # Update axis mapping
+        self.axis_mapping = {col: col for col in input_vars}
+        for symbol in output_vars:
+            self.axis_mapping[symbol] = ('symbol', symbol)
+        
+        # Update dropdowns
+        self.x_axis_dropdown['values'] = axis_display_list
+        self.y_axis_dropdown['values'] = axis_display_list
+        self.z_axis_dropdown['values'] = axis_display_list
     
     def _on_plot_type_change(self):
         """Handle plot type change (2D vs 3D)."""
@@ -1008,6 +1054,20 @@ class VisualisierApp(tk.Tk):
             # Validate that we have data after filtering
             if filtered_df.empty:
                 messagebox.showwarning("No Data", "No data available for selected papers and symbols.")
+                return
+            
+            # Remove rows with NaN values in the axis columns to ensure valid plotting data
+            axis_cols = [x_axis, y_axis]
+            if z_axis:
+                axis_cols.append(z_axis)
+            
+            filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
+            
+            # Validate we still have data after dropping NaN
+            if filtered_df.empty:
+                messagebox.showwarning("No Valid Data", 
+                                       f"No valid numeric data available for the selected axes.\n"
+                                       f"Some axis columns may contain non-numeric or missing values.")
                 return
             
             # Apply binning if enabled

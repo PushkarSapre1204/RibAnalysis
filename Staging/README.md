@@ -8,11 +8,20 @@ Each research paper has its own subdirectory with the following files:
 
 ```
 Staging/
-├── [paper_name]/
-│   ├── raw_data.csv          # Raw extracted data (15 columns per DATA_SCHEMA.md)
-│   ├── manifest.json         # Metadata about experimental setup and constants
-│   └── clean_data.csv        # Generated locally after preprocessing
+├── P0001/                        # Any folder name (P0001, P_author_year, etc.)
+│   ├── raw_data.csv              # Raw extracted data (15 columns per DATA_SCHEMA.md)
+│   ├── manifest.json             # Metadata about experimental setup
+│   └── clean_data.csv            # Generated locally after preprocessing
+├── P0002/
+│   ├── raw_data.csv
+│   ├── manifest.json
+│   └── clean_data.csv
 ```
+
+**Folder Naming**: Folder names can be flexible:
+- Serial: `P0001`, `P0002`, etc.
+- Custom: `author_year`, `Smith2024`, etc.
+- The preprocessor automatically adds the folder name as `paper_number` in the manifest
 
 ## Files per Paper
 
@@ -52,7 +61,8 @@ Metadata about the paper's experimental setup. Example structure:
   "Paper Identification": {
     "Title": "Paper Title",
     "Authors/Year": "Author(s) Year",
-    "Study Objective": "Study description"
+    "Study Objective": "Study description",
+    "paper_number": "P0001"
   },
   "Experimental Apparatus & Dimensions": {
     "Channel Geometry": ["value"],
@@ -91,6 +101,8 @@ Metadata about the paper's experimental setup. Example structure:
 ```
 
 **Note on varying parameters**: If a parameter (e.g., P/e, Alpha) was varied in the study, list it as the second array element indicator in the manifest. This triggers the "Safety Trigger" — the preprocessor will NOT auto-fill N/A values for varied parameters.
+
+**Automatic paper_number field**: The preprocessor automatically adds the folder name as `paper_number` in the `Paper Identification` section. This creates a permanent link between the folder name and the metadata, making it easy to track which staging folder each processed dataset came from.
 
 ### clean_data.csv
 Generated output after preprocessing. Includes:
