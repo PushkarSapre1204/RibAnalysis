@@ -33,6 +33,50 @@ class GeometricEngine:
         """
         self.verbose = verbose
         self.derivation_log = []
+    
+    @staticmethod
+    def parse_numeric_value(value: Any) -> Optional[float]:
+        """
+        Parse numeric values, handling units and type conversion.
+        
+        Converts strings like "25.5 mm", ratios like "1/4", and numbers to float.
+        
+        Args:
+            value: Value to parse (string, number, or None)
+            
+        Returns:
+            Float value or None if cannot parse
+        """
+        if value is None or (isinstance(value, float) and pd.isna(value)):
+            return None
+        
+        # Already numeric
+        if isinstance(value, (int, float)):
+            return float(value)
+        
+        # String parsing
+        if isinstance(value, str):
+            value = value.strip()
+            
+            # Handle ratio format (e.g., "1/4")
+            if '/' in value:
+                try:
+                    parts = value.split('/')
+                    return float(parts[0]) / float(parts[1])
+                except (ValueError, IndexError):
+                    pass
+            
+            # Remove common units and convert
+            for unit in ['mm', 'cm', 'm', 'deg', 'degree', '%']:
+                value = value.replace(unit, '').strip()
+            
+            # Try to convert to float
+            try:
+                return float(value)
+            except ValueError:
+                return None
+        
+        return None
         
     def load_paper_data(self, paper_dir: Path) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         """
@@ -86,6 +130,14 @@ class GeometricEngine:
         """
         constants = {}
         
+        # Helper to extract single value from list and parse numeric
+        def extract_and_parse(val, parse_numeric=True):
+            if isinstance(val, list):
+                val = val[0] if val else None
+            if parse_numeric:
+                return self.parse_numeric_value(val)
+            return val
+        
         # Extract from nested structure
         try:
             dims = manifest.get('Experimental Apparatus & Dimensions', {})
@@ -93,43 +145,33 @@ class GeometricEngine:
             # Channel dimensions
             channel_dims = dims.get('Channel Dimensions', {})
             if channel_dims.get('Width'):
-                constants['W'] = channel_dims['Width'][0] if isinstance(
-                    channel_dims['Width'], list
-                ) else channel_dims['Width']
+                constants['W'] = extract_and_parse(channel_dims['Width'], parse_numeric=True)
             if channel_dims.get('Height'):
-                constants['H'] = channel_dims['Height'][0] if isinstance(
-                    channel_dims['Height'], list
-                ) else channel_dims['Height']
+                constants['H'] = extract_and_parse(channel_dims['Height'], parse_numeric=True)
             
             # Rib dimensions
             rib_dims = dims.get('Rib Dimensions', {})
             if rib_dims.get('Width'):
-                constants['rib_width'] = rib_dims['Width'][0] if isinstance(
-                    rib_dims['Width'], list
-                ) else rib_dims['Width']
+                constants['rib_width'] = extract_and_parse(rib_dims['Width'], parse_numeric=True)
             if rib_dims.get('Height'):
-                constants['e'] = rib_dims['Height'][0] if isinstance(
-                    rib_dims['Height'], list
-                ) else rib_dims['Height']
+                constants['e'] = extract_and_parse(rib_dims['Height'], parse_numeric=True)
             if rib_dims.get('Pitch'):
-                constants['P'] = rib_dims['Pitch'][0] if isinstance(
-                    rib_dims['Pitch'], list
-                ) else rib_dims['Pitch']
+                constants['P'] = extract_and_parse(rib_dims['Pitch'], parse_numeric=True)
             
             # Hydraulic diameter
             d_h = dims.get('Hydraulic Diameter (Dh)')
             if d_h:
-                constants['D_h'] = d_h[0] if isinstance(d_h, list) else d_h
+                constants['D_h'] = extract_and_parse(d_h, parse_numeric=True)
             
-            # Aspect ratio
+            # Aspect ratio (can be ratio like "1/4")
             ar = dims.get('Aspect Ratio (W/H)')
             if ar:
-                constants['Aspect_Ratio'] = ar[0] if isinstance(ar, list) else ar
+                constants['Aspect_Ratio'] = extract_and_parse(ar, parse_numeric=True)
             
             # Alpha (angle of attack)
             alpha = dims.get('Angle of attack')
             if alpha:
-                constants['Alpha'] = alpha[0] if isinstance(alpha, list) else alpha
+                constants['Alpha'] = extract_and_parse(alpha, parse_numeric=True)
             
             # Fluid properties (Prandtl)
             boundary = manifest.get('Boundary & Flow Conditions', {})
@@ -141,12 +183,12 @@ class GeometricEngine:
             # e/D_h
             e_d = dims.get('e/Dh')
             if e_d:
-                constants['e/D_h'] = e_d[0] if isinstance(e_d, list) else e_d
+                constants['e/D_h'] = extract_and_parse(e_d, parse_numeric=True)
             
             # P/e
             p_e = dims.get('P/e')
             if p_e:
-                constants['P/e'] = p_e[0] if isinstance(p_e, list) else p_e
+                constants['P/e'] = extract_and_parse(p_e, parse_numeric=True)
             
         except Exception as e:
             logger.warning(f"Error extracting manifest constants: {e}")
@@ -282,6 +324,9 @@ class GeometricEngine:
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
         
+        # Ensure column can accept numeric values
+        df['Aspect ratio'] = pd.to_numeric(df['Aspect ratio'], errors='coerce')
+        
         for idx in df.index:
             val = df.loc[idx, 'Aspect ratio']
             
@@ -339,6 +384,9 @@ class GeometricEngine:
             df['e/D'] = np.nan
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
+        
+        # Ensure column can accept numeric values
+        df['e/D'] = pd.to_numeric(df['e/D'], errors='coerce')
         
         for idx in df.index:
             val = df.loc[idx, 'e/D']
@@ -406,6 +454,9 @@ class GeometricEngine:
             df['P/e'] = np.nan
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
+        
+        # Ensure column can accept numeric values
+        df['P/e'] = pd.to_numeric(df['P/e'], errors='coerce')
         
         for idx in df.index:
             val = df.loc[idx, 'P/e']

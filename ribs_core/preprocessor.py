@@ -10,11 +10,17 @@ Coordinates the complete preprocessing pipeline:
 Author: Meta-Analysis Preprocessor
 """
 
+import sys
+from pathlib import Path
+
+# Add project root to path for ribs_core imports
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 import pandas as pd
 import numpy as np
 import json
 import logging
-from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
 from ribs_core import config
@@ -129,9 +135,17 @@ class MetaAnalysisPreprocessor:
             error_message is '' if no errors
         """
         try:
+            # Helper to extract single value from list or return as-is
+            def extract_value(val):
+                if isinstance(val, list):
+                    return val[0] if val else ''
+                return val
+            
             # Extract baseline method and Prandtl number from manifest
             data_reduction = manifest.get('Data Reduction & Normalization', {})
-            baseline_method = data_reduction.get('Smooth Baseline (Heat Transfer)', '')
+            baseline_method = extract_value(
+                data_reduction.get('Smooth Baseline (Heat Transfer)', '')
+            )
             
             # Try to get Prandtl from manifest
             pr_value = None
