@@ -257,9 +257,37 @@ PREPROCESSOR_RIBBED_PERFORM_KEYWORDS = ['ribbed', 'rib', 'textured', 'rough', '1
 # Default output naming
 PREPROCESSOR_CLEAN_DATA_FILENAME = 'clean_data.csv'
 PREPROCESSOR_MASTER_OUTPUT_FILENAME = 'clean_data_master.csv'
-PREPROCESSOR_MASTER_OUTPUT_DIR = './data'
+PREPROCESSOR_MASTER_OUTPUT_DIR = './Staging'  # Master CSV goes to Staging, NOT ./data
 
 # Logging configuration for preprocessor
 PREPROCESSOR_LOGGING_DIR = './preprocessing_logs'
 PREPROCESSOR_LOG_DECISION_JSON = True  # Save per-paper JSON decision logs
 PREPROCESSOR_LOG_VERBOSITY = 'normal'  # 'quiet', 'normal', 'verbose'
+
+# ============================================================================
+# STITCHING CONFIGURATION (Final Schema Definition)
+# ============================================================================
+
+# Final master CSV schema (after stitching step - schema columns only)
+STITCHING_MASTER_SCHEMA = [
+    'Paper Title', 'Figure Number', 'Point ID', 'Variable', 'Value',
+    'Reynolds number (Re)', 'Geometry', 'P/e', 'e/D', 'Alpha',
+    'Aspect ratio', 'Number of ribbed walls', 'Reading on'
+]
+
+# Log CSV schema (source tracking and processing metadata - per paper)
+STITCHING_LOG_SCHEMA = [
+    'Paper Title', 'Figure Number', 'Point ID',
+    'P/e_Source', 'e/D_Source', 'Alpha_Source',
+    'Geometry_Source', 'Aspect_Ratio_Source',
+    'Standard_Ratio', 'Standard_Ratio_Method', 'Standard_Baseline_Type', 'Processing_Note',
+    'Prandtl'
+]
+
+# Output filenames for per-paper files
+STITCHING_MAIN_FILENAME = 'clean_data.csv'
+STITCHING_LOG_FILENAME = 'clean_data_log.csv'
+
+# Master output filename
+STITCHING_MASTER_FILENAME = 'clean_data_master.csv'
+STITCHING_MASTER_OUTPUT_DIR = './Staging'  # Master goes to Staging

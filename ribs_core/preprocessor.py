@@ -26,6 +26,7 @@ from datetime import datetime
 from ribs_core import config
 from ribs_core.geometric_engine import GeometricEngine
 from ribs_core.baseline_engine import BaselineEngine
+from ribs_core.stitching_engine import StitchingEngine
 
 # Initialize logging
 logging.basicConfig(
@@ -50,6 +51,7 @@ class MetaAnalysisPreprocessor:
         self.verbose = verbose
         self.geometric_engine = GeometricEngine(verbose=verbose)
         self.baseline_engine = BaselineEngine(verbose=verbose)
+        self.stitching_engine = StitchingEngine(verbose=verbose)
         
         # Create logging directory
         self.logging_dir = Path(config.PREPROCESSOR_LOGGING_DIR)
@@ -356,13 +358,18 @@ class MetaAnalysisPreprocessor:
                 df, reading_log = self.filter_reading_on(df)
                 df.drop('Reading_Category', axis=1, errors='ignore', inplace=True)
             
-            # Step 5: Save local clean_data.csv
-            clean_data_path = self.save_clean_data_csv(df, paper_dir)
-            if not clean_data_path:
-                result['status'] = 'warning'
-                result['error'] = 'Could not save clean_data.csv'
-            else:
+            # Step 5: Stitch data into schema-only and log CSVs
+            try:
+                main_df, log_df = self.stitching_engine.stitch_paper(df, paper_dir)
+                clean_data_path = str(paper_dir / config.STITCHING_MAIN_FILENAME)
                 result['clean_data_path'] = clean_data_path
+                if self.verbose:
+                    logger.info(f"Saved stitched CSVs for {paper_dir.name}: "
+                               f"{config.STITCHING_MAIN_FILENAME} and {config.STITCHING_LOG_FILENAME}")
+            except Exception as e:
+                logger.error(f"Error stitching data for {paper_dir.name}: {e}")
+                result['status'] = 'warning'
+                result['error'] = f"Stitching error: {e}"
             
             # Step 6: Save decision log
             decision_log = {
@@ -391,36 +398,24 @@ class MetaAnalysisPreprocessor:
     
     def aggregate_master_csv(self) -> Tuple[str, int]:
         """
-        Aggregate all clean_data.csv files into master CSV.
+        Aggregate main schema CSVs from all papers into master CSV.
+        
+        Uses StitchingEngine to read the stitched main CSVs (not raw preprocessor output).
         
         Returns:
             Tuple of (master_csv_path, total_rows)
         """
-        master_dfs = []
-        
-        for paper_dir in self.find_paper_directories():
-            clean_data_path = paper_dir / config.PREPROCESSOR_CLEAN_DATA_FILENAME
-            
-            if clean_data_path.exists():
-                try:
-                    df = pd.read_csv(clean_data_path)
-                    master_dfs.append(df)
-                    logger.info(f"Added {len(df)} rows from {paper_dir.name}")
-                except Exception as e:
-                    logger.warning(f"Could not load {clean_data_path}: {e}")
-        
-        if not master_dfs:
-            logger.warning("No clean_data.csv files found to aggregate")
-            return '', 0
-        
-        # Concatenate all DataFrames
-        master_df = pd.concat(master_dfs, ignore_index=True)
-        
-        # Save master CSV
-        master_csv_path = (
-            self.master_output_dir / config.PREPROCESSOR_MASTER_OUTPUT_FILENAME
+        master_csv_path, total_rows = self.stitching_engine.aggregate_master_main_csv(
+            self.staging_dir
         )
-        master_df.to_csv(master_csv_path, index=False)
+        
+        if master_csv_path:
+            self.master_decision_log['master_csv_path'] = master_csv_path
+            logger.info(f"Master aggregation complete: {master_csv_path} ({total_rows} rows)")
+        else:
+            logger.warning("Master aggregation failed: No main CSV files to aggregate")
+        
+        return master_csv_path, total_rows
         
         logger.info(f"Saved master CSV to {master_csv_path} ({len(master_df)} rows)")
         self.master_decision_log['master_csv_path'] = str(master_csv_path)

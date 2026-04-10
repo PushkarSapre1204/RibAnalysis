@@ -183,15 +183,14 @@ python -m ribs_core.preprocessor ./Staging --verbose
 
 The preprocessor will:
 1. Process each paper in `Staging/`
-2. Generate `clean_data.csv` locally in each paper directory
-3. Create `data/clean_data_master.csv` with all papers aggregated
+2. Generate `clean_data.csv` and `clean_data_log.csv` locally in each paper directory
+3. Create `Staging/clean_data_master.csv` with all papers aggregated (schema only)
 4. Save decision logs in `preprocessing_logs/`
 
 **Output files:**
-- `Staging/[paper_name]/clean_data.csv` — Processed data for each paper
-- `data/clean_data_master.csv` — Master file ready for visualization
-- `preprocessing_logs/master_preprocessing_log.json` — Summary of all processing decisions
-- `preprocessing_logs/[paper_name]/processing_decisions.json` — Per-paper details
+- `Staging/[paper_name]/clean_data.csv` — Processed data for each paper (schema columns only)
+- `Staging/[paper_name]/clean_data_log.csv` — Source tracking and processing metadata
+- `Staging/clean_data_master.csv` — Master file ready for visualization (schema columns only)
 
 ### Preprocessor Features
 
@@ -227,7 +226,7 @@ mkdir Staging\Paper_Smith_2024
 python -m ribs_core.preprocessor ./Staging
 
 # 3. Check results
-Get-Content data/clean_data_master.csv | Select-Object -First 5
+Get-Content Staging/clean_data_master.csv | Select-Object -First 5
 
 # 4. Use with visualization
 python -c "from ribs_core.data_loader import process_research_data; process_research_data('./data/clean_data_master.csv')"
