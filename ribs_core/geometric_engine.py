@@ -607,9 +607,13 @@ class GeometricEngine:
         
         # Apply derivations
         df = self.derive_aspect_ratio(df, constants)
+        
         df = self.derive_relative_roughness(df, constants)
+        
         df = self.derive_pitch_to_height(df, constants)
+        
         df = self.process_alpha(df, constants)
+        
         df = self.process_geometry(df, constants)
         
         # Build decision log

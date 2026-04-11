@@ -180,7 +180,15 @@ class MetaAnalysisPreprocessor:
         df: pd.DataFrame
     ) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
-        Filter data by "Reading on" column.
+        Filter data by "Reading on" column with hierarchical priority.
+        
+        Priority:
+        1. If contains "smooth" keyword → Baseline (smooth)
+        2. Else if contains ribbed keywords → Performance (ribbed)
+        3. Else → Unknown
+        
+        This prevents rows like "Smooth wall" from being misclassified due to
+        shared keywords (e.g., 'wall' appearing in both smooth and ribbed labels).
         
         Returns smooth (baseline) and ribbed (performance) data separately.
         
@@ -190,18 +198,25 @@ class MetaAnalysisPreprocessor:
         Returns:
             Tuple of (smooth_df, ribbed_df)
         """
-        smooth_mask = df['Reading on'].str.lower().str.contains(
-            '|'.join(config.PREPROCESSOR_SMOOTH_BASELINE_KEYWORDS),
-            regex=True,
+        # Hierarchical priority: first check for smooth (explicit keyword)
+        # This prevents "Smooth wall" from being classified as ribbed due to 'wall' keyword
+        reading_on_lower = df['Reading on'].str.lower()
+        
+        smooth_mask = reading_on_lower.str.contains(
+            'smooth',  # Just look for explicit "smooth" with highest priority
+            regex=False,
             na=False
         )
         
-        ribbed_mask = df['Reading on'].str.lower().str.contains(
+        # For remaining rows, check if they contain ribbed keywords
+        remaining_mask = ~smooth_mask
+        ribbed_mask = remaining_mask & reading_on_lower.str.contains(
             '|'.join(config.PREPROCESSOR_RIBBED_PERFORM_KEYWORDS),
             regex=True,
             na=False
         )
         
+        # Now categorize: smooth first, then ribbed, then other
         smooth_df = df[smooth_mask].copy()
         ribbed_df = df[ribbed_mask].copy()
         other_df = df[~smooth_mask & ~ribbed_mask].copy()
@@ -310,6 +325,9 @@ class MetaAnalysisPreprocessor:
             logger.info(f"Processing paper: {paper_dir.name}")
             
             # Step 1: Geometric processing
+            print(f"\n{'='*50}")
+            print(f"PROCESSING: {paper_dir.name}")
+            print(f"{'='*50}")
             df, geo_log, geo_error = self.process_paper_geometric(paper_dir)
             if geo_error:
                 result['status'] = 'error'
@@ -351,16 +369,19 @@ class MetaAnalysisPreprocessor:
                 result['error'] = base_error
                 return result
             
+
             result['baseline_log'] = base_log
             
             # Step 4: Reading on filtering (if column exists)
             if 'Reading on' in df.columns:
                 df, reading_log = self.filter_reading_on(df)
                 df.drop('Reading_Category', axis=1, errors='ignore', inplace=True)
+
             
             # Step 5: Stitch data into schema-only and log CSVs
             try:
                 main_df, log_df = self.stitching_engine.stitch_paper(df, paper_dir)
+
                 clean_data_path = str(paper_dir / config.STITCHING_MAIN_FILENAME)
                 result['clean_data_path'] = clean_data_path
                 if self.verbose:
@@ -386,6 +407,10 @@ class MetaAnalysisPreprocessor:
             
             result['rows_processed'] = len(df)
             
+            print(f"\n{'='*50}")
+            print(f"✓ COMPLETE: {paper_dir.name}")
+            print(f"Final output rows: {len(df)}")
+            print(f"{'='*50}\n")
             logger.info(f"✓ Completed {paper_dir.name} ({len(df)} rows)")
             
             return result
