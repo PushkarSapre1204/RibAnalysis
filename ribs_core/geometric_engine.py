@@ -301,6 +301,7 @@ class GeometricEngine:
         self,
         df: pd.DataFrame,
         constants: Dict[str, Any],
+        manifest: Dict[str, Any],
         source_col: str = 'Aspect_Ratio_Source'
     ) -> pd.DataFrame:
         """
@@ -314,6 +315,7 @@ class GeometricEngine:
         Args:
             df: Data frame to process (modified in place)
             constants: Constants extracted from manifest
+            manifest: Manifest dictionary for multi-value detection
             source_col: Name of source tracking column
             
         Returns:
@@ -335,7 +337,15 @@ class GeometricEngine:
                 df.loc[idx, source_col] = 'raw'
                 continue
             
-            # Try manifest constant
+            # Check for multiple values in manifest (Case C)
+            manifest_value = manifest.get('Experimental Apparatus & Dimensions', {}).get('Aspect Ratio (W/H)')
+            if isinstance(manifest_value, list) and len(manifest_value) > 1:
+                df.loc[idx, source_col] = 'WARNING'
+                if self.verbose:
+                    logger.info(f"Multiple values in manifest for Aspect ratio: {manifest_value} - skipping auto-fill")
+                continue
+            
+            # Try manifest constant (Case A)
             if 'Aspect_Ratio' in constants and pd.notna(constants['Aspect_Ratio']):
                 df.loc[idx, 'Aspect ratio'] = constants['Aspect_Ratio']
                 df.loc[idx, source_col] = 'metadata'
@@ -361,6 +371,7 @@ class GeometricEngine:
         self,
         df: pd.DataFrame,
         constants: Dict[str, Any],
+        manifest: Dict[str, Any],
         source_col: str = 'e/D_Source'
     ) -> pd.DataFrame:
         """
@@ -375,6 +386,7 @@ class GeometricEngine:
         Args:
             df: Data frame to process (modified in place)
             constants: Constants extracted from manifest
+            manifest: Manifest dictionary for multi-value detection
             source_col: Name of source tracking column
             
         Returns:
@@ -396,7 +408,15 @@ class GeometricEngine:
                 df.loc[idx, source_col] = 'raw'
                 continue
             
-            # Try manifest constant
+            # Check for multiple values in manifest (Case C)
+            manifest_value = manifest.get('Experimental Apparatus & Dimensions', {}).get('e/Dh')
+            if isinstance(manifest_value, list) and len(manifest_value) > 1:
+                df.loc[idx, source_col] = 'WARNING'
+                if self.verbose:
+                    logger.info(f"Multiple values in manifest for e/D: {manifest_value} - skipping auto-fill")
+                continue
+            
+            # Try manifest constant (Case A)
             if 'e/D_h' in constants and pd.notna(constants['e/D_h']):
                 df.loc[idx, 'e/D'] = constants['e/D_h']
                 df.loc[idx, source_col] = 'metadata'
@@ -432,6 +452,7 @@ class GeometricEngine:
         self,
         df: pd.DataFrame,
         constants: Dict[str, Any],
+        manifest: Dict[str, Any],
         source_col: str = 'P/e_Source'
     ) -> pd.DataFrame:
         """
@@ -445,6 +466,7 @@ class GeometricEngine:
         Args:
             df: Data frame to process (modified in place)
             constants: Constants extracted from manifest
+            manifest: Manifest dictionary for multi-value detection
             source_col: Name of source tracking column
             
         Returns:
@@ -466,7 +488,15 @@ class GeometricEngine:
                 df.loc[idx, source_col] = 'raw'
                 continue
             
-            # Try manifest constant
+            # Check for multiple values in manifest (Case C)
+            manifest_value = manifest.get('Experimental Apparatus & Dimensions', {}).get('P/e')
+            if isinstance(manifest_value, list) and len(manifest_value) > 1:
+                df.loc[idx, source_col] = 'WARNING'
+                if self.verbose:
+                    logger.info(f"Multiple values in manifest for P/e: {manifest_value} - skipping auto-fill")
+                continue
+            
+            # Try manifest constant (Case A)
             if 'P/e' in constants and pd.notna(constants['P/e']):
                 df.loc[idx, 'P/e'] = constants['P/e']
                 df.loc[idx, source_col] = 'metadata'
@@ -492,6 +522,7 @@ class GeometricEngine:
         self,
         df: pd.DataFrame,
         constants: Dict[str, Any],
+        manifest: Dict[str, Any],
         source_col: str = 'Alpha_Source'
     ) -> pd.DataFrame:
         """
@@ -502,6 +533,7 @@ class GeometricEngine:
         Args:
             df: Data frame to process (modified in place)
             constants: Constants extracted from manifest
+            manifest: Manifest dictionary for multi-value detection
             source_col: Name of source tracking column
             
         Returns:
@@ -520,7 +552,15 @@ class GeometricEngine:
                 df.loc[idx, source_col] = 'raw'
                 continue
             
-            # Try manifest constant
+            # Check for multiple values in manifest (Case C)
+            manifest_value = manifest.get('Experimental Apparatus & Dimensions', {}).get('Angle of attack')
+            if isinstance(manifest_value, list) and len(manifest_value) > 1:
+                df.loc[idx, source_col] = 'WARNING'
+                if self.verbose:
+                    logger.info(f"Multiple values in manifest for Alpha: {manifest_value} - skipping auto-fill")
+                continue
+            
+            # Try manifest constant (Case A)
             if 'Alpha' in constants and pd.notna(constants['Alpha']):
                 df.loc[idx, 'Alpha'] = constants['Alpha']
                 df.loc[idx, source_col] = 'metadata'
@@ -534,6 +574,7 @@ class GeometricEngine:
         self,
         df: pd.DataFrame,
         constants: Dict[str, Any],
+        manifest: Dict[str, Any],
         source_col: str = 'Geometry_Source'
     ) -> pd.DataFrame:
         """
@@ -544,6 +585,7 @@ class GeometricEngine:
         Args:
             df: Data frame to process (modified in place)
             constants: Constants extracted from manifest
+            manifest: Manifest dictionary for multi-value detection
             source_col: Name of source tracking column
             
         Returns:
@@ -562,7 +604,15 @@ class GeometricEngine:
                 df.loc[idx, source_col] = 'raw'
                 continue
             
-            # Try manifest constant (Channel Geometry)
+            # Check for multiple values in manifest (Case C)
+            manifest_value = manifest.get('Experimental Apparatus & Dimensions', {}).get('Channel Geometry')
+            if isinstance(manifest_value, list) and len(manifest_value) > 1:
+                df.loc[idx, source_col] = 'WARNING'
+                if self.verbose:
+                    logger.info(f"Multiple values in manifest for Geometry: {manifest_value} - skipping auto-fill")
+                continue
+            
+            # Try manifest constant (Channel Geometry) (Case A)
             if 'Channel_Geometry' in constants and pd.notna(constants['Channel_Geometry']):
                 df.loc[idx, 'Geometry'] = constants['Channel_Geometry']
                 df.loc[idx, source_col] = 'metadata'
@@ -606,15 +656,15 @@ class GeometricEngine:
         classification, varied_params = self.classify_parameters(df, manifest)
         
         # Apply derivations
-        df = self.derive_aspect_ratio(df, constants)
+        df = self.derive_aspect_ratio(df, constants, manifest)
         
-        df = self.derive_relative_roughness(df, constants)
+        df = self.derive_relative_roughness(df, constants, manifest)
         
-        df = self.derive_pitch_to_height(df, constants)
+        df = self.derive_pitch_to_height(df, constants, manifest)
         
-        df = self.process_alpha(df, constants)
+        df = self.process_alpha(df, constants, manifest)
         
-        df = self.process_geometry(df, constants)
+        df = self.process_geometry(df, constants, manifest)
         
         # Build decision log
         decision_log = {

@@ -1,0 +1,649 @@
+Paper Title,Figure Number,Point ID,Variable,Value,Reynolds number (Re),Geometry,P/e,e/D,Alpha,Aspect ratio,Number of ribbed walls,Reading on
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 5,Nu/Nu_0,1.5,10000,Straight,10.0,0.047,90.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 6,Nu/Nu_0,1.7,10000,Straight,10.0,0.047,60.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 7,Nu/Nu_0,1.6,10000,Straight,10.0,0.047,45.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 8,Nu/Nu_0,1.5,10000,Straight,10.0,0.047,30.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 13,Nu/Nu_0,1.4,30000,Straight,10.0,0.047,90.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 14,Nu/Nu_0,1.65,30000,Straight,10.0,0.047,60.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 15,Nu/Nu_0,1.6,30000,Straight,10.0,0.047,45.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 16,Nu/Nu_0,1.6,30000,Straight,10.0,0.047,30.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 21,Nu/Nu_0,1.4,60000,Straight,10.0,0.047,90.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 22,Nu/Nu_0,1.65,60000,Straight,10.0,0.047,60.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 23,Nu/Nu_0,1.6,60000,Straight,10.0,0.047,45.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 24,Nu/Nu_0,1.6,60000,Straight,10.0,0.047,30.0,1.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 29,Nu/Nu_0,2.1,10000,Straight,10.0,0.047,90.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 30,Nu/Nu_0,1.15,10000,Straight,10.0,0.047,60.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 31,Nu/Nu_0,0.9,10000,Straight,10.0,0.047,45.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 32,Nu/Nu_0,0.9,10000,Straight,10.0,0.047,30.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 37,Nu/Nu_0,1.65,30000,Straight,10.0,0.047,90.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 38,Nu/Nu_0,0.95,30000,Straight,10.0,0.047,60.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 39,Nu/Nu_0,0.9,30000,Straight,10.0,0.047,45.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 40,Nu/Nu_0,0.9,30000,Straight,10.0,0.047,30.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 45,Nu/Nu_0,1.3,60000,Straight,10.0,0.047,90.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 46,Nu/Nu_0,1.1,60000,Straight,10.0,0.047,60.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 47,Nu/Nu_0,1.05,60000,Straight,10.0,0.047,45.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 48,Nu/Nu_0,1.0,60000,Straight,10.0,0.047,30.0,2.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 53,Nu/Nu_0,1.35,10000,Straight,10.0,0.047,90.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 54,Nu/Nu_0,1.65,10000,Straight,10.0,0.047,60.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 55,Nu/Nu_0,1.85,10000,Straight,10.0,0.047,45.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 56,Nu/Nu_0,1.5,10000,Straight,10.0,0.047,30.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 61,Nu/Nu_0,1.35,30000,Straight,10.0,0.047,90.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 62,Nu/Nu_0,1.7,30000,Straight,10.0,0.047,60.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 63,Nu/Nu_0,1.65,30000,Straight,10.0,0.047,45.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 64,Nu/Nu_0,1.65,30000,Straight,10.0,0.047,30.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 69,Nu/Nu_0,1.2,60000,Straight,10.0,0.047,90.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 70,Nu/Nu_0,1.6,60000,Straight,10.0,0.047,60.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 71,Nu/Nu_0,1.65,60000,Straight,10.0,0.047,45.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 72,Nu/Nu_0,1.6,60000,Straight,10.0,0.047,30.0,0.5,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 77,Nu/Nu_0,2.1,10000,Straight,10.0,0.078,90.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 78,Nu/Nu_0,0.55,10000,Straight,10.0,0.078,60.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 79,Nu/Nu_0,1.05,10000,Straight,10.0,0.078,45.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 80,Nu/Nu_0,0.95,10000,Straight,10.0,0.078,30.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 85,Nu/Nu_0,2.0,30000,Straight,10.0,0.078,90.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 86,Nu/Nu_0,0.95,30000,Straight,10.0,0.078,60.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 87,Nu/Nu_0,0.95,30000,Straight,10.0,0.078,45.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 88,Nu/Nu_0,1.0,30000,Straight,10.0,0.078,30.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 93,Nu/Nu_0,1.95,60000,Straight,10.0,0.078,90.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 94,Nu/Nu_0,1.25,60000,Straight,10.0,0.078,60.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 95,Nu/Nu_0,1.2,60000,Straight,10.0,0.078,45.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 96,Nu/Nu_0,1.05,60000,Straight,10.0,0.078,30.0,4.0,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 101,Nu/Nu_0,1.2,10000,Straight,10.0,0.078,90.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 102,Nu/Nu_0,1.45,10000,Straight,10.0,0.078,60.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 103,Nu/Nu_0,1.3,10000,Straight,10.0,0.078,45.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 104,Nu/Nu_0,1.25,10000,Straight,10.0,0.078,30.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 109,Nu/Nu_0,1.3,30000,Straight,10.0,0.078,90.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 110,Nu/Nu_0,1.35,30000,Straight,10.0,0.078,60.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 111,Nu/Nu_0,1.35,30000,Straight,10.0,0.078,45.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 112,Nu/Nu_0,1.3,30000,Straight,10.0,0.078,30.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 117,Nu/Nu_0,1.2,60000,Straight,10.0,0.078,90.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 118,Nu/Nu_0,1.35,60000,Straight,10.0,0.078,60.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 119,Nu/Nu_0,1.45,60000,Straight,10.0,0.078,45.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 120,Nu/Nu_0,1.3,60000,Straight,10.0,0.078,30.0,0.25,2,Smooth wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 1,Nu/Nu_0,2.4,10000,Straight,10.0,0.047,90.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 2,Nu/Nu_0,3.3,10000,Straight,10.0,0.047,60.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 3,Nu/Nu_0,3.0,10000,Straight,10.0,0.047,45.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 4,Nu/Nu_0,2.6,10000,Straight,10.0,0.047,30.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 9,Nu/Nu_0,2.2,30000,Straight,10.0,0.047,90.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 10,Nu/Nu_0,2.85,30000,Straight,10.0,0.047,60.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 11,Nu/Nu_0,2.7,30000,Straight,10.0,0.047,45.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 12,Nu/Nu_0,2.6,30000,Straight,10.0,0.047,30.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 17,Nu/Nu_0,2.2,60000,Straight,10.0,0.047,90.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 18,Nu/Nu_0,2.85,60000,Straight,10.0,0.047,60.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 19,Nu/Nu_0,2.65,60000,Straight,10.0,0.047,45.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 20,Nu/Nu_0,2.5,60000,Straight,10.0,0.047,30.0,1.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 25,Nu/Nu_0,3.2,10000,Straight,10.0,0.047,90.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 26,Nu/Nu_0,3.2,10000,Straight,10.0,0.047,60.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 27,Nu/Nu_0,2.85,10000,Straight,10.0,0.047,45.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 28,Nu/Nu_0,2.35,10000,Straight,10.0,0.047,30.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 33,Nu/Nu_0,2.6,30000,Straight,10.0,0.047,90.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 34,Nu/Nu_0,2.55,30000,Straight,10.0,0.047,60.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 35,Nu/Nu_0,2.3,30000,Straight,10.0,0.047,45.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 36,Nu/Nu_0,2.05,30000,Straight,10.0,0.047,30.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 41,Nu/Nu_0,2.1,60000,Straight,10.0,0.047,90.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 42,Nu/Nu_0,2.45,60000,Straight,10.0,0.047,60.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 43,Nu/Nu_0,2.2,60000,Straight,10.0,0.047,45.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 44,Nu/Nu_0,1.9,60000,Straight,10.0,0.047,30.0,2.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 49,Nu/Nu_0,2.3,10000,Straight,10.0,0.047,90.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 50,Nu/Nu_0,3.4,10000,Straight,10.0,0.047,60.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 51,Nu/Nu_0,3.4,10000,Straight,10.0,0.047,45.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 52,Nu/Nu_0,2.5,10000,Straight,10.0,0.047,30.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 57,Nu/Nu_0,2.15,30000,Straight,10.0,0.047,90.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 58,Nu/Nu_0,3.05,30000,Straight,10.0,0.047,60.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 59,Nu/Nu_0,2.95,30000,Straight,10.0,0.047,45.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 60,Nu/Nu_0,2.5,30000,Straight,10.0,0.047,30.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 65,Nu/Nu_0,2.0,60000,Straight,10.0,0.047,90.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 66,Nu/Nu_0,2.85,60000,Straight,10.0,0.047,60.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 67,Nu/Nu_0,2.8,60000,Straight,10.0,0.047,45.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 68,Nu/Nu_0,2.45,60000,Straight,10.0,0.047,30.0,0.5,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 73,Nu/Nu_0,2.85,10000,Straight,10.0,0.078,90.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 74,Nu/Nu_0,2.85,10000,Straight,10.0,0.078,60.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 75,Nu/Nu_0,2.8,10000,Straight,10.0,0.078,45.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 76,Nu/Nu_0,2.75,10000,Straight,10.0,0.078,30.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 81,Nu/Nu_0,2.65,30000,Straight,10.0,0.078,90.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 82,Nu/Nu_0,2.65,30000,Straight,10.0,0.078,60.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 83,Nu/Nu_0,2.35,30000,Straight,10.0,0.078,45.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 84,Nu/Nu_0,2.25,30000,Straight,10.0,0.078,30.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 89,Nu/Nu_0,2.45,60000,Straight,10.0,0.078,90.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 90,Nu/Nu_0,2.45,60000,Straight,10.0,0.078,60.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 91,Nu/Nu_0,2.15,60000,Straight,10.0,0.078,45.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 92,Nu/Nu_0,2.05,60000,Straight,10.0,0.078,30.0,4.0,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 97,Nu/Nu_0,1.95,10000,Straight,10.0,0.078,90.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 98,Nu/Nu_0,2.85,10000,Straight,10.0,0.078,60.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 99,Nu/Nu_0,2.8,10000,Straight,10.0,0.078,45.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 100,Nu/Nu_0,2.8,10000,Straight,10.0,0.078,30.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 105,Nu/Nu_0,2.0,30000,Straight,10.0,0.078,90.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 106,Nu/Nu_0,2.7,30000,Straight,10.0,0.078,60.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 107,Nu/Nu_0,2.95,30000,Straight,10.0,0.078,45.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 108,Nu/Nu_0,2.8,30000,Straight,10.0,0.078,30.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 113,Nu/Nu_0,1.9,60000,Straight,10.0,0.078,90.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 114,Nu/Nu_0,2.7,60000,Straight,10.0,0.078,60.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 115,Nu/Nu_0,2.95,60000,Straight,10.0,0.078,45.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 9,pt 116,Nu/Nu_0,2.8,60000,Straight,10.0,0.078,30.0,0.25,2,Ribbed wall
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 1,f/f_0,4.0,10000,Straight,10.0,0.047,90.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 2,f/f_0,4.5,10000,Straight,10.0,0.047,60.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 3,f/f_0,3.8,10000,Straight,10.0,0.047,45.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 4,f/f_0,2.6,10000,Straight,10.0,0.047,30.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 5,f/f_0,4.5,30000,Straight,10.0,0.047,90.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 6,f/f_0,6.0,30000,Straight,10.0,0.047,60.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 7,f/f_0,4.5,30000,Straight,10.0,0.047,45.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 8,f/f_0,2.8,30000,Straight,10.0,0.047,30.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 9,f/f_0,4.8,60000,Straight,10.0,0.047,90.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 10,f/f_0,7.0,60000,Straight,10.0,0.047,60.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 11,f/f_0,5.0,60000,Straight,10.0,0.047,45.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 12,f/f_0,2.9,60000,Straight,10.0,0.047,30.0,1.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 13,f/f_0,5.0,10000,Straight,10.0,0.047,90.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 14,f/f_0,5.5,10000,Straight,10.0,0.047,60.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 15,f/f_0,4.0,10000,Straight,10.0,0.047,45.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 16,f/f_0,3.0,10000,Straight,10.0,0.047,30.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 17,f/f_0,6.8,30000,Straight,10.0,0.047,90.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 18,f/f_0,7.4,30000,Straight,10.0,0.047,60.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 19,f/f_0,5.2,30000,Straight,10.0,0.047,45.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 20,f/f_0,3.5,30000,Straight,10.0,0.047,30.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 21,f/f_0,8.0,60000,Straight,10.0,0.047,90.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 22,f/f_0,8.8,60000,Straight,10.0,0.047,60.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 23,f/f_0,6.0,60000,Straight,10.0,0.047,45.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 24,f/f_0,3.8,60000,Straight,10.0,0.047,30.0,2.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 25,f/f_0,2.0,10000,Straight,10.0,0.047,90.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 26,f/f_0,3.2,10000,Straight,10.0,0.047,60.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 27,f/f_0,2.2,10000,Straight,10.0,0.047,45.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 28,f/f_0,2.1,10000,Straight,10.0,0.047,30.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 29,f/f_0,2.6,30000,Straight,10.0,0.047,90.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 30,f/f_0,3.8,30000,Straight,10.0,0.047,60.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 31,f/f_0,3.4,30000,Straight,10.0,0.047,45.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 32,f/f_0,2.8,30000,Straight,10.0,0.047,30.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 33,f/f_0,2.8,60000,Straight,10.0,0.047,90.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 34,f/f_0,4.2,60000,Straight,10.0,0.047,60.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 35,f/f_0,3.5,60000,Straight,10.0,0.047,45.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 36,f/f_0,3.0,60000,Straight,10.0,0.047,30.0,0.5,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 37,f/f_0,12.5,10000,Straight,10.0,0.078,90.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 38,f/f_0,11.2,10000,Straight,10.0,0.078,60.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 39,f/f_0,8.8,10000,Straight,10.0,0.078,45.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 40,f/f_0,5.8,10000,Straight,10.0,0.078,30.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 41,f/f_0,16.2,30000,Straight,10.0,0.078,90.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 42,f/f_0,14.8,30000,Straight,10.0,0.078,60.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 43,f/f_0,11.2,30000,Straight,10.0,0.078,45.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 44,f/f_0,6.1,30000,Straight,10.0,0.078,30.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 45,f/f_0,18.2,60000,Straight,10.0,0.078,90.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 46,f/f_0,17.0,60000,Straight,10.0,0.078,60.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 47,f/f_0,12.8,60000,Straight,10.0,0.078,45.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 48,f/f_0,6.3,60000,Straight,10.0,0.078,30.0,4.0,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 49,f/f_0,1.9,10000,Straight,10.0,0.078,90.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 50,f/f_0,2.8,10000,Straight,10.0,0.078,60.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 51,f/f_0,2.5,10000,Straight,10.0,0.078,45.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 52,f/f_0,2.5,10000,Straight,10.0,0.078,30.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 53,f/f_0,2.2,30000,Straight,10.0,0.078,90.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 54,f/f_0,3.4,30000,Straight,10.0,0.078,60.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 55,f/f_0,3.4,30000,Straight,10.0,0.078,45.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 56,f/f_0,3.2,30000,Straight,10.0,0.078,30.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 57,f/f_0,2.5,60000,Straight,10.0,0.078,90.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 58,f/f_0,3.6,60000,Straight,10.0,0.078,60.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 59,f/f_0,3.6,60000,Straight,10.0,0.078,45.0,0.25,2,
+Heat transfer performance comparisons of five different rectangular channels,Fig 10,pt 60,f/f_0,3.5,60000,Straight,10.0,0.078,30.0,0.25,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 16,Nu/Nu_0,0.9333884262536584,5000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 17,Nu/Nu_0,1.0191611524964108,7000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 18,Nu/Nu_0,1.027507510235397,10000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 19,Nu/Nu_0,0.8720631309474144,15000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 20,Nu/Nu_0,1.0006858974657713,20000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 21,Nu/Nu_0,0.99269743338689,25000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 22,Nu/Nu_0,0.9460854015299224,30000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 23,Nu/Nu_0,0.9136941941773732,40000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 24,Nu/Nu_0,1.017033161850348,50000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 25,Nu/Nu_0,0.8949843777610489,60000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 26,Nu/Nu_0,0.9230066129213624,70000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 27,Nu/Nu_0,0.8464185627595888,80000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 28,Nu/Nu_0,0.8319302514383956,90000,Square duct,10.0,0.021,90.0,1.0,0,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 24,Nu/Nu_0,1.1231571884654326,7000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 25,Nu/Nu_0,1.0716963587406323,9000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 26,Nu/Nu_0,1.0721817498108488,10000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 27,Nu/Nu_0,0.972999714465667,12000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 28,Nu/Nu_0,1.1627508412632193,15000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 29,Nu/Nu_0,1.1033203484879015,20000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 30,Nu/Nu_0,1.0731864144723136,25000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 31,Nu/Nu_0,1.0573895664157953,30000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 32,Nu/Nu_0,1.1094907220185617,50000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 33,Nu/Nu_0,1.0228392888697702,60000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 34,Nu/Nu_0,1.0878292223716055,70000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 35,Nu/Nu_0,1.0745765747745946,90000,Square duct,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 54,Nu/Nu_0,1.081558774077824,7000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 55,Nu/Nu_0,0.938159031084493,10000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 56,Nu/Nu_0,0.9205110826667152,15000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 57,Nu/Nu_0,0.8980514464436408,20000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 58,Nu/Nu_0,0.8904333190869855,30000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 59,Nu/Nu_0,0.8842201879135869,40000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 60,Nu/Nu_0,0.862937228236659,50000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 61,Nu/Nu_0,0.8570775691412652,70000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 62,Nu/Nu_0,0.8319302514383956,90000,Square duct,10.0,0.042,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 81,Nu/Nu_0,1.081558774077824,7000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 82,Nu/Nu_0,0.9158219112967668,10000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 83,Nu/Nu_0,0.8720631309474144,15000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 84,Nu/Nu_0,0.8467342209325757,20000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 85,Nu/Nu_0,0.834781236644049,30000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 86,Nu/Nu_0,0.8252721753860145,40000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 87,Nu/Nu_0,0.8012988547911833,50000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 88,Nu/Nu_0,0.7911485253611676,70000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 89,Nu/Nu_0,0.7972664909617959,90000,Square duct,10.0,0.021,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 19,Nu/Nu_0,0.9075486959089868,6000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 20,Nu/Nu_0,1.0721817498108488,10000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 21,Nu/Nu_0,1.090078913684268,15000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 22,Nu/Nu_0,1.077661735732369,20000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 23,Nu/Nu_0,1.0573895664157953,30000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 24,Nu/Nu_0,1.031590219232518,40000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 25,Nu/Nu_0,1.0478523485730855,50000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 26,Nu/Nu_0,1.0219001785915085,70000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 27,Nu/Nu_0,1.0399128142979943,90000,Square duct,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 46,Nu/Nu_0,0.8735667021397808,7000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 47,Nu/Nu_0,0.9158219112967668,10000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 48,Nu/Nu_0,0.968959034386016,15000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 49,Nu/Nu_0,1.0006858974657713,20000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 50,Nu/Nu_0,0.9739114427513904,30000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 51,Nu/Nu_0,0.9431682004411596,40000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 52,Nu/Nu_0,0.9553947884048724,50000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 53,Nu/Nu_0,0.9230066129213624,70000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 54,Nu/Nu_0,0.9359215328681952,90000,Square duct,40.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 15,Nu/Nu_0,2.2783862183480545,10000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 16,Nu/Nu_0,1.937918068772032,15000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 17,Nu/Nu_0,2.07834763319814,20000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 18,Nu/Nu_0,2.039054187497396,25000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 19,Nu/Nu_0,2.0034749679457176,30000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 20,Nu/Nu_0,1.910789576809745,50000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 21,Nu/Nu_0,1.8538962110764583,60000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 22,Nu/Nu_0,1.747119660172579,70000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 23,Nu/Nu_0,1.733188023829991,90000,Square duct,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 45,Nu/Nu_0,2.0799207193804303,7000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 46,Nu/Nu_0,1.7422953434426296,10000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 47,Nu/Nu_0,1.6472303584562271,15000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 48,Nu/Nu_0,1.5395167653319557,20000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 49,Nu/Nu_0,1.5304322671807564,30000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 50,Nu/Nu_0,1.4737003131893116,40000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 51,Nu/Nu_0,1.4793209626914152,50000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 52,Nu/Nu_0,1.3845099193820436,70000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 53,Nu/Nu_0,1.3865504190639928,90000,Square duct,10.0,0.042,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 72,Nu/Nu_0,1.5599405395353227,7000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 73,Nu/Nu_0,1.3402271872635612,10000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 74,Nu/Nu_0,1.332318672280772,15000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 75,Nu/Nu_0,1.28293063777663,20000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 76,Nu/Nu_0,1.2521718549660734,30000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 77,Nu/Nu_0,1.2084342568152355,40000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 78,Nu/Nu_0,1.2019482821867749,50000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 79,Nu/Nu_0,1.153758266151703,70000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 80,Nu/Nu_0,1.143904095727794,90000,Square duct,10.0,0.021,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 10,Nu/Nu_0,1.915936135807861,6000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 11,Nu/Nu_0,1.7869695830180816,10000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 12,Nu/Nu_0,1.81679818947378,15000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 13,Nu/Nu_0,1.6678098291096188,20000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 14,Nu/Nu_0,1.6139103908451613,30000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 15,Nu/Nu_0,1.4737003131893116,40000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 16,Nu/Nu_0,1.4485017759686776,50000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 17,Nu/Nu_0,1.3185808756019464,70000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 18,Nu/Nu_0,1.3172228981107932,90000,Square duct,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 37,Nu/Nu_0,1.5599405395353227,7000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 38,Nu/Nu_0,1.6082726247162735,10000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 39,Nu/Nu_0,1.574558430877276,15000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 40,Nu/Nu_0,1.4881995398208905,20000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 41,Nu/Nu_0,1.4191281022948832,30000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 42,Nu/Nu_0,1.3263302818703804,40000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 43,Nu/Nu_0,1.2944058423549885,50000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 44,Nu/Nu_0,1.1867227880417517,70000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 45,Nu/Nu_0,1.178567856204394,90000,Square duct,40.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 1,f/f_0,0.2055160650798649,7000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 2,f/f_0,0.2065068703203137,8000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 3,f/f_0,0.2250071945855907,9000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 4,f/f_0,0.2088607594936708,10000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 5,f/f_0,0.2381467422139932,15000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 6,f/f_0,0.2370887602695298,20000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 7,f/f_0,0.2387531828511903,25000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 8,f/f_0,0.2415578884533055,30000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 9,f/f_0,0.2423918176980168,35000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 10,f/f_0,0.2416694062283137,40000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 11,f/f_0,0.2413379362097539,50000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 12,f/f_0,0.2426871658974401,60000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 13,f/f_0,0.2419275265816327,70000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 14,f/f_0,0.2448179436814612,80000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 15,f/f_0,0.2411716314336411,90000,Square duct,10.0,0.021,90.0,1.0,0,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 1,f/f_0,0.974807303410404,6000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 2,f/f_0,1.0325343516015686,8000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 3,f/f_0,1.0759493670886076,10000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 4,f/f_0,1.1095657332163145,12000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 5,f/f_0,1.1557121313326144,15000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 6,f/f_0,1.241893506173728,20000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 7,f/f_0,1.333038604252479,25000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 8,f/f_0,1.3327331776734102,30000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 9,f/f_0,1.4097382029984966,40000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 10,f/f_0,1.5142772468062993,50000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 11,f/f_0,1.560131780769258,60000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 12,f/f_0,1.595692196602258,70000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 13,f/f_0,1.6764707012969626,80000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 14,f/f_0,1.6991637669188355,90000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 36,f/f_0,0.8394318151149411,7000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 37,f/f_0,0.8227848101265821,10000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 38,f/f_0,0.8580287035651228,15000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 39,f/f_0,0.9031952772172568,20000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 40,f/f_0,0.9995498832550576,30000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 41,f/f_0,1.0517094530306246,40000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 42,f/f_0,1.0883867711420276,50000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 43,f/f_0,1.1839006619952237,70000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 44,f/f_0,1.233264024376574,90000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 63,f/f_0,0.5210266438644462,7000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 64,f/f_0,0.5379746835443038,10000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 65,f/f_0,0.5778560656663072,15000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 66,f/f_0,0.5833136165361449,20000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 67,f/f_0,0.624718677034411,30000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 68,f/f_0,0.6713039061897603,40000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 69,f/f_0,0.6861568774591044,50000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 70,f/f_0,0.7463721564752498,70000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 71,f/f_0,0.7673642818343128,90000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 1,f/f_0,0.7182847663315259,8000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 2,f/f_0,0.7278481012658227,10000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 3,f/f_0,0.7879855440904189,15000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 4,f/f_0,0.8279290041158185,20000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 5,f/f_0,0.9579019714527636,30000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 6,f/f_0,1.0517094530306246,40000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 7,f/f_0,1.1357079351047243,50000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 8,f/f_0,1.235374603821103,70000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 9,f/f_0,1.315481626001679,90000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 28,f/f_0,0.4456261958447561,6000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 29,f/f_0,0.4746835443037974,10000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 30,f/f_0,0.5078129061916034,15000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 31,f/f_0,0.5268639117100664,20000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 32,f/f_0,0.583070765232117,30000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 33,f/f_0,0.6265503124437763,40000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 34,f/f_0,0.6624962954777559,50000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 35,f/f_0,0.7206351855623102,70000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 36,f/f_0,0.7673642818343128,90000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 1,f/f_0,1.0026589406507012,6000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 2,f/f_0,1.0474986175668088,8000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 3,f/f_0,1.0759493670886076,10000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 4,f/f_0,1.1557121313326144,15000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 5,f/f_0,1.2042603696230088,20000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 6,f/f_0,1.3327331776734102,30000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 7,f/f_0,1.5142772468062993,50000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 8,f/f_0,1.595692196602258,70000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 9,f/f_0,1.6991637669188355,90000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 10,f/f_0,0.8394318151149411,7000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 11,f/f_0,0.8227848101265821,10000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 12,f/f_0,0.8755394934337989,15000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 13,f/f_0,0.9031952772172568,20000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 14,f/f_0,1.0740862499036166,40000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 15,f/f_0,1.1839006619952237,70000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 16,f/f_0,1.2606698915849424,90000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 17,f/f_0,0.5013294703253506,6000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 18,f/f_0,0.5379746835443038,10000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 19,f/f_0,0.5603452757976313,15000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 20,f/f_0,0.6021301848115044,20000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 21,f/f_0,0.6713039061897603,40000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 22,f/f_0,0.7721091273881894,70000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 23,f/f_0,0.7673642818343128,90000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 24,f/f_0,0.7182847663315259,8000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 25,f/f_0,0.8054963339590949,15000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 26,f/f_0,0.9995498832550576,30000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 27,f/f_0,1.1357079351047243,50000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 28,f/f_0,1.315481626001679,90000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 29,f/f_0,0.4177745586044589,6000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 30,f/f_0,0.4430379746835443,10000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 31,f/f_0,0.5268639117100664,20000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 32,f/f_0,0.6624962954777559,50000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 33,f/f_0,0.7673642818343128,90000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 1,f/f_0,3.5802874996787217,2500,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 2,f/f_0,3.9814581254331807,3000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 3,f/f_0,4.470588536791901,5000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 4,f/f_0,4.776077568757424,7000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 5,f/f_0,5.221518987341772,10000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 6,f/f_0,5.603452757976313,15000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 7,f/f_0,6.20946753086864,20000,Rectangular duct,10.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 8,f/f_0,2.107830772288154,3000,Rectangular duct,20.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 9,f/f_0,2.7209169179587747,7000,Rectangular duct,20.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 10,f/f_0,3.0063291139240502,10000,Rectangular duct,20.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 11,f/f_0,3.2989334391121585,18000,Rectangular duct,20.0,0.102,90.0,11.6,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 12,f/f_0,1.2881188052872057,3000,Rectangular duct,15.0,0.056,90.0,18.4,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 13,f/f_0,1.4596741224205363,4000,Rectangular duct,15.0,0.056,90.0,18.4,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 14,f/f_0,1.8258702931750053,7500,Rectangular duct,15.0,0.056,90.0,18.4,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 15,f/f_0,1.8987341772151896,10000,Rectangular duct,15.0,0.056,90.0,18.4,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 16,f/f_0,2.2579881930431416,20000,Rectangular duct,15.0,0.056,90.0,18.4,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 1,Nu/Nu_0,1.6021620260325955,8000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 2,Nu/Nu_0,1.574558430877276,15000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 3,Nu/Nu_0,1.5304322671807564,30000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 4,Nu/Nu_0,1.4793209626914152,50000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 5,Nu/Nu_0,1.4834034850521896,70000,Square duct,10.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 6,Nu/Nu_0,1.5189241455653697,10000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 7,Nu/Nu_0,1.4112237015542928,20000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 8,Nu/Nu_0,1.391302061073415,30000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 9,Nu/Nu_0,1.2944058423549885,50000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 10,Nu/Nu_0,1.3185808756019464,70000,Square duct,10.0,0.042,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 11,Nu/Nu_0,1.3402271872635612,10000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 12,Nu/Nu_0,1.2572720250210971,20000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 13,Nu/Nu_0,1.2521718549660734,30000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 14,Nu/Nu_0,1.2019482821867749,50000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 15,Nu/Nu_0,1.153758266151703,70000,Square duct,10.0,0.021,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 16,Nu/Nu_0,1.4519127862021914,10000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 17,Nu/Nu_0,1.4112237015542928,20000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 18,Nu/Nu_0,1.2944058423549885,50000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 19,Nu/Nu_0,1.2856163537118976,70000,Square duct,20.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 20,Nu/Nu_0,1.2955529476881091,10000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 21,Nu/Nu_0,1.2316134122655644,20000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 22,Nu/Nu_0,1.1711290954640372,50000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 23,Nu/Nu_0,1.153758266151703,70000,Square duct,40.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 19,Nu/Nu_0,1.2308954665432268,6000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 20,Nu/Nu_0,1.069664891243218,10000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 21,Nu/Nu_0,0.9936436696261568,16000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 22,Nu/Nu_0,1.0480278449442892,20000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 23,Nu/Nu_0,0.9536624456183972,30000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 24,Nu/Nu_0,0.9859262658660888,40000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 25,Nu/Nu_0,1.038942467284898,45000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 26,Nu/Nu_0,0.9379028103632722,60000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 27,Nu/Nu_0,0.8954145785023279,70000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 28,Nu/Nu_0,0.8344971745517072,80000,,10.0,0.063,15.0,1.0,0,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 6,Nu/Nu_0,1.1282831169243634,8000,Straight,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 7,Nu/Nu_0,1.1880522136834484,16000,Straight,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 8,Nu/Nu_0,1.3063869118060234,30000,Straight,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 9,Nu/Nu_0,1.3890337677853666,50000,Straight,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 10,Nu/Nu_0,1.1921388207881534,80000,Straight,10.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 16,Nu/Nu_0,1.42915861477086,8000,Straight,10.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 17,Nu/Nu_0,1.4040617070804389,16000,Straight,10.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 18,Nu/Nu_0,1.502344948576927,30000,Straight,10.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 19,Nu/Nu_0,1.475848378271952,50000,Straight,10.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 20,Nu/Nu_0,1.3113527028669687,80000,Straight,10.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 26,Nu/Nu_0,1.5043774892324844,8000,Straight,10.0,0.063,60.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 27,Nu/Nu_0,1.6200712004774294,16000,Straight,10.0,0.063,60.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 28,Nu/Nu_0,1.6983029853478304,30000,Straight,10.0,0.063,60.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 29,Nu/Nu_0,1.7362922097317082,50000,Straight,10.0,0.063,60.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 30,Nu/Nu_0,1.4901735259851916,80000,Straight,10.0,0.063,60.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 36,Nu/Nu_0,1.5795963636941086,8000,Straight,10.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 37,Nu/Nu_0,1.6848740484965266,16000,Straight,10.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 38,Nu/Nu_0,1.7636223309381316,30000,Straight,10.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 39,Nu/Nu_0,1.779699514975001,50000,Straight,10.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 40,Nu/Nu_0,1.5497804670245992,80000,Straight,10.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 46,Nu/Nu_0,1.692424675386545,8000,Straight,10.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 47,Nu/Nu_0,1.7280759471759248,16000,Straight,10.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 48,Nu/Nu_0,1.567664294167228,30000,Straight,10.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 49,Nu/Nu_0,1.475848378271952,50000,Straight,10.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 50,Nu/Nu_0,1.4305665849457838,80000,Straight,10.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 6,Nu/Nu_0,1.1282831169243634,8000,Straight,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 7,Nu/Nu_0,1.080047466984953,16000,Straight,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 8,Nu/Nu_0,1.2410675662157222,30000,Straight,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 9,Nu/Nu_0,1.171997241568903,50000,Straight,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 10,Nu/Nu_0,0.9537110566305226,80000,Straight,20.0,0.063,90.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 16,Nu/Nu_0,1.0530642424627392,8000,Straight,20.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 17,Nu/Nu_0,1.1880522136834484,16000,Straight,20.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 18,Nu/Nu_0,1.3063869118060234,30000,Straight,20.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 19,Nu/Nu_0,1.2588118520554883,50000,Straight,20.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 20,Nu/Nu_0,1.1921388207881534,80000,Straight,20.0,0.063,75.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 26,Nu/Nu_0,1.1658925541551757,8000,Straight,20.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 27,Nu/Nu_0,1.2528550617025451,16000,Straight,20.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 28,Nu/Nu_0,1.3717062573963246,30000,Straight,20.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 29,Nu/Nu_0,1.345626462542074,50000,Straight,20.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 30,Nu/Nu_0,1.251745761827561,80000,Straight,20.0,0.063,45.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 36,Nu/Nu_0,1.692424675386545,8000,Straight,20.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 37,Nu/Nu_0,1.512066453778934,16000,Straight,20.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 38,Nu/Nu_0,1.4370256029866255,30000,Straight,20.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 39,Nu/Nu_0,1.2588118520554883,50000,Straight,20.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 40,Nu/Nu_0,1.1921388207881534,80000,Straight,20.0,0.063,30.0,1.0,2,Smooth wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 1,Nu/Nu_0,2.256566233848727,8000,Straight,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 2,Nu/Nu_0,2.3761044273668968,16000,Straight,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 3,Nu/Nu_0,2.22085775007024,30000,Straight,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 4,Nu/Nu_0,1.9967360411914643,50000,Straight,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 5,Nu/Nu_0,1.7882082311822298,80000,Straight,10.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 11,Nu/Nu_0,2.632660606156848,8000,Straight,10.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 12,Nu/Nu_0,2.7001186674623825,16000,Straight,10.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 13,Nu/Nu_0,2.612773823612047,30000,Straight,10.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 14,Nu/Nu_0,2.430809093624392,50000,Straight,10.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 15,Nu/Nu_0,2.0862429363792683,80000,Straight,10.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 21,Nu/Nu_0,3.0087549784649688,8000,Straight,10.0,0.063,60.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 22,Nu/Nu_0,3.024132907557868,16000,Straight,10.0,0.063,60.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 23,Nu/Nu_0,3.2659672795150585,30000,Straight,10.0,0.063,60.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 24,Nu/Nu_0,2.778067535570733,50000,Straight,10.0,0.063,60.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 25,Nu/Nu_0,2.3842776415763067,80000,Straight,10.0,0.063,60.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 31,Nu/Nu_0,3.0087549784649688,8000,Straight,10.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 32,Nu/Nu_0,3.1321376542563635,16000,Straight,10.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 33,Nu/Nu_0,3.33128662510536,30000,Straight,10.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 34,Nu/Nu_0,2.951696756543904,50000,Straight,10.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 35,Nu/Nu_0,2.503491523655122,80000,Straight,10.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 41,Nu/Nu_0,3.196802164619029,8000,Straight,10.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 42,Nu/Nu_0,2.916128160859373,16000,Straight,10.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 43,Nu/Nu_0,2.743412514792649,30000,Straight,10.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 44,Nu/Nu_0,2.300587177894513,50000,Straight,10.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 45,Nu/Nu_0,1.9074221132610447,80000,Straight,10.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 1,Nu/Nu_0,1.8804718615406053,8000,Straight,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 2,Nu/Nu_0,1.9440854405729155,16000,Straight,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 3,Nu/Nu_0,1.894261022118734,30000,Straight,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 4,Nu/Nu_0,1.7362922097317082,50000,Straight,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 5,Nu/Nu_0,1.4901735259851916,80000,Straight,20.0,0.063,90.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 11,Nu/Nu_0,1.9556907360022295,8000,Straight,20.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 12,Nu/Nu_0,2.0520901872714106,16000,Straight,20.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 13,Nu/Nu_0,2.090219058889637,30000,Straight,20.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 14,Nu/Nu_0,1.9967360411914643,50000,Straight,20.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 15,Nu/Nu_0,1.9074221132610447,80000,Straight,20.0,0.063,75.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 21,Nu/Nu_0,2.444613420002787,8000,Straight,20.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 22,Nu/Nu_0,2.484109174065392,16000,Straight,20.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 23,Nu/Nu_0,2.4168157868411435,30000,Straight,20.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 24,Nu/Nu_0,2.257179872651221,50000,Straight,20.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 25,Nu/Nu_0,1.9074221132610447,80000,Straight,20.0,0.063,45.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 31,Nu/Nu_0,2.632660606156848,8000,Straight,20.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 32,Nu/Nu_0,2.3761044273668968,16000,Straight,20.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 33,Nu/Nu_0,2.155538404479939,30000,Straight,20.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 34,Nu/Nu_0,1.953328735948172,50000,Straight,20.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 35,Nu/Nu_0,1.6689943491034145,80000,Straight,20.0,0.063,30.0,1.0,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 1,f/f_0,0.1977466244061105,6000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 2,f/f_0,0.1960606089899289,6500,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 3,f/f_0,0.2170944349435192,7000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 4,f/f_0,0.2203788951194375,11000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 5,f/f_0,0.2237475471073513,14000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 6,f/f_0,0.2416489001877284,15000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 7,f/f_0,0.2333254466144579,20000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 8,f/f_0,0.2415578884533055,30000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 9,f/f_0,0.2423918176980168,35000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 10,f/f_0,0.2416694062283137,40000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 11,f/f_0,0.2488913513183114,45000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 12,f/f_0,0.2366058198134842,50000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 13,f/f_0,0.2326188086285153,55000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 14,f/f_0,0.2426871658974401,60000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 15,f/f_0,0.2419275265816327,70000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 16,f/f_0,0.2356626445951096,75000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 17,f/f_0,0.2448179436814612,80000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 18,f/f_0,0.2411716314336411,90000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 1,f/f_0,1.1075949367088609,10000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 2,f/f_0,1.1907337110699665,15000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 3,f/f_0,1.241893506173728,20000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 4,f/f_0,1.3327331776734102,30000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 5,f/f_0,1.3873614061255046,40000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 6,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 7,f/f_0,1.5353677842491111,60000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 8,f/f_0,1.595692196602258,70000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 9,f/f_0,1.64986005524463,80000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 10,f/f_0,1.6991637669188355,90000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 11,f/f_0,1.4242187023373587,12000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 12,f/f_0,1.7311242813330752,20000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 13,f/f_0,1.874156031103233,30000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 14,f/f_0,1.9691581248232968,40000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 15,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 16,f/f_0,2.2287596868132256,60000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 17,f/f_0,2.3678013239904474,70000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 18,f/f_0,2.3949581447099466,80000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 19,f/f_0,2.5213397831698847,90000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 20,f/f_0,1.5630799315933386,7000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 21,f/f_0,1.6219594517049734,13000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 22,f/f_0,1.768757417883794,20000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 23,f/f_0,1.9158039429055271,30000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 24,f/f_0,2.058665312315265,40000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 25,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 26,f/f_0,2.2287596868132256,60000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 27,f/f_0,2.316327382164568,70000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 28,f/f_0,2.3949581447099466,80000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 29,f/f_0,1.077427149497289,8000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 30,f/f_0,1.1703717848692223,14000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 31,f/f_0,1.2042603696230088,20000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 32,f/f_0,1.249437354068822,30000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 33,f/f_0,1.3426078123795206,40000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 34,f/f_0,1.4196349188809054,50000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 35,f/f_0,1.5353677842491111,60000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 36,f/f_0,1.5442182547763788,70000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 37,f/f_0,1.5966387631399643,80000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 38,f/f_0,0.8679274259839272,8000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 39,f/f_0,0.8280341292659064,12000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 40,f/f_0,0.8279290041158185,20000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 41,f/f_0,0.8329582360458814,30000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 42,f/f_0,0.8055646874277124,40000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 43,f/f_0,0.8044597873658466,50000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 44,f/f_0,0.7924478886447025,60000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 45,f/f_0,0.8235830692140688,70000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 46,f/f_0,0.8515406736746477,80000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 47,f/f_0,0.8221760162510494,90000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 48,f/f_0,0.607864417841854,7000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 49,f/f_0,0.60126582278481,10000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 50,f/f_0,0.5253236960602793,15000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 51,f/f_0,0.5268639117100664,20000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 52,f/f_0,0.5414228534298229,30000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 53,f/f_0,0.5370431249518083,40000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 54,f/f_0,0.5205328035896654,50000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 55,f/f_0,0.5448079234432329,60000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 56,f/f_0,0.5662133600846723,70000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 57,f/f_0,0.5322129210466549,80000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 58,f/f_0,0.5481173441673663,90000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 1,f/f_0,0.7182847663315259,8000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 2,f/f_0,0.7917220897644739,14000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 3,f/f_0,0.9995498832550576,30000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 4,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 5,f/f_0,1.224089718407306,80000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 6,f/f_0,0.9841614384106208,7000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 7,f/f_0,1.0267623202897238,12000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 8,f/f_0,1.1666272330722898,20000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 9,f/f_0,1.3873614061255046,40000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 10,f/f_0,1.7030813473492954,80000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 11,f/f_0,0.7236481164783976,7000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 12,f/f_0,0.826144789319451,14000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 13,f/f_0,0.9995498832550576,30000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 14,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 15,f/f_0,1.224089718407306,80000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 16,f/f_0,0.6657562671601257,7000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 17,f/f_0,0.6303884352723351,15000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 18,f/f_0,0.624718677034411,30000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 19,f/f_0,0.6624962954777559,50000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 20,f/f_0,0.6918767973606512,80000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 21,f/f_0,0.4631347945461744,7000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 22,f/f_0,0.4552805365855754,15000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 23,f/f_0,0.4164791180229407,30000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 24,f/f_0,0.4258904756642716,50000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 25,f/f_0,0.4257703368373238,80000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 1,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 2,f/f_0,2.1767735422840557,50000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 3,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 4,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 5,f/f_0,0.8044597873658466,50000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 6,f/f_0,0.5205328035896654,50000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 7,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 8,f/f_0,1.5142772468062993,50000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 9,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 10,f/f_0,0.6624962954777559,50000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 11,f/f_0,0.4258904756642716,50000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 12,f/f_0,0.2366058198134842,50000,,10.0,0.063,15.0,1.0,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 13,Nu/Nu_0,1.7875128299187937,50000,Straight,10.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 14,Nu/Nu_0,2.218981444037123,50000,Straight,10.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 15,Nu/Nu_0,2.12652388386891,50000,Straight,10.0,0.063,60.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 16,Nu/Nu_0,2.034066323700696,50000,Straight,10.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 17,Nu/Nu_0,1.69505526975058,50000,Straight,10.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 18,Nu/Nu_0,0.9553947884048724,50000,Straight,10.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 19,Nu/Nu_0,1.6334168963051043,50000,Straight,20.0,0.063,90.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 20,Nu/Nu_0,1.7875128299187937,50000,Straight,20.0,0.063,75.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 21,Nu/Nu_0,1.6334168963051043,50000,Straight,20.0,0.063,45.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 22,Nu/Nu_0,1.4793209626914152,50000,Straight,20.0,0.063,30.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 23,Nu/Nu_0,0.9245756016821346,50000,Straight,20.0,0.063,15.0,1.0,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 24,Nu/Nu_0,0.862937228236659,50000,,10.0,0.063,15.0,1.0,0,

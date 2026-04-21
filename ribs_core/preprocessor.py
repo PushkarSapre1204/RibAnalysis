@@ -137,18 +137,6 @@ class MetaAnalysisPreprocessor:
             error_message is '' if no errors
         """
         try:
-            # Helper to extract single value from list or return as-is
-            def extract_value(val):
-                if isinstance(val, list):
-                    return val[0] if val else ''
-                return val
-            
-            # Extract baseline method and Prandtl number from manifest
-            data_reduction = manifest.get('Data Reduction & Normalization', {})
-            baseline_method = extract_value(
-                data_reduction.get('Smooth Baseline (Heat Transfer)', '')
-            )
-            
             # Try to get Prandtl from manifest
             pr_value = None
             boundary = manifest.get('Boundary & Flow Conditions', {})
@@ -162,10 +150,10 @@ class MetaAnalysisPreprocessor:
             # Store Prandtl in dataframe for tracking
             df['Prandtl'] = pr_value
             
-            # Process baseline for each row
-            df, baseline_log = self.baseline_engine.process_paper(
+            # Process baseline for each row using manifest
+            df, baseline_log, status = self.baseline_engine.process_paper(
                 df,
-                baseline_method,
+                manifest,
                 pr_value
             )
             

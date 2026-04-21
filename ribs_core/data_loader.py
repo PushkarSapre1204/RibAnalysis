@@ -59,15 +59,21 @@ COLORS = sns.color_palette("husl", 12)
 
 def load_research_data(file_path: str) -> pd.DataFrame:
     """
-    Load Excel file and preprocess data.
+    Load research data file (CSV or Excel) and preprocess data.
     
     Args:
-        file_path: Path to the Excel file
+        file_path: Path to the data file (CSV or Excel)
         
     Returns:
         DataFrame with cleaned data
     """
-    df = pd.read_excel(file_path)
+    # Determine file type and load accordingly
+    if file_path.lower().endswith('.csv'):
+        df = pd.read_csv(file_path)
+    elif file_path.lower().endswith(('.xlsx', '.xls')):
+        df = pd.read_excel(file_path)
+    else:
+        raise ValueError(f"Unsupported file format: {file_path}. Expected CSV or Excel.")
     
     # Convert 'N/A' strings to NaN for easier handling
     df = df.replace('N/A', np.nan)
