@@ -801,24 +801,31 @@ class BinningConfigPanel(ttk.Frame):
 
 
 class PlotDisplayPanel(ttk.Frame):
-    """Panel for displaying plots and save/clear buttons."""
+    """Panel for displaying plots with binning controls and save/clear buttons."""
     
-    def __init__(self, parent):
+    def __init__(self, parent, on_bins_set=None):
         """
         Initialize plot display panel.
         
         Args:
             parent: Parent widget
+            on_bins_set: Callback when bins are set
         """
         super().__init__(parent)
         self.current_fig = None
         self.canvas = None
+        self.binning_panel = None
+        self.on_bins_set = on_bins_set
         
         self._create_widgets()
     
     def _create_widgets(self):
         """Create GUI widgets for plot display."""
-        # Canvas frame
+        # ====== BINNING CONFIGURATION (TOP) ======
+        self.binning_panel = BinningConfigPanel(self, on_bins_set=self.on_bins_set)
+        self.binning_panel.pack(fill=tk.X, padx=0, pady=(0, 10))
+        
+        # ====== CANVAS FRAME (MAIN PLOT AREA) ======
         self.canvas_frame = ttk.Frame(self)
         self.canvas_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
     
@@ -841,6 +848,22 @@ class PlotDisplayPanel(ttk.Frame):
             self.canvas.get_tk_widget().destroy()
             self.canvas = None
         self.current_fig = None
+    
+    def set_binning_dataframe(self, df):
+        """Set dataframe for binning panel."""
+        if self.binning_panel:
+            self.binning_panel.set_dataframe(df)
+    
+    def set_binning_parameters(self, parameters):
+        """Set available parameters for binning panel."""
+        if self.binning_panel:
+            self.binning_panel.set_available_parameters(parameters)
+    
+    def get_bins_config(self):
+        """Get current bins configuration from binning panel."""
+        if self.binning_panel:
+            return self.binning_panel.get_bins_config()
+        return None
     
     def _on_generate_click(self):
         """Handle generate plot button click."""
@@ -981,13 +1004,6 @@ class VisualisierApp(tk.Tk):
                        value="surface", state=tk.DISABLED)
         self.mode_surface_button.pack(side=tk.LEFT, padx=5)
         
-        ttk.Separator(row2, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
-        
-        self.binning_enabled_var = tk.BooleanVar(value=False)
-        ttk.Checkbutton(row2, text="Enable Binning", 
-                       variable=self.binning_enabled_var,
-                       command=self._on_binning_toggle).pack(side=tk.LEFT, padx=5)
-        
         # ====== Row 3: Axes Configuration ======
         row3 = ttk.Frame(left_side)
         row3.pack(fill=tk.X, pady=5)
@@ -1032,12 +1048,8 @@ class VisualisierApp(tk.Tk):
         self.selected_papers_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.selected_papers_listbox.yview)
         
-        # ====== BINNING CONFIGURATION PANEL ======
-        self.binning_panel = BinningConfigPanel(main_frame, on_bins_set=self._on_bins_set)
-        self.binning_panel.pack(fill=tk.X, padx=0, pady=(10, 10))
-        
-        # ====== PLOT DISPLAY AREA (BOTTOM, FULL WIDTH) ======
-        self.plot_display = PlotDisplayPanel(main_frame)
+        # ====== PLOT DISPLAY AREA WITH BINNING (BOTTOM, FULL WIDTH) ======
+        self.plot_display = PlotDisplayPanel(main_frame, on_bins_set=self._on_bins_set)
         self.plot_display.pack(fill=tk.BOTH, expand=True)
     
     def _add_paper(self):
@@ -1196,8 +1208,8 @@ class VisualisierApp(tk.Tk):
             self.z_axis_dropdown['values'] = axis_display_list
             
             # Set up binning panel with available parameters
-            self.binning_panel.set_dataframe(self.df)
-            self.binning_panel.set_available_parameters(input_vars)
+            self.plot_display.set_binning_dataframe(self.df)
+            self.plot_display.set_binning_parameters(input_vars)
             
             # Set defaults
             if len(input_vars) > 0:
@@ -1299,7 +1311,7 @@ class VisualisierApp(tk.Tk):
                 return
             
             # Prepare binning configuration from panel
-            bins_config = self.binning_panel.get_bins_config()
+            bins_config = self.plot_display.get_bins_config()
             
             # Generate plot
             if plot_type == '2d':
