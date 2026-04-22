@@ -271,7 +271,6 @@ class MultiPaperSelector(ttk.Frame):
     
     def _on_paper_selected(self, event):
         """Handle paper selection from dropdown."""
-        # Paper is selected from dropdown, user can add it with the Add button
         pass
     
     def _add_paper(self):
@@ -459,51 +458,95 @@ class BinningPanel(ttk.Frame):
             on_binning_change: Callback when binning config changes
         """
         super().__init__(parent)
-        self.on_binning_change = on_binning_change
-        self.available_columns = []
+        self.on_bins_set = on_bins_set
+        self.df = None
+        self.current_bins = None  # Stores validated bins
+        self.bin_frames = []  # Store bin input frames for manual mode
+        self.bins_container = None  # Container for bin input rows
+        self.selected_papers = []  # Track which papers are currently selected
         
         self._create_widgets()
     
     def _create_widgets(self):
         """Create GUI widgets for binning configuration."""
-        # Title
-        title = ttk.Label(self, text="Binning Configuration", font=("Arial", 10, "bold"))
-        title.pack(pady=5)
+        # Main horizontal frame
+        main_frame = ttk.Frame(self)
+        main_frame.pack(fill=tk.X, padx=0, pady=0)
         
         # Enable binning checkbox
         self.binning_enabled_var = tk.BooleanVar(value=False)
-        ttk.Checkbutton(self, text="Enable Binning", 
+        ttk.Checkbutton(main_frame, text="Enable Binning", 
                        variable=self.binning_enabled_var,
-                       command=self._on_binning_toggle).pack(anchor=tk.W, padx=5, pady=5)
+                       command=self._on_binning_toggle).pack(side=tk.LEFT, padx=5, pady=2)
         
-        # Binning options frame
-        self.frame_options = ttk.LabelFrame(self, text="Binning Options", padding=5)
-        self.frame_options.pack(fill=tk.X, padx=5, pady=5)
+        # Separator
+        ttk.Separator(main_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=5)
         
-        # Binning parameter
-        ttk.Label(self.frame_options, text="Bin by Parameter:").pack(anchor=tk.W, pady=3)
+        # Parameter selection (horizontal)
+        ttk.Label(main_frame, text="Parameter:").pack(side=tk.LEFT, padx=2)
         self.bin_param_var = tk.StringVar()
-        self.bin_param_dropdown = ttk.Combobox(self.frame_options, 
+        self.bin_param_dropdown = ttk.Combobox(main_frame, 
                                                textvariable=self.bin_param_var,
-                                               state="disabled", width=25)
-        self.bin_param_dropdown.pack(fill=tk.X, padx=5, pady=3)
+                                               state="disabled", width=15)
+        self.bin_param_dropdown.pack(side=tk.LEFT, padx=2)
+        self.bin_param_dropdown.bind("<<ComboboxSelected>>", self._on_param_selected)
         
-        # Binning method
-        ttk.Label(self.frame_options, text="Method:").pack(anchor=tk.W, pady=(10, 3))
-        self.binning_method_var = tk.StringVar(value="quantile")
-        self.method_quantile_btn = ttk.Radiobutton(self.frame_options, text="Quantile", 
-                       variable=self.binning_method_var, value="quantile", state=tk.DISABLED)
-        self.method_quantile_btn.pack(anchor=tk.W, padx=20)
-        self.method_manual_btn = ttk.Radiobutton(self.frame_options, text="Manual", 
-                       variable=self.binning_method_var, value="manual", state=tk.DISABLED)
-        self.method_manual_btn.pack(anchor=tk.W, padx=20)
+        # Separator
+        ttk.Separator(main_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=5)
         
-        # Number of bins
-        ttk.Label(self.frame_options, text="Number of Bins:").pack(anchor=tk.W, pady=(10, 3))
-        self.n_bins_var = tk.StringVar(value="4")
-        self.n_bins_spinbox = ttk.Spinbox(self.frame_options, from_=2, to=10, textvariable=self.n_bins_var, 
-                   width=10, state=tk.DISABLED)
-        self.n_bins_spinbox.pack(anchor=tk.W, padx=20, pady=3)
+        # Binning mode selection (horizontal)
+        ttk.Label(main_frame, text="Mode:").pack(side=tk.LEFT, padx=2)
+        self.binning_mode_var = tk.StringVar(value="automatic")
+        ttk.Radiobutton(main_frame, text="Auto", 
+                       variable=self.binning_mode_var, value="automatic", 
+                       state=tk.DISABLED, command=self._on_mode_changed).pack(side=tk.LEFT, padx=2)
+        ttk.Radiobutton(main_frame, text="Manual", 
+                       variable=self.binning_mode_var, value="manual", 
+                       state=tk.DISABLED, command=self._on_mode_changed).pack(side=tk.LEFT, padx=2)
+        
+        # Separator
+        ttk.Separator(main_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=5)
+        
+        # Set Bins button
+        ttk.Button(main_frame, text="Set Bins", command=self._on_set_bins).pack(side=tk.LEFT, padx=2)
+        
+        # Separator
+        ttk.Separator(main_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=5)
+        
+        # Validation message
+        self.validation_label = ttk.Label(main_frame, text="", foreground="green")
+        self.validation_label.pack(side=tk.LEFT, padx=2)
+        
+        # Container for mode-specific widgets (initially hidden, shown below main frame if needed)
+        self.mode_frame = ttk.Frame(self)
+        self.mode_frame.pack(fill=tk.X, padx=0, pady=0)
+        
+        # Automatic mode info frame
+        self.auto_frame = ttk.Frame(self.mode_frame)
+        
+        # Manual mode frame (initially hidden)
+        self.manual_frame = ttk.Frame(self.mode_frame)
+        self.manual_canvas = tk.Canvas(self.manual_frame, bg='white', highlightthickness=0, height=80)
+        self.manual_scrollbar = ttk.Scrollbar(self.manual_frame, orient='vertical', command=self.manual_canvas.yview)
+        self.manual_scrollable_frame = ttk.Frame(self.manual_canvas)
+        
+        # Bind canvas resize to update scrollable frame width
+        def _on_canvas_configure(event):
+            # Update scroll region and make frame fill canvas width
+            self.manual_canvas.configure(scrollregion=self.manual_canvas.bbox("all"))
+            # Make scrollable_frame take full canvas width
+            canvas_width = self.manual_canvas.winfo_width()
+            if canvas_width > 1:
+                self.manual_canvas.itemconfig(self.canvas_window, width=canvas_width)
+        
+        self.manual_scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.manual_canvas.configure(scrollregion=self.manual_canvas.bbox("all"))
+        )
+        
+        self.canvas_window = self.manual_canvas.create_window((0, 0), window=self.manual_scrollable_frame, anchor="nw")
+        self.manual_canvas.bind("<Configure>", _on_canvas_configure)
+        self.manual_canvas.configure(yscrollcommand=self.manual_scrollbar.set)
     
     def _on_binning_toggle(self):
         """Handle binning enable/disable toggle."""
@@ -516,19 +559,228 @@ class BinningPanel(ttk.Frame):
         self.method_manual_btn.config(state=new_state)
         self.n_bins_spinbox.config(state=new_state)
         
-        if self.on_binning_change:
-            self.on_binning_change()
+        # Find and update radio buttons in main_frame
+        for widget in self.winfo_children()[0].winfo_children():  # main_frame children
+            if isinstance(widget, ttk.Radiobutton):
+                widget.config(state=new_state)
     
-    def set_available_columns(self, columns):
-        """Set list of available columns for binning."""
-        self.available_columns = sorted(columns)
-        self.bin_param_dropdown['values'] = self.available_columns
+    def _on_param_selected(self, event=None):
+        """Handle parameter selection - show automatic mode info for now."""
+        # Mode frame can show info if needed in the future
+        self.validation_label.config(text="")
+    
+    def _on_mode_changed(self):
+        """Handle mode change between automatic and manual."""
+        mode = self.binning_mode_var.get()
         
-        if len(self.available_columns) > 0:
+        if mode == "automatic":
+            # Hide manual frame and reset canvas completely
+            if self.manual_frame.winfo_ismapped():
+                self.manual_frame.pack_forget()
+                self.manual_canvas.pack_forget()
+                self.manual_scrollbar.pack_forget()
+        else:  # manual
+            self._create_manual_bin_inputs()
+            self.manual_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            self.manual_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+            self.manual_frame.pack(fill=tk.X, padx=0, pady=(2, 0))
+        
+        self.validation_label.config(text="")
+    
+    def _create_manual_bin_inputs(self):
+        """Create input fields for manual bin definition."""
+        # Clear previous inputs
+        for widget in self.manual_scrollable_frame.winfo_children():
+            widget.destroy()
+        self.bin_frames = []
+        
+        # Configure scrollable frame to fill canvas
+        self.manual_scrollable_frame.columnconfigure(0, weight=0)  # Buttons column - fixed width
+        self.manual_scrollable_frame.columnconfigure(1, weight=1)  # Bins column - flexible
+        self.manual_scrollable_frame.rowconfigure(0, weight=1)
+        
+        # Left column: buttons frame (stacked vertically)
+        buttons_frame = ttk.Frame(self.manual_scrollable_frame)
+        buttons_frame.grid(row=0, column=0, sticky='nw', padx=2, pady=3)
+        
+        ttk.Button(buttons_frame, text="\u002b Add", command=self._add_bin_input).pack(pady=2, fill=tk.X)
+        ttk.Button(buttons_frame, text="\u2212 Remove", command=self._remove_bin_input).pack(pady=2, fill=tk.X)
+        
+        # Right column: bins container frame
+        self.bins_container = ttk.Frame(self.manual_scrollable_frame)
+        self.bins_container.grid(row=0, column=1, sticky='ns    ew', padx=2, pady=3)
+        
+        # Add 1 default bin
+        self._add_bin_input()
+        
+        # Update canvas scroll region
+        self.manual_scrollable_frame.update_idletasks()
+        self.manual_canvas.configure(scrollregion=self.manual_canvas.bbox("all"))
+    
+    def _add_bin_input(self):
+        """Add a new bin input row."""
+        bin_number = len(self.bin_frames) + 1
+        
+        bin_frame = ttk.Frame(self.bins_container, relief=tk.SUNKEN, borderwidth=1)
+        bin_frame.pack(fill=tk.X, padx=0, pady=2)
+        
+        ttk.Label(bin_frame, text=f"Bin {bin_number}:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
+        
+        ttk.Label(bin_frame, text="Lower:").pack(side=tk.LEFT, padx=2)
+        lower_var = tk.StringVar()
+        lower_entry = ttk.Entry(bin_frame, textvariable=lower_var, width=10)
+        lower_entry.pack(side=tk.LEFT, padx=2)
+        
+        ttk.Label(bin_frame, text="Upper:").pack(side=tk.LEFT, padx=2)
+        upper_var = tk.StringVar()
+        upper_entry = ttk.Entry(bin_frame, textvariable=upper_var, width=10)
+        upper_entry.pack(side=tk.LEFT, padx=2)
+        
+        self.bin_frames.append({
+            'frame': bin_frame,
+            'bin_number': bin_number,
+            'lower_var': lower_var,
+            'upper_var': upper_var
+        })
+        
+        # Update canvas scroll region
+        self.manual_scrollable_frame.update_idletasks()
+        self.manual_canvas.configure(scrollregion=self.manual_canvas.bbox("all"))
+    
+    def _remove_bin_input(self):
+        """Remove the last bin input row."""
+        if len(self.bin_frames) > 1:  # Always keep at least 1 bin
+            bin_data = self.bin_frames.pop()
+            bin_data['frame'].destroy()
+            
+            # Renumber remaining bins
+            for i, bin_data in enumerate(self.bin_frames):
+                # Update label text
+                for widget in bin_data['frame'].winfo_children():
+                    if isinstance(widget, ttk.Label) and "Bin" in str(widget.cget("text")):
+                        widget.config(text=f"Bin {i+1}:")
+                        bin_data['bin_number'] = i + 1
+                        break
+            
+            # Update canvas scroll region
+            self.manual_scrollable_frame.update_idletasks()
+            self.manual_canvas.configure(scrollregion=self.manual_canvas.bbox("all"))
+    
+    def _on_set_bins(self):
+        """Validate and set bins."""
+        if not self.binning_enabled_var.get():
+            return
+        
+        param = self.bin_param_var.get()
+        if not param:
+            self.validation_label.config(text="Error: Please select a parameter", foreground="red")
+            return
+        
+        mode = self.binning_mode_var.get()
+        
+        if mode == "automatic":
+            self._create_automatic_bins(param)
+        else:  # manual
+            self._create_manual_bins()
+    
+    def _create_automatic_bins(self, param):
+        """Create automatic bins from unique values in selected papers."""
+        # Validate that papers are selected
+        if not self.selected_papers:
+            self.validation_label.config(text="Error: Please select at least one paper", foreground="red")
+            return
+        
+        if self.df is None or param not in self.df.columns:
+            self.validation_label.config(text="Error: Parameter not found in data", foreground="red")
+            return
+        
+        # Filter dataframe by selected papers
+        df_filtered = self.df[self.df['Paper Title'].isin(self.selected_papers)]
+        
+        unique_values = sorted(df_filtered[param].dropna().unique().tolist())
+        
+        if len(unique_values) == 0:
+            self.validation_label.config(text="Error: No valid values for parameter", foreground="red")
+            return
+        
+        # Create bins: one per unique value
+        bins = []
+        for i, val in enumerate(unique_values):
+            bins.append({
+                'bin_number': i + 1,
+                'lower': val,
+                'upper': val,
+                'label': f'Bin {i+1}: {val}'
+            })
+        
+        self.current_bins = bins
+        self.validation_label.config(text=f"✓ {len(bins)} bins created successfully", foreground="green")
+        
+        if self.on_bins_set:
+            self.on_bins_set()
+    
+    def _create_manual_bins(self):
+        """Create manual bins from user input."""
+        bins = []
+        
+        try:
+            for bin_data in self.bin_frames:
+                lower_str = bin_data['lower_var'].get().strip()
+                upper_str = bin_data['upper_var'].get().strip()
+                
+                if not lower_str or not upper_str:
+                    continue  # Skip empty rows
+                
+                lower = float(lower_str)
+                upper = float(upper_str)
+                bin_num = bin_data['bin_number']
+                
+                bins.append({
+                    'bin_number': bin_num,
+                    'lower': lower,
+                    'upper': upper,
+                    'label': f'Bin {bin_num}'
+                })
+        
+        except ValueError as e:
+            self.validation_label.config(text=f"Error: Invalid numeric input - {str(e)}", foreground="red")
+            return
+        
+        if not bins:
+            self.validation_label.config(text="Error: No bins defined", foreground="red")
+            return
+        
+        # Validate continuity
+        is_valid, error_msg = validate_bin_continuity(bins)
+        if not is_valid:
+            self.validation_label.config(text=f"Error: {error_msg}", foreground="red")
+            return
+        
+        self.current_bins = bins
+        self.validation_label.config(text=f"✓ {len(bins)} bins set successfully", foreground="green")
+        
+        if self.on_bins_set:
+            self.on_bins_set()
+    
+    def set_available_parameters(self, parameters):
+        """Set available parameters for binning."""
+        self.bin_param_dropdown['values'] = sorted(parameters)
+        if len(parameters) > 0:
             self.bin_param_dropdown.current(0)
     
-    def get_config(self):
-        """Get current binning configuration."""
+    def set_dataframe(self, df):
+        """Set dataframe for automatic bin generation."""
+        self.df = df
+    
+    def set_selected_papers(self, papers):
+        """Set the currently selected papers for binning filtering."""
+        self.selected_papers = papers.copy() if papers else []
+    
+    def get_bins_config(self):
+        """Get current bins configuration."""
+        if not self.binning_enabled_var.get() or self.current_bins is None:
+            return None
+        
         return {
             'enabled': self.binning_enabled_var.get(),
             'parameter': self.bin_param_var.get(),
@@ -538,7 +790,7 @@ class BinningPanel(ttk.Frame):
 
 
 class PlotDisplayPanel(ttk.Frame):
-    """Panel for displaying plots and save/clear buttons."""
+    """Panel for displaying plots (canvas only)."""
     
     def __init__(self, parent):
         """
@@ -555,7 +807,7 @@ class PlotDisplayPanel(ttk.Frame):
     
     def _create_widgets(self):
         """Create GUI widgets for plot display."""
-        # Canvas frame
+        # Canvas frame for plot area
         self.canvas_frame = ttk.Frame(self)
         self.canvas_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
     
@@ -664,15 +916,15 @@ class VisualisierApp(tk.Tk):
         main_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # ====== RIBBON TOOLBAR (TOP) ======
-        ribbon = ttk.LabelFrame(main_frame, text="Controls", padding=10)
-        ribbon.pack(fill=tk.X, padx=0, pady=(0, 10))
+        ribbon = ttk.LabelFrame(main_frame, text="Controls", padding=5)
+        ribbon.pack(fill=tk.BOTH, expand=False, padx=0, pady=(0, 5))
         
         # Create a container for left controls and right selected papers list
         ribbon_container = ttk.Frame(ribbon)
         ribbon_container.pack(fill=tk.BOTH, expand=True)
         
         # Configure columns for equal widths
-        ribbon_container.columnconfigure(0, weight=1, minsize=200)  # Left panel
+        ribbon_container.columnconfigure(0, weight=1, minsize=100)  # Left panel
         ribbon_container.columnconfigure(1, weight=1, minsize=200)  # Right panel
         ribbon_container.rowconfigure(0, weight=1)
         
@@ -682,7 +934,7 @@ class VisualisierApp(tk.Tk):
         
         # Row 1: Paper Selection
         row1 = ttk.Frame(left_side)
-        row1.pack(fill=tk.X, pady=5)
+        row1.pack(fill=tk.X, pady=2)
         
         ttk.Label(row1, text="Papers:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
         
@@ -696,9 +948,9 @@ class VisualisierApp(tk.Tk):
         ttk.Button(row1, text="Add All", command=self._add_all_papers).pack(side=tk.LEFT, padx=2)
         ttk.Button(row1, text="Clear", command=self._clear_papers).pack(side=tk.LEFT, padx=2)
         
-        # ====== Row 2: Plot Type and Binning Enable ======
+        # ====== Row 2: Plot Type and Mode ======
         row2 = ttk.Frame(left_side)
-        row2.pack(fill=tk.X, pady=5)
+        row2.pack(fill=tk.X, pady=2)    
         
         ttk.Label(row2, text="Plot Type:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
         self.plot_type_var = tk.StringVar(value="2d")
@@ -729,7 +981,7 @@ class VisualisierApp(tk.Tk):
         
         # ====== Row 3: Axes Configuration ======
         row3 = ttk.Frame(left_side)
-        row3.pack(fill=tk.X, pady=5)
+        row3.pack(fill=tk.X, pady=2)
         
         ttk.Label(row3, text="X Axis:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
         self.x_axis_var = tk.StringVar()
@@ -775,11 +1027,15 @@ class VisualisierApp(tk.Tk):
         
         # ====== Row 5: Action Buttons ======
         row5 = ttk.Frame(left_side)
-        row5.pack(fill=tk.X, pady=5)
+        row5.pack(fill=tk.X, pady=2)
         
         ttk.Button(row5, text="Generate Plot", command=self._generate_plot).pack(side=tk.LEFT, padx=5)
         ttk.Button(row5, text="Save Plot", command=self._save_plot).pack(side=tk.LEFT, padx=5)
         ttk.Button(row5, text="Clear", command=self._clear_plot).pack(side=tk.LEFT, padx=5)
+        
+        # ====== Binning Controls (below plot controls in left_side) ======
+        self.binning_panel = BinningConfigPanel(left_side, on_bins_set=self._on_bins_set)
+        self.binning_panel.pack(fill=tk.X, pady=(5, 0))
         
         # RIGHT SIDE: Selected Papers List
         right_side = ttk.LabelFrame(ribbon_container, text="Selected Papers", padding=5)
@@ -794,15 +1050,12 @@ class VisualisierApp(tk.Tk):
         self.selected_papers_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.selected_papers_listbox.yview)
         
-        # Store references to binning controls for toggle
-        self.binning_controls = [
-            self.bin_param_dropdown,
-            self.n_bins_spinbox
-        ]
-        self.binning_radio_buttons = row4.winfo_children()
+        # ====== CONTENT AREA (BLUE REGION - PLOT CANVAS ONLY) ======
+        content_area = ttk.LabelFrame(main_frame, text="Plot Display", padding=0)
+        content_area.pack(fill=tk.BOTH, expand=True, padx=0, pady=(5, 0))
         
-        # ====== PLOT DISPLAY AREA (BOTTOM, FULL WIDTH) ======
-        self.plot_display = PlotDisplayPanel(main_frame)
+        # ====== PLOT DISPLAY AREA (CANVAS ONLY) ======
+        self.plot_display = PlotDisplayPanel(content_area)
         self.plot_display.pack(fill=tk.BOTH, expand=True)
     
     def _add_paper(self):
@@ -812,72 +1065,20 @@ class VisualisierApp(tk.Tk):
             self.selected_papers.append(paper)
             self._update_selected_papers_display_listbox()
             self._refresh_axis_dropdowns()
-    
-    def _remove_paper(self):
-        """Remove last selected paper from list."""
-        if self.selected_papers:
-            self.selected_papers.pop()
-            self._update_selected_papers_display_listbox()
-            self._refresh_axis_dropdowns()
+            self.binning_panel.set_selected_papers(self.selected_papers)
     
     def _add_all_papers(self):
         """Add all papers to selection."""
         self.selected_papers = self.all_papers.copy()
         self._update_selected_papers_display_listbox()
         self._refresh_axis_dropdowns()
-    
-    def _clear_papers(self):
-        """Clear all selected papers."""
-        self.selected_papers = []
-        self._update_selected_papers_display_listbox()
-        self._refresh_axis_dropdowns()
+        self.binning_panel.set_selected_papers(self.selected_papers)
     
     def _update_selected_papers_display_listbox(self):
         """Update the listbox display of selected papers."""
         self.selected_papers_listbox.delete(0, tk.END)
         for i, paper in enumerate(self.selected_papers, 1):
             self.selected_papers_listbox.insert(tk.END, f"{i}. {paper}")
-    
-    def _refresh_axis_dropdowns(self):
-        """Refresh axis dropdowns based on currently selected papers."""
-        if not self.selected_papers:
-            # No papers selected - show all symbols from all papers
-            papers_for_symbols = self.all_papers
-        else:
-            # Papers are selected - show only symbols common to selected papers
-            papers_for_symbols = self.selected_papers
-        
-        # Get input variables (same for all configurations)
-        input_vars = [
-            'Reynolds number (Re)',
-            'P/e',
-            'e/D',
-            'Alpha',
-            'Aspect ratio',
-            'Number of ribbed walls'
-        ]
-        
-        # Get output variables (symbols) from selected/all papers
-        output_vars = data_loader.get_available_symbols(self.df, papers_for_symbols)
-        
-        # Build combined display list with sections
-        axis_display_list = (
-            ['INPUT VARIABLES:'] + 
-            input_vars + 
-            ['─────────────────'] +  # Separator
-            ['OUTPUT VARIABLES:'] + 
-            output_vars
-        )
-        
-        # Update axis mapping
-        self.axis_mapping = {col: col for col in input_vars}
-        for symbol in output_vars:
-            self.axis_mapping[symbol] = ('symbol', symbol)
-        
-        # Update dropdowns
-        self.x_axis_dropdown['values'] = axis_display_list
-        self.y_axis_dropdown['values'] = axis_display_list
-        self.z_axis_dropdown['values'] = axis_display_list
     
     def _on_plot_type_change(self):
         """Handle plot type change (2D vs 3D)."""
@@ -971,7 +1172,10 @@ class VisualisierApp(tk.Tk):
             self.x_axis_dropdown['values'] = axis_display_list
             self.y_axis_dropdown['values'] = axis_display_list
             self.z_axis_dropdown['values'] = axis_display_list
-            self.bin_param_dropdown['values'] = input_vars  # Binning only works with numeric columns
+            
+            # Set up binning panel with available parameters
+            self.binning_panel.set_dataframe(self.df)
+            self.binning_panel.set_available_parameters(input_vars)
             
             # Set defaults
             if len(input_vars) > 0:
@@ -1070,21 +1274,8 @@ class VisualisierApp(tk.Tk):
                                        f"Some axis columns may contain non-numeric or missing values.")
                 return
             
-            # Apply binning if enabled
-            bin_col = None
-            if self.binning_enabled_var.get():
-                bin_param = self.bin_param_var.get()
-                binning_method = self.binning_method_var.get()
-                n_bins = int(self.n_bins_var.get())
-                
-                if bin_param and bin_param in filtered_df.columns:
-                    filtered_df = apply_custom_binning(
-                        filtered_df,
-                        bin_param,
-                        binning_method,
-                        n_bins
-                    )
-                    bin_col = 'Bin'
+            # Prepare binning configuration from panel
+            bins_config = self.binning_panel.get_bins_config()
             
             # Generate plot
             if plot_type == '2d':
