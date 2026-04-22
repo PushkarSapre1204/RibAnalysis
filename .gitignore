@@ -42,8 +42,3 @@ outputs/
 *.png
 
 # Preprocessing and staging
-Staging/P00*/raw_data.csv
-Staging/P00*/clean_data.csv
-Staging/P00*/manifest.json
-preprocessing_logs/
-data/clean_data_master.csv
