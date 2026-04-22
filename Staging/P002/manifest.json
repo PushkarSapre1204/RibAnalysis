@@ -1,0 +1,130 @@
+{
+  "Paper Identification": {
+    "Title": "Heat Transfer and Friction in Channels With Two Opposite Rib Roughened Walls",
+    "Authors/Year": "J. C. Han / 1984",
+    "Study Objective": "An experimental study of fully developed turbulent air flow in square ducts with two opposite rib roughened walls to determine the effects of rib pitch to height and rib height to equivalent diameter ratios on friction factor and heat transfer coefficients.",
+    "paper_number": "P002"
+  },
+  "Experimental Apparatus & Dimensions": {
+    "Channel Dimensions": {
+      "Width": [
+        "76 mm"
+      ],
+      "Height": [
+        "76 mm"
+      ],
+      "Length": [
+        "1524 mm"
+      ]
+    },
+    "Hydraulic Diameter (Dh)": [
+      "76 mm"
+    ],
+    "Aspect Ratio (W/H)": [
+      "1.0"
+    ],
+    "Test Section Length": [
+      "20 duct diameters"
+    ],
+    "Rib Geometry": [
+      "Square cross section"
+    ],
+    "Rib Dimensions": {
+      "Width": [
+        "1.59 mm",
+        "3.17 mm",
+        "4.76 mm"
+      ],
+      "Height": [
+        "1.59 mm",
+        "3.17 mm",
+        "4.76 mm"
+      ],
+      "Pitch": [
+        "15.9 mm to 190.4 mm"
+      ]
+    },
+    "e/Dh": [
+      "0.021",
+      "0.042",
+      "0.063"
+    ],
+    "P/e": [
+      "10",
+      "20",
+      "40"
+    ],
+    "Angle of attack": [
+      "90 deg"
+    ]
+  },
+  "Boundary & Flow Conditions": {
+    "Reynolds Number Range": [
+      "7000 to 90,000"
+    ],
+    "Fluid Properties": [
+      "Air at room temperature and pressure"
+    ],
+    "Thermal Boundary Condition": [
+      "Longitudinally constant heat flux"
+    ],
+    "Heating Setup": [
+      "All 4 walls heated"
+    ],
+    "Number of Ribbed Walls": [
+      "2"
+    ]
+  },
+  "Data Reduction & Normalization": {
+    "Smooth Baseline (Heat Transfer)": [
+      "Modified Dittus Boelter equation"
+    ],
+    "Smooth Baseline (Friction)": [
+      "Modified Karman Prandtl equation"
+    ],
+    "Reported Dependent Variables": [
+      "Average friction factor (f)",
+      "Average Stanton number (St)",
+      "Stanton number on the two smooth walls (St2s)",
+      "Stanton number on the two ribbed walls (St2r)"
+    ],
+    "Uncertainty": [
+      "Friction factor < 6.6%",
+      "Stanton number < 6.8%"
+    ]
+  },
+  "Figures of Interest": [
+    {
+      "Figure Title": "Fig 5: Stanton Number (Sts) and Friction Factor (fs) vs ReDe for a smooth surface.",
+      "Tag": "Verification"
+    },
+    {
+      "Figure Title": "Fig 6: Friction Factor (f) and Stanton Number (St2r, St2s) vs ReDe for different e/De ratios (0.021, 0.042, 0.063) at a constant P/e of 10.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 7: Friction Factor (f) and Stanton Number (St2r, St2s) vs ReDe for different P/e ratios (10, 20, 40) at a constant e/De of 0.063.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 9: Average Friction Factor (f) vs ReDe comparing predictions with present friction data in a square duct with two opposite ribbed walls for various e/De and P/e ratios.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 10: Average Friction Factor (f) vs ReDe comparing predictions with previous friction data in a rectangular duct with two opposite ribbed walls.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 11: Average Stanton Number (St) vs ReDe comparing predictions with present heat transfer data in a square duct with two opposite ribbed walls.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 12: Friction Factor (f, fr) and Stanton Number (St2r, St2s, Str) vs ReDe comparing predictions in a four sided ribbed duct and the present data for different e/De ratios.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 13: Friction Factor (f, fr) and Stanton Number (St2r, St2s, Str) vs ReDe comparing predictions in a four sided ribbed duct and the present data for different P/e ratios.",
+      "Tag": "Archive"
+    }
+  ]
+}

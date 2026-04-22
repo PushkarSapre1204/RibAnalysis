@@ -1,0 +1,226 @@
+﻿Paper Title,Figure Number,Point ID,Variable,Value,Reynolds number (Re),Geometry,P/e,e/D,Alpha,Aspect ratio,Number of ribbed walls,Reading on,Constant factor,Dittus-Boelter Value,Investigation
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 1,f,0.0071,6000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 2,f,0.0069,6500,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 3,f,0.0075,7000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 4,f,0.0068,11000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 5,f,0.0065,14000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 6,f,0.0069,15000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 7,f,0.0062,20000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 8,f,0.0058,30000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 9,f,0.0056,35000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 10,f,0.0054,40000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 11,f,0.0054,45000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 12,f,0.005,50000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 13,f,0.0048,55000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 14,f,0.0049,60000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 15,f,0.0047,70000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 16,f,0.0045,75000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 17,f,0.0046,80000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 18,f,0.0044,90000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 19,Nu,26,6000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,25,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 20,Nu,34,10000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,38,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 21,Nu,46,16000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,55,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 22,Nu,58,20000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,65,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 23,Nu,73,30000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,90,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 24,Nu,95,40000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,115,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 25,Nu,110,45000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,125,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 26,Nu,125,60000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,155,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 27,Nu,135,70000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,175,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 3,pt 28,Nu,140,80000,N/A,N/A,N/A,N/A,1,0,Smooth wall,Constant heat flux,195,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 1,f,0.035,10000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 2,f,0.034,15000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 3,f,0.033,20000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 4,f,0.032,30000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 5,f,0.031,40000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 6,f,0.031,50000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 7,f,0.031,60000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 8,f,0.031,70000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 9,f,0.031,80000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 10,f,0.031,90000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 11,f,0.043,12000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 12,f,0.046,20000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 13,f,0.045,30000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 14,f,0.044,40000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 15,f,0.045,50000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 16,f,0.045,60000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 17,f,0.046,70000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 18,f,0.045,80000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 19,f,0.046,90000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 20,f,0.054,7000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 21,f,0.048,13000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 22,f,0.047,20000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 23,f,0.046,30000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 24,f,0.046,40000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 25,f,0.045,50000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 26,f,0.045,60000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 27,f,0.045,70000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 28,f,0.045,80000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 29,f,0.036,8000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 30,f,0.034,14000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 31,f,0.032,20000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 32,f,0.03,30000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 33,f,0.03,40000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 34,f,0.03,50000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 35,f,0.031,60000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 36,f,0.03,70000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 37,f,0.03,80000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 38,f,0.029,8000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 39,f,0.025,12000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 40,f,0.022,20000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 41,f,0.02,30000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 42,f,0.018,40000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 43,f,0.017,50000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 44,f,0.016,60000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 45,f,0.016,70000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 46,f,0.016,80000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 47,f,0.015,90000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 48,f,0.021,7000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 49,f,0.019,10000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 50,f,0.015,15000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 51,f,0.014,20000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 52,f,0.013,30000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 53,f,0.012,40000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 54,f,0.011,50000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 55,f,0.011,60000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 56,f,0.011,70000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 57,f,0.01,80000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 58,f,0.01,90000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 1,f,0.024,8000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 2,f,0.023,14000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 3,f,0.024,30000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 4,f,0.023,50000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 5,f,0.023,80000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 6,f,0.034,7000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 7,f,0.031,12000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 8,f,0.031,20000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 9,f,0.031,40000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 10,f,0.032,80000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 11,f,0.025,7000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 12,f,0.024,14000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 13,f,0.024,30000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 14,f,0.023,50000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 15,f,0.023,80000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 16,f,0.023,7000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 17,f,0.018,15000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 18,f,0.015,30000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 19,f,0.014,50000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 20,f,0.013,80000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 21,f,0.016,7000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 22,f,0.013,15000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 23,f,0.01,30000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 24,f,0.009,50000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 25,f,0.008,80000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 1,Nu,60,8000,Straight,10,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 2,Nu,110,16000,Straight,10,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 3,Nu,170,30000,Straight,10,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 4,Nu,230,50000,Straight,10,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 5,Nu,300,80000,Straight,10,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 6,Nu,30,8000,Straight,10,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 7,Nu,55,16000,Straight,10,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 8,Nu,100,30000,Straight,10,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 9,Nu,160,50000,Straight,10,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 10,Nu,200,80000,Straight,10,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 11,Nu,70,8000,Straight,10,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 12,Nu,125,16000,Straight,10,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 13,Nu,200,30000,Straight,10,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 14,Nu,280,50000,Straight,10,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 15,Nu,350,80000,Straight,10,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 16,Nu,38,8000,Straight,10,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 17,Nu,65,16000,Straight,10,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 18,Nu,115,30000,Straight,10,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 19,Nu,170,50000,Straight,10,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 20,Nu,220,80000,Straight,10,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 21,Nu,80,8000,Straight,10,0.063,60,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 22,Nu,140,16000,Straight,10,0.063,60,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 23,Nu,250,30000,Straight,10,0.063,60,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 24,Nu,320,50000,Straight,10,0.063,60,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 25,Nu,400,80000,Straight,10,0.063,60,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 26,Nu,40,8000,Straight,10,0.063,60,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 27,Nu,75,16000,Straight,10,0.063,60,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 28,Nu,130,30000,Straight,10,0.063,60,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 29,Nu,200,50000,Straight,10,0.063,60,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 30,Nu,250,80000,Straight,10,0.063,60,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 31,Nu,80,8000,Straight,10,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 32,Nu,145,16000,Straight,10,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 33,Nu,255,30000,Straight,10,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 34,Nu,340,50000,Straight,10,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 35,Nu,420,80000,Straight,10,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 36,Nu,42,8000,Straight,10,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 37,Nu,78,16000,Straight,10,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 38,Nu,135,30000,Straight,10,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 39,Nu,205,50000,Straight,10,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 40,Nu,260,80000,Straight,10,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 41,Nu,85,8000,Straight,10,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 42,Nu,135,16000,Straight,10,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 43,Nu,210,30000,Straight,10,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 44,Nu,265,50000,Straight,10,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 45,Nu,320,80000,Straight,10,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 46,Nu,45,8000,Straight,10,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 47,Nu,80,16000,Straight,10,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 48,Nu,120,30000,Straight,10,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 49,Nu,170,50000,Straight,10,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 50,Nu,240,80000,Straight,10,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 1,Nu,50,8000,Straight,20,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 2,Nu,90,16000,Straight,20,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 3,Nu,145,30000,Straight,20,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 4,Nu,200,50000,Straight,20,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 5,Nu,250,80000,Straight,20,0.063,90,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 6,Nu,30,8000,Straight,20,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 7,Nu,50,16000,Straight,20,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 8,Nu,95,30000,Straight,20,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 9,Nu,135,50000,Straight,20,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 10,Nu,160,80000,Straight,20,0.063,90,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 11,Nu,52,8000,Straight,20,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 12,Nu,95,16000,Straight,20,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 13,Nu,160,30000,Straight,20,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 14,Nu,230,50000,Straight,20,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 15,Nu,320,80000,Straight,20,0.063,75,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 16,Nu,28,8000,Straight,20,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 17,Nu,55,16000,Straight,20,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 18,Nu,100,30000,Straight,20,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 19,Nu,145,50000,Straight,20,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 20,Nu,200,80000,Straight,20,0.063,75,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 21,Nu,65,8000,Straight,20,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 22,Nu,115,16000,Straight,20,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 23,Nu,185,30000,Straight,20,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 24,Nu,260,50000,Straight,20,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 25,Nu,320,80000,Straight,20,0.063,45,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 26,Nu,31,8000,Straight,20,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 27,Nu,58,16000,Straight,20,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 28,Nu,105,30000,Straight,20,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 29,Nu,155,50000,Straight,20,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 30,Nu,210,80000,Straight,20,0.063,45,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 31,Nu,70,8000,Straight,20,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 32,Nu,110,16000,Straight,20,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 33,Nu,165,30000,Straight,20,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 34,Nu,225,50000,Straight,20,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 35,Nu,280,80000,Straight,20,0.063,30,1,2,Ribbed wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 36,Nu,45,8000,Straight,20,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 37,Nu,70,16000,Straight,20,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 38,Nu,110,30000,Straight,20,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 39,Nu,145,50000,Straight,20,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 40,Nu,200,80000,Straight,20,0.063,30,1,2,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 1,f,0.031,50000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 2,f,0.046,50000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 3,f,0.045,50000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 4,f,0.031,50000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 5,f,0.017,50000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 6,f,0.011,50000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 7,f,0.023,50000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 8,f,0.032,50000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 9,f,0.023,50000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 10,f,0.014,50000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 11,f,0.009,50000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 12,f,0.005,50000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 13,St,0.0058,50000,Straight,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 14,St,0.0072,50000,Straight,10,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 15,St,0.0069,50000,Straight,10,0.063,60,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 16,St,0.0066,50000,Straight,10,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 17,St,0.0055,50000,Straight,10,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 18,St,0.0031,50000,Straight,10,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 19,St,0.0053,50000,Straight,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 20,St,0.0058,50000,Straight,20,0.063,75,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 21,St,0.0053,50000,Straight,20,0.063,45,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 22,St,0.0048,50000,Straight,20,0.063,30,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 23,St,0.003,50000,Straight,20,0.063,15,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 24,St,0.0028,50000,N/A,N/A,N/A,N/A,1,0,N/A,Constant heat flux,N/A,Experimental

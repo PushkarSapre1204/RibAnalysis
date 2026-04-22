@@ -1,0 +1,244 @@
+﻿Paper Title,Figure Number,Point ID,Variable,Value,Reynolds number (Re),Geometry,P/e,e/D,Alpha,Aspect ratio,Number of ribbed walls,Reading on,Constant factor,Dittus-Boelter Value,Investigation
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 1,f,0.0071,7000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 2,f,0.0069,8000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 3,f,0.0073,9000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 4,f,0.0066,10000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 5,f,0.0068,15000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 6,f,0.0063,20000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 7,f,0.006,25000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 8,f,0.0058,30000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 9,f,0.0056,35000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 10,f,0.0054,40000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 11,f,0.0051,50000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 12,f,0.0049,60000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 13,f,0.0047,70000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 14,f,0.0046,80000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 15,f,0.0044,90000,Square duct,N/A,N/A,90,1,0,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 16,St,0.0048,5000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 17,St,0.0049,7000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 18,St,0.0046,10000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 19,St,0.0036,15000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 20,St,0.0039,20000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 21,St,0.0037,25000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0034,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 22,St,0.0034,30000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 23,St,0.0031,40000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 24,St,0.0033,50000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 25,St,0.0028,60000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0026,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 26,St,0.0028,70000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 27,St,0.0025,80000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0024,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 5,pt 28,St,0.0024,90000,Square duct,N/A,N/A,90,1,0,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 1,f,0.035,6000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 2,f,0.0345,8000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 3,f,0.034,10000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 4,f,0.0335,12000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 5,f,0.033,15000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 6,f,0.033,20000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 7,f,0.0335,25000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 8,f,0.032,30000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 9,f,0.0315,40000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 10,f,0.032,50000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 11,f,0.0315,60000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 12,f,0.031,70000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 13,f,0.0315,80000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 14,f,0.031,90000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 15,St,0.0102,10000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 16,St,0.008,15000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 17,St,0.0081,20000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 18,St,0.0076,25000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0034,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 19,St,0.0072,30000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 20,St,0.0062,50000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 21,St,0.0058,60000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0026,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 22,St,0.0053,70000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 23,St,0.005,90000,Square duct,10,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 24,St,0.0054,7000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 25,St,0.0049,9000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0044,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 26,St,0.0048,10000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 27,St,0.0042,12000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.004,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 28,St,0.0048,15000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 29,St,0.0043,20000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 30,St,0.004,25000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0034,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 31,St,0.0038,30000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 32,St,0.0036,50000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 33,St,0.0032,60000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0026,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 34,St,0.0033,70000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 35,St,0.0031,90000,Square duct,10,0.063,90,1,2,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 36,f,0.029,7000,Square duct,10,"""""'",90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 37,f,0.026,10000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 38,f,0.0245,15000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 39,f,0.024,20000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 40,f,0.024,30000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 41,f,0.0235,40000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 42,f,0.023,50000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 43,f,0.023,70000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 44,f,0.0225,90000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 45,St,0.01,7000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 46,St,0.0078,10000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 47,St,0.0068,15000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 48,St,0.006,20000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 49,St,0.0055,30000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 50,St,0.005,40000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 51,St,0.0048,50000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 52,St,0.0042,70000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 53,St,0.004,90000,Square duct,10,0.042,90,1,2,Ribbed wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 54,St,0.0052,7000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 55,St,0.0042,10000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 56,St,0.0038,15000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 57,St,0.0035,20000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 58,St,0.0032,30000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 59,St,0.003,40000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 60,St,0.0028,50000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 61,St,0.0026,70000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 62,St,0.0024,90000,Square duct,10,0.042,90,1,2,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 63,f,0.018,7000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 64,f,0.017,10000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 65,f,0.0165,15000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 66,f,0.0155,20000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 67,f,0.015,30000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 68,f,0.015,40000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 69,f,0.0145,50000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 70,f,0.0145,70000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 71,f,0.014,90000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 72,St,0.0075,7000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 73,St,0.006,10000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 74,St,0.0055,15000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 75,St,0.005,20000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 76,St,0.0045,30000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 77,St,0.0041,40000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 78,St,0.0039,50000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 79,St,0.0035,70000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 80,St,0.0033,90000,Square duct,10,0.021,90,1,2,Ribbed wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 81,St,0.0052,7000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 82,St,0.0041,10000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 83,St,0.0036,15000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 84,St,0.0033,20000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 85,St,0.003,30000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 86,St,0.0028,40000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 87,St,0.0026,50000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 88,St,0.0024,70000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 6,pt 89,St,0.0023,90000,Square duct,10,0.021,90,1,2,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 1,f,0.024,8000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 2,f,0.023,10000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 3,f,0.0225,15000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 4,f,0.022,20000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 5,f,0.023,30000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 6,f,0.0235,40000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 7,f,0.024,50000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 8,f,0.024,70000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 9,f,0.024,90000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 10,St,0.0095,6000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.005,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 11,St,0.008,10000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 12,St,0.0075,15000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 13,St,0.0065,20000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 14,St,0.0058,30000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 15,St,0.005,40000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 16,St,0.0047,50000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 17,St,0.004,70000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 18,St,0.0038,90000,Square duct,20,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 19,St,0.0045,6000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.005,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 20,St,0.0048,10000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 21,St,0.0045,15000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 22,St,0.0042,20000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 23,St,0.0038,30000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 24,St,0.0035,40000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 25,St,0.0034,50000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 26,St,0.0031,70000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 27,St,0.003,90000,Square duct,20,0.063,90,1,2,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 28,f,0.016,6000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 29,f,0.015,10000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 30,f,0.0145,15000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 31,f,0.014,20000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 32,f,0.014,30000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 33,f,0.014,40000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 34,f,0.014,50000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 35,f,0.014,70000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 36,f,0.014,90000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 37,St,0.0075,7000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 38,St,0.0072,10000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 39,St,0.0065,15000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 40,St,0.0058,20000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 41,St,0.0051,30000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 42,St,0.0045,40000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 43,St,0.0042,50000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 44,St,0.0036,70000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 45,St,0.0034,90000,Square duct,40,0.063,90,1,2,Ribbed wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 46,St,0.0042,7000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0048,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 47,St,0.0041,10000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0042,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 48,St,0.004,15000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0038,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 49,St,0.0039,20000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0036,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 50,St,0.0035,30000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0032,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 51,St,0.0032,40000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0029,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 52,St,0.0031,50000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0027,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 53,St,0.0028,70000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0025,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 7,pt 54,St,0.0027,90000,Square duct,40,0.063,90,1,2,Smooth wall,Constant heat flux,0.0023,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 1,f,0.036,6000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 2,f,0.035,8000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 3,f,0.034,10000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 4,f,0.033,15000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 5,f,0.032,20000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 6,f,0.032,30000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 7,f,0.032,50000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 8,f,0.031,70000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 9,f,0.031,90000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 10,f,0.029,7000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 11,f,0.026,10000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 12,f,0.025,15000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 13,f,0.024,20000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 14,f,0.024,40000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 15,f,0.023,70000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 16,f,0.023,90000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 17,f,0.018,6000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 18,f,0.017,10000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 19,f,0.016,15000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 20,f,0.016,20000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 21,f,0.015,40000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 22,f,0.015,70000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 23,f,0.014,90000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 24,f,0.024,8000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 25,f,0.023,15000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 26,f,0.024,30000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 27,f,0.024,50000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 28,f,0.024,90000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 29,f,0.015,6000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 30,f,0.014,10000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 31,f,0.014,20000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 32,f,0.014,50000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 9,pt 33,f,0.014,90000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 1,f,0.16,2500,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 2,f,0.17,3000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 3,f,0.168,5000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 4,f,0.165,7000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 5,f,0.165,10000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 6,f,0.16,15000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 7,f,0.165,20000,Rectangular duct,10,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 8,f,0.09,3000,Rectangular duct,20,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 9,f,0.094,7000,Rectangular duct,20,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 10,f,0.095,10000,Rectangular duct,20,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 11,f,0.09,18000,Rectangular duct,20,0.102,90,11.6,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 12,f,0.055,3000,Rectangular duct,15,0.056,90,18.4,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 13,f,0.058,4000,Rectangular duct,15,0.056,90,18.4,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 14,f,0.062,7500,Rectangular duct,15,0.056,90,18.4,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 15,f,0.06,10000,Rectangular duct,15,0.056,90,18.4,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 10,pt 16,f,0.06,20000,Rectangular duct,15,0.056,90,18.4,2,N/A,N/A,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 1,St,0.0075,8000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 2,St,0.0065,15000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 3,St,0.0055,30000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 4,St,0.0048,50000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 5,St,0.0045,70000,Square duct,10,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 6,St,0.0068,10000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 7,St,0.0055,20000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 8,St,0.005,30000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 9,St,0.0042,50000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 10,St,0.004,70000,Square duct,10,0.042,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 11,St,0.006,10000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 12,St,0.0049,20000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 13,St,0.0045,30000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 14,St,0.0039,50000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 15,St,0.0035,70000,Square duct,10,0.021,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 16,St,0.0065,10000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 17,St,0.0055,20000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 18,St,0.0042,50000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 19,St,0.0039,70000,Square duct,20,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 20,St,0.0058,10000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 21,St,0.0048,20000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 22,St,0.0038,50000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental
+Heat Transfer and Friction in Channels With Two Opposite Rib-Roughened Walls,Fig 11,pt 23,St,0.0035,70000,Square duct,40,0.063,90,1,2,N/A,Constant heat flux,N/A,Experimental

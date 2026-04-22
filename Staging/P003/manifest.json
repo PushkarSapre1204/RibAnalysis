@@ -1,0 +1,145 @@
+{
+  "Paper Identification": {
+    "Title": "Heat Transfer Enhancement in Channels With Turbulence Promoters",
+    "Authors/Year": "J. C. Han, J. S. Park, C. K. Lei / 1985",
+    "Study Objective": "To determine the effect of rib angle of attack and rib spacing on the pressure drop and average heat transfer coefficients in fully developed turbulent air flow in a square duct with two opposite rib roughened walls.",
+    "paper_number": "P003"
+  },
+  "Experimental Apparatus & Dimensions": {
+    "Channel Dimensions": {
+      "Width": [
+        "76 mm"
+      ],
+      "Height": [
+        "76 mm"
+      ],
+      "Length": [
+        "1524 mm"
+      ]
+    },
+    "Hydraulic Diameter (Dh)": [
+      "76 mm"
+    ],
+    "Aspect Ratio (W/H)": [
+      "1.0"
+    ],
+    "Test Section Length": [
+      "20 duct diameters"
+    ],
+    "Rib Geometry": [
+      "Square cross section"
+    ],
+    "Rib Dimensions": {
+      "Width": [
+        "4.76 mm"
+      ],
+      "Height": [
+        "4.76 mm"
+      ],
+      "Pitch": [
+        "47.6 mm",
+        "95.2 mm"
+      ]
+    },
+    "e/Dh": [
+      "0.063"
+    ],
+    "P/e": [
+      "10",
+      "20"
+    ],
+    "Angle of attack": [
+      "15 deg",
+      "30 deg",
+      "45 deg",
+      "60 deg",
+      "75 deg",
+      "90 deg"
+    ]
+  },
+  "Boundary & Flow Conditions": {
+    "Reynolds Number Range": [
+      "7000 to 90,000"
+    ],
+    "Fluid Properties": [
+      "Air"
+    ],
+    "Thermal Boundary Condition": [
+      "Controllable constant heat flux"
+    ],
+    "Heating Setup": [
+      "All 4 walls heated"
+    ],
+    "Number of Ribbed Walls": [
+      "2"
+    ]
+  },
+  "Data Reduction & Normalization": {
+    "Smooth Baseline (Heat Transfer)": [
+      "Petukhov Popov equation",
+      "Modified Dittus Boelter equation"
+    ],
+    "Smooth Baseline (Friction)": [
+      "Modified Karman Prandtl equation"
+    ],
+    "Reported Dependent Variables": [
+      "Average friction factor (f)",
+      "Nusselt number on smooth side (Nus)",
+      "Nusselt number on ribbed side (NuR)",
+      "Average Nusselt number (Nu)",
+      "Efficiency index (eta)",
+      "Increased heat conductance (K/K)",
+      "Reduced pumping power (P/P)"
+    ],
+    "Uncertainty": [
+      "Friction factor < 6.6%",
+      "Nusselt number < 6.8%"
+    ]
+  },
+  "Figures of Interest": [
+    {
+      "Figure Title": "Fig 3: Nu and f vs Re for a smooth duct baseline.",
+      "Tag": "Verification"
+    },
+    {
+      "Figure Title": "Fig 4: Average friction factor vs Re for varying angles of attack at P/e = 10.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 5: Average friction factor vs Re for varying angles of attack at P/e = 20.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 7: Nusselt number (Nus, NuR) vs Re for varying angles of attack at P/e = 10.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 8: Nusselt number (Nus, NuR) vs Re for varying angles of attack at P/e = 20.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 9: Average friction (f/f0) and Stanton number (St/St0) vs angle of attack at Re = 50,000.",
+      "Tag": "Processing"
+    },
+    {
+      "Figure Title": "Fig 10: Efficiency index (eta) vs roughness Reynolds number for varying angles and P/e ratios.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 11: Increased heat conductance (K/K0) vs roughness Reynolds number for varying angles and P/e ratios.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 12: Reduced pumping power (P/P0) vs roughness Reynolds number for varying angles and P/e ratios.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 13: Friction momentum transfer roughness function vs roughness Reynolds number and angle of attack.",
+      "Tag": "Archive"
+    },
+    {
+      "Figure Title": "Fig 14: Heat transfer roughness function vs roughness Reynolds number and angle of attack.",
+      "Tag": "Archive"
+    }
+  ]
+}
