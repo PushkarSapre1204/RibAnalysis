@@ -1,0 +1,153 @@
+Paper Title,Figure Number,Point ID,Variable,Value,Reynolds number (Re),Geometry,P/e,e/D,Alpha,Aspect ratio,Number of ribbed walls,Reading on
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 1,f/f_0,1.1075949367088607,10000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 2,f/f_0,1.1907337110699665,15000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 3,f/f_0,1.241893506173728,20000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 4,f/f_0,1.3327331776734102,30000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 5,f/f_0,1.3873614061255046,40000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 6,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 7,f/f_0,1.5353677842491111,60000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 8,f/f_0,1.5956921966022581,70000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 9,f/f_0,1.6498600552446299,80000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 10,f/f_0,1.6991637669188355,90000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 11,f/f_0,1.4242187023373587,12000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 12,f/f_0,1.7311242813330752,20000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 13,f/f_0,1.874156031103233,30000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 14,f/f_0,1.9691581248232968,40000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 15,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 16,f/f_0,2.2287596868132256,60000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 17,f/f_0,2.3678013239904474,70000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 18,f/f_0,2.3949581447099466,80000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 19,f/f_0,2.5213397831698847,90000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 20,f/f_0,1.5630799315933386,7000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 21,f/f_0,1.6219594517049734,13000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 22,f/f_0,1.7687574178837941,20000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 23,f/f_0,1.9158039429055271,30000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 24,f/f_0,2.058665312315265,40000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 25,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 26,f/f_0,2.2287596868132256,60000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 27,f/f_0,2.3163273821645682,70000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 28,f/f_0,2.3949581447099466,80000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 29,f/f_0,1.077427149497289,8000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 30,f/f_0,1.1703717848692223,14000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 31,f/f_0,1.2042603696230088,20000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 32,f/f_0,1.249437354068822,30000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 33,f/f_0,1.3426078123795206,40000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 34,f/f_0,1.4196349188809054,50000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 35,f/f_0,1.5353677842491111,60000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 36,f/f_0,1.5442182547763788,70000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 37,f/f_0,1.5966387631399643,80000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 38,f/f_0,0.8679274259839272,8000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 39,f/f_0,0.8280341292659064,12000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 40,f/f_0,0.8279290041158185,20000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 41,f/f_0,0.8329582360458814,30000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 42,f/f_0,0.8055646874277124,40000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 43,f/f_0,0.8044597873658466,50000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 44,f/f_0,0.7924478886447025,60000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 45,f/f_0,0.8235830692140688,70000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 46,f/f_0,0.8515406736746477,80000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 47,f/f_0,0.8221760162510494,90000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 48,f/f_0,0.607864417841854,7000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 49,f/f_0,0.60126582278481,10000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 50,f/f_0,0.5253236960602793,15000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 51,f/f_0,0.5268639117100664,20000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 52,f/f_0,0.5414228534298229,30000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 53,f/f_0,0.5370431249518083,40000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 54,f/f_0,0.5205328035896654,50000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 55,f/f_0,0.5448079234432329,60000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 56,f/f_0,0.5662133600846723,70000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 57,f/f_0,0.5322129210466549,80000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 4,pt 58,f/f_0,0.5481173441673663,90000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 1,f/f_0,0.7182847663315259,8000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 2,f/f_0,0.7917220897644739,14000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 3,f/f_0,0.9995498832550577,30000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 4,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 5,f/f_0,1.224089718407306,80000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 6,f/f_0,0.9841614384106208,7000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 7,f/f_0,1.0267623202897238,12000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 8,f/f_0,1.1666272330722898,20000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 9,f/f_0,1.3873614061255046,40000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 10,f/f_0,1.7030813473492954,80000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 11,f/f_0,0.7236481164783976,7000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 12,f/f_0,0.826144789319451,14000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 13,f/f_0,0.9995498832550577,30000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 14,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 15,f/f_0,1.224089718407306,80000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 16,f/f_0,0.6657562671601257,7000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 17,f/f_0,0.6303884352723351,15000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 18,f/f_0,0.624718677034411,30000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 19,f/f_0,0.6624962954777559,50000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 20,f/f_0,0.6918767973606512,80000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 21,f/f_0,0.4631347945461744,7000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 22,f/f_0,0.4552805365855754,15000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 23,f/f_0,0.4164791180229407,30000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 24,f/f_0,0.42589047566427163,50000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 5,pt 25,f/f_0,0.42577033683732385,80000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 1,Nu/Nu_0,2.256566233848727,8000,Straight,10.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 2,Nu/Nu_0,2.3761044273668968,16000,Straight,10.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 3,Nu/Nu_0,2.2208577500702398,30000,Straight,10.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 4,Nu/Nu_0,1.9967360411914645,50000,Straight,10.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 5,Nu/Nu_0,1.7882082311822298,80000,Straight,10.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 11,Nu/Nu_0,2.632660606156848,8000,Straight,10.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 12,Nu/Nu_0,2.7001186674623825,16000,Straight,10.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 13,Nu/Nu_0,2.612773823612047,30000,Straight,10.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 14,Nu/Nu_0,2.4308090936243913,50000,Straight,10.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 15,Nu/Nu_0,2.0862429363792683,80000,Straight,10.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 21,Nu/Nu_0,3.0087549784649688,8000,Straight,10.0,0.063,60.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 22,Nu/Nu_0,3.0241329075578682,16000,Straight,10.0,0.063,60.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 23,Nu/Nu_0,3.2659672795150585,30000,Straight,10.0,0.063,60.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 24,Nu/Nu_0,2.778067535570733,50000,Straight,10.0,0.063,60.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 25,Nu/Nu_0,2.3842776415763067,80000,Straight,10.0,0.063,60.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 31,Nu/Nu_0,3.0087549784649688,8000,Straight,10.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 32,Nu/Nu_0,3.1321376542563635,16000,Straight,10.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 33,Nu/Nu_0,3.33128662510536,30000,Straight,10.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 34,Nu/Nu_0,2.951696756543904,50000,Straight,10.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 35,Nu/Nu_0,2.503491523655122,80000,Straight,10.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 41,Nu/Nu_0,3.1968021646190294,8000,Straight,10.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 42,Nu/Nu_0,2.916128160859373,16000,Straight,10.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 43,Nu/Nu_0,2.743412514792649,30000,Straight,10.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 44,Nu/Nu_0,2.3005871778945135,50000,Straight,10.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 7,pt 45,Nu/Nu_0,1.9074221132610452,80000,Straight,10.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 1,Nu/Nu_0,1.8804718615406055,8000,Straight,20.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 2,Nu/Nu_0,1.9440854405729153,16000,Straight,20.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 3,Nu/Nu_0,1.894261022118734,30000,Straight,20.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 4,Nu/Nu_0,1.7362922097317082,50000,Straight,20.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 5,Nu/Nu_0,1.4901735259851916,80000,Straight,20.0,0.063,90.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 11,Nu/Nu_0,1.9556907360022298,8000,Straight,20.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 12,Nu/Nu_0,2.0520901872714106,16000,Straight,20.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 13,Nu/Nu_0,2.0902190588896374,30000,Straight,20.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 14,Nu/Nu_0,1.9967360411914645,50000,Straight,20.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 15,Nu/Nu_0,1.9074221132610452,80000,Straight,20.0,0.063,75.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 21,Nu/Nu_0,2.444613420002787,8000,Straight,20.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 22,Nu/Nu_0,2.484109174065392,16000,Straight,20.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 23,Nu/Nu_0,2.4168157868411435,30000,Straight,20.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 24,Nu/Nu_0,2.257179872651221,50000,Straight,20.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 25,Nu/Nu_0,1.9074221132610452,80000,Straight,20.0,0.063,45.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 31,Nu/Nu_0,2.632660606156848,8000,Straight,20.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 32,Nu/Nu_0,2.3761044273668968,16000,Straight,20.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 33,Nu/Nu_0,2.155538404479939,30000,Straight,20.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 34,Nu/Nu_0,1.9533287359481717,50000,Straight,20.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 8,pt 35,Nu/Nu_0,1.6689943491034145,80000,Straight,20.0,0.063,30.0,1,2,Ribbed wall
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 1,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 2,f/f_0,2.1767735422840553,50000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 3,f/f_0,2.1294523783213584,50000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 4,f/f_0,1.4669560828436023,50000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 5,f/f_0,0.8044597873658466,50000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 6,f/f_0,0.5205328035896654,50000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 7,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 8,f/f_0,1.5142772468062993,50000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 9,f/f_0,1.0883867711420276,50000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 10,f/f_0,0.6624962954777559,50000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 11,f/f_0,0.42589047566427163,50000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 12,f/f_0,0.23660581981348425,50000,,,0.063,,1,0,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 13,Nu/Nu_0,1.7875128299187935,50000,Straight,10.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 14,Nu/Nu_0,2.218981444037123,50000,Straight,10.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 15,Nu/Nu_0,2.12652388386891,50000,Straight,10.0,0.063,60.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 16,Nu/Nu_0,2.034066323700696,50000,Straight,10.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 17,Nu/Nu_0,1.69505526975058,50000,Straight,10.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 18,Nu/Nu_0,0.9553947884048725,50000,Straight,10.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 19,Nu/Nu_0,1.6334168963051043,50000,Straight,20.0,0.063,90.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 20,Nu/Nu_0,1.7875128299187935,50000,Straight,20.0,0.063,75.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 21,Nu/Nu_0,1.6334168963051043,50000,Straight,20.0,0.063,45.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 22,Nu/Nu_0,1.4793209626914152,50000,Straight,20.0,0.063,30.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 23,Nu/Nu_0,0.9245756016821346,50000,Straight,20.0,0.063,15.0,1,2,
+Heat Transfer Enhancement in Channels With Turbulence Promoters,Fig 9,pt 24,Nu/Nu_0,0.862937228236659,50000,,,0.063,,1,0,
