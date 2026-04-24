@@ -11,6 +11,7 @@ Provides interactive Tkinter interface with 4 main panels:
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt
+from matplotlib.backend_bases import MouseButton
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import pandas as pd
@@ -121,10 +122,74 @@ def get_bin_legend_label(parameter_name, bin_dict):
     return f"{parameter_name}: {lower_text} - {upper_text}"
 
 
+DETAIL_FIELD_MAP = [
+    ("Paper", "Paper Title"),
+    ("Variable name", "Variable"),
+    ("Value", "Value"),
+    ("Reynolds number", "Reynolds number (Re)"),
+    ("P/e", "P/e"),
+    ("e/D", "e/D"),
+    ("Alpha", "Alpha"),
+    ("Aspect ratio", "Aspect ratio"),
+]
+
+
+def _display_value(value):
+    """Return a raw display value while normalizing missing data."""
+    if pd.isna(value):
+        return "N/A"
+    if isinstance(value, np.generic):
+        return value.item()
+    return value
+
+
+def _display_value_3dp(value):
+    """Return a value formatted to three decimal places when numeric."""
+    if pd.isna(value):
+        return "N/A"
+    if isinstance(value, (int, float, np.integer, np.floating)):
+        return f"{float(value):.3f}"
+    return str(_display_value(value))
+
+
+def _attach_point_metadata(fig, artist, df_subset, x_axis, y_axis, z_axis=None, x_label=None, y_label=None, z_label=None):
+    """Attach row-level metadata to a plotted artist so clicks can be resolved back to data rows."""
+    point_records = []
+
+    for row_index, row in df_subset.iterrows():
+        record = row.to_dict()
+        record['_row_index'] = row_index
+        record['_coordinates'] = {
+            'x': _display_value(row[x_axis]),
+            'y': _display_value(row[y_axis]),
+        }
+        if z_axis is not None:
+            record['_coordinates']['z'] = _display_value(row[z_axis])
+        point_records.append(record)
+
+    artist._point_records = point_records
+    artist._plot_axes = {
+        'x_axis': x_axis,
+        'y_axis': y_axis,
+        'z_axis': z_axis,
+        'x_label': x_label if x_label else x_axis,
+        'y_label': y_label if y_label else y_axis,
+        'z_label': z_label if z_label else z_axis,
+    }
+    artist.set_picker(5)
+
+    if not hasattr(fig, '_clickable_artists'):
+        fig._clickable_artists = []
+    fig._clickable_artists.append(artist)
+
+    return artist
+
+
 def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
     """Create 2D scatter plot with optional binning."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
+    fig._clickable_artists = []
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -139,19 +204,22 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
             mask = bin_assignment == bin_num
             if mask.any():
                 style = bin_styles[bin_num]
-                ax.scatter(
-                    df[mask][x_axis],
-                    df[mask][y_axis],
+                subset = df.iloc[np.flatnonzero(mask)].copy()
+                scatter = ax.scatter(
+                    subset[x_axis],
+                    subset[y_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     alpha=0.6,
                     color=style['color'],
                     marker=style['marker'],
                     s=70
                 )
+                _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, None, x_label, y_label, None)
 
         ax.legend(loc='best', framealpha=0.9)
     else:
-        ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
+        scatter = ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
+        _attach_point_metadata(fig, scatter, df, x_axis, y_axis, None, x_label, y_label, None)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -166,6 +234,7 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
     """Create 2D line plot with optional binning."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
+    fig._clickable_artists = []
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -184,7 +253,7 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
             if mask.any():
                 style = bin_styles[bin_num]
                 subset = df_sorted[mask].sort_values(x_axis)
-                ax.plot(
+                line = ax.plot(
                     subset[x_axis],
                     subset[y_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
@@ -192,11 +261,15 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
                     alpha=0.6,
                     color=style['color'],
                     linewidth=2
-                )
+                )[0]
+                line.set_pickradius(5)
+                _attach_point_metadata(fig, line, subset, x_axis, y_axis, None, x_label, y_label, None)
 
         ax.legend(loc='best', framealpha=0.9)
     else:
-        ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)
+        line = ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)[0]
+        line.set_pickradius(5)
+        _attach_point_metadata(fig, line, df_sorted, x_axis, y_axis, None, x_label, y_label, None)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -218,6 +291,7 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
+    fig._clickable_artists = []
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
@@ -228,20 +302,23 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
             mask = bin_assignment == bin_num
             if mask.any():
                 style = bin_styles[bin_num]
-                ax.scatter(
-                    df[mask][x_axis],
-                    df[mask][y_axis],
-                    df[mask][z_axis],
+                subset = df.iloc[np.flatnonzero(mask)].copy()
+                scatter = ax.scatter(
+                    subset[x_axis],
+                    subset[y_axis],
+                    subset[z_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     alpha=0.6,
                     color=style['color'],
                     marker=style['marker'],
                     s=70
                 )
+                _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
         ax.legend(loc='best', framealpha=0.9)
     else:
-        ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
+        scatter = ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
+        _attach_point_metadata(fig, scatter, df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -265,6 +342,7 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
+    fig._clickable_artists = []
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
@@ -278,7 +356,7 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                 continue
 
             style = bin_styles[bin_num]
-            subset = df[mask]
+            subset = df.iloc[np.flatnonzero(mask)].copy()
             x = subset[x_axis].values
             y = subset[y_axis].values
             z = subset[z_axis].values
@@ -303,7 +381,8 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                     antialiased=True
                 )
 
-            ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=0.55)
+            scatter = ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=0.55)
+            _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
             legend_handles.append(
                 Patch(
@@ -332,7 +411,8 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
 
         # Plot surface
         ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
-        ax.scatter(x, y, z, color='red', s=35, alpha=0.5)
+        scatter = ax.scatter(x, y, z, color='red', s=35, alpha=0.5)
+        _attach_point_metadata(fig, scatter, df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -943,39 +1023,266 @@ class PlotDisplayPanel(ttk.Frame):
         super().__init__(parent)
         self.current_fig = None
         self.canvas = None
+        self._pick_cid = None
+        self._active_point_records = []
+        self._active_plot_axes = {}
+        self._tooltip_window = None
         
         self._create_widgets()
     
     def _create_widgets(self):
         """Create GUI widgets for plot display."""
+        self.layout_frame = ttk.Frame(self)
+        self.layout_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+        self.layout_frame.columnconfigure(0, weight=1)
+        self.layout_frame.columnconfigure(1, weight=0, minsize=150)
+        self.layout_frame.rowconfigure(0, weight=1)
+
         # Canvas frame for plot area
-        self.canvas_frame = ttk.Frame(self)
-        self.canvas_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.canvas_frame = ttk.Frame(self.layout_frame)
+        self.canvas_frame.grid(row=0, column=0, sticky=tk.NSEW)
+
+        # Details frame for clicked point information
+        self.details_frame = ttk.LabelFrame(self.layout_frame, text="Point Details", padding=8)
+        self.details_frame.grid(row=0, column=1, sticky=tk.NSEW, padx=(10, 0))
+        self.details_frame.configure(width=150)
+        self.details_frame.grid_propagate(False)
+        self.details_frame.grid_remove()
+
+        self.details_frame.columnconfigure(0, weight=1)
+
+        self.detail_value_labels = {}
+        for display_label, source_key in DETAIL_FIELD_MAP:
+            row_frame = ttk.Frame(self.details_frame)
+            row_frame.pack(fill=tk.X, pady=1)
+
+            label = ttk.Label(row_frame, text=f"{display_label}:", width=18)
+            label.pack(side=tk.LEFT, anchor=tk.W)
+
+            value_label = ttk.Label(row_frame, text="", wraplength=240, justify=tk.LEFT)
+            value_label.pack(side=tk.LEFT, fill=tk.X, expand=True)
+            self.detail_value_labels[display_label] = value_label
+
+        self.matches_frame = ttk.Frame(self.details_frame)
+        self.matches_label = ttk.Label(self.matches_frame, text="Matching points")
+        self.matches_label.pack(anchor=tk.W, pady=(8, 2))
+
+        matches_list_frame = ttk.Frame(self.matches_frame)
+        matches_list_frame.pack(fill=tk.BOTH, expand=False)
+
+        self.matches_scrollbar = ttk.Scrollbar(matches_list_frame)
+        self.matches_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.matches_listbox = tk.Listbox(
+            matches_list_frame,
+            height=5,
+            yscrollcommand=self.matches_scrollbar.set,
+        )
+        self.matches_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.matches_scrollbar.config(command=self.matches_listbox.yview)
+        self.matches_listbox.bind("<<ListboxSelect>>", self._on_match_selected)
+
+        self.matches_frame.pack_forget()
     
     def display_plot(self, fig):
         """Display a matplotlib figure."""
+        self._destroy_tooltip()
+        self._clear_details(hide=True)
+
         self.current_fig = fig
         
         # Clear previous canvas
         if self.canvas is not None:
+            if self._pick_cid is not None:
+                self.canvas.mpl_disconnect(self._pick_cid)
             self.canvas.get_tk_widget().destroy()
         
         # Create new canvas
         self.canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        self._pick_cid = self.canvas.mpl_connect("button_press_event", self._on_canvas_click)
     
     def clear_plot(self):
         """Clear the displayed plot."""
         if self.canvas is not None:
+            if self._pick_cid is not None:
+                self.canvas.mpl_disconnect(self._pick_cid)
+                self._pick_cid = None
             self.canvas.get_tk_widget().destroy()
             self.canvas = None
         self.current_fig = None
+        self._destroy_tooltip()
+        self._clear_details(hide=True)
     
     def _on_generate_click(self):
         """Handle generate plot button click."""
         # This will be called by the main app
         pass
+
+    def _on_canvas_click(self, event):
+        """Resolve clicked artists back to their source rows."""
+        if self.current_fig is None or event.button not in (1, MouseButton.LEFT):
+            return
+
+        if event.inaxes is None:
+            self._clear_details(hide=True)
+            return
+
+        matches = self._collect_point_matches(event)
+        if not matches:
+            self._clear_details(hide=True)
+            return
+
+        self._show_point_records(matches, event)
+
+    def _collect_point_matches(self, event):
+        """Collect all point records hit by a canvas click."""
+        clickable_artists = getattr(self.current_fig, '_clickable_artists', [])
+        matches = []
+
+        for artist in clickable_artists:
+            contains, info = artist.contains(event)
+            if not contains:
+                continue
+
+            point_records = getattr(artist, '_point_records', [])
+            plot_axes = getattr(artist, '_plot_axes', {})
+            for index in info.get('ind', []):
+                if 0 <= index < len(point_records):
+                    matches.append((point_records[index], plot_axes))
+
+        unique_matches = []
+        seen_rows = set()
+        for record, plot_axes in matches:
+            row_index = record.get('_row_index')
+            if row_index in seen_rows:
+                continue
+            seen_rows.add(row_index)
+            unique_matches.append((record, plot_axes))
+
+        return unique_matches
+
+    def _show_point_records(self, matches, event):
+        """Display the selected point data in the right-side details frame."""
+        self._active_point_records = [record for record, _ in matches]
+        self._active_plot_axes = matches[0][1] if matches else {}
+
+        self.details_frame.grid()
+
+        if len(self._active_point_records) > 1:
+            self.matches_frame.pack(fill=tk.X, pady=(8, 0))
+            self.matches_listbox.delete(0, tk.END)
+            for index, record in enumerate(self._active_point_records, start=1):
+                self.matches_listbox.insert(tk.END, self._format_match_entry(index, record))
+            self.matches_listbox.selection_clear(0, tk.END)
+            self.matches_listbox.selection_set(0)
+            self.matches_listbox.activate(0)
+            self.matches_listbox.see(0)
+        else:
+            self.matches_frame.pack_forget()
+
+        self._render_point_details(self._active_point_records[0])
+        self._show_tooltip(event, self._active_point_records[0])
+
+    def _render_point_details(self, record):
+        """Render the selected row fields into the details labels."""
+        for display_label, source_key in DETAIL_FIELD_MAP:
+            if source_key == "Value":
+                value = _display_value_3dp(record.get(source_key))
+            else:
+                value = _display_value(record.get(source_key))
+            self.detail_value_labels[display_label].config(text=str(value))
+
+    def _format_match_entry(self, index, record):
+        """Build a compact label for a matched point list entry."""
+        coordinates = record.get('_coordinates', {})
+        x_label = self._active_plot_axes.get('x_label', self._active_plot_axes.get('x_axis', 'X'))
+        y_label = self._active_plot_axes.get('y_label', self._active_plot_axes.get('y_axis', 'Y'))
+        z_label = self._active_plot_axes.get('z_label', self._active_plot_axes.get('z_axis'))
+        coordinate_parts = [
+            f"{x_label}={_display_value(coordinates.get('x'))}",
+            f"{y_label}={_display_value(coordinates.get('y'))}",
+        ]
+        if 'z' in coordinates and z_label:
+            coordinate_parts.append(f"{z_label}={_display_value(coordinates.get('z'))}")
+
+        paper = _display_value(record.get('Paper Title'))
+        variable = _display_value(record.get('Variable'))
+        value = _display_value(record.get('Value'))
+        return f"{index}. {paper} | {variable} | {value} | {', '.join(coordinate_parts)}"
+
+    def _on_match_selected(self, event):
+        """Update the details section when a user selects a different match."""
+        if not self._active_point_records:
+            return
+
+        selection = self.matches_listbox.curselection()
+        if not selection:
+            return
+
+        index = selection[0]
+        if 0 <= index < len(self._active_point_records):
+            self._render_point_details(self._active_point_records[index])
+
+    def _clear_details(self, hide=False):
+        """Clear the point details view."""
+        self._active_point_records = []
+        self._active_plot_axes = {}
+        for value_label in self.detail_value_labels.values():
+            value_label.config(text="")
+        self.matches_listbox.delete(0, tk.END)
+        self.matches_frame.pack_forget()
+        if hide:
+            self.details_frame.grid_remove()
+
+    def _show_tooltip(self, event, record):
+        """Show a transient tooltip with the selected point summary."""
+        self._destroy_tooltip()
+
+        tooltip_text = self._build_tooltip_text(record)
+        if not tooltip_text:
+            return
+
+        tooltip = tk.Toplevel(self)
+        tooltip.overrideredirect(True)
+        tooltip.attributes("-topmost", True)
+        tooltip.geometry(f"+{event.x_root + 15}+{event.y_root + 15}")
+
+        frame = ttk.Frame(tooltip, padding=6, relief=tk.SOLID, borderwidth=1)
+        frame.pack(fill=tk.BOTH, expand=True)
+        ttk.Label(frame, text=tooltip_text, justify=tk.LEFT).pack()
+
+        self._tooltip_window = tooltip
+        tooltip.after(1800, lambda win=tooltip: self._destroy_specific_tooltip(win))
+
+    def _build_tooltip_text(self, record):
+        """Build short tooltip text for the selected point."""
+        paper = _display_value(record.get('Paper Title'))
+        variable = _display_value(record.get('Variable'))
+        coordinates = record.get('_coordinates', {})
+        x_label = self._active_plot_axes.get('x_label', self._active_plot_axes.get('x_axis', 'X'))
+        y_label = self._active_plot_axes.get('y_label', self._active_plot_axes.get('y_axis', 'Y'))
+        z_label = self._active_plot_axes.get('z_label', self._active_plot_axes.get('z_axis'))
+
+        lines = [f"Paper: {paper}", f"Variable: {variable}"]
+        lines.append(f"{x_label}: {_display_value(coordinates.get('x'))}")
+        lines.append(f"{y_label}: {_display_value(coordinates.get('y'))}")
+        if 'z' in coordinates and z_label:
+            lines.append(f"{z_label}: {_display_value(coordinates.get('z'))}")
+        return "\n".join(lines)
+
+    def _destroy_tooltip(self):
+        """Destroy the current tooltip if one is visible."""
+        if self._tooltip_window is not None:
+            self._tooltip_window.destroy()
+            self._tooltip_window = None
+
+    def _destroy_specific_tooltip(self, tooltip):
+        """Destroy a specific tooltip instance only if it is still current."""
+        if self._tooltip_window is tooltip:
+            self._destroy_tooltip()
     
     def _on_save_click(self):
         """Handle save plot button click."""
