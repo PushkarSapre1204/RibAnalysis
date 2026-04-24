@@ -1246,16 +1246,48 @@ class PlotDisplayPanel(ttk.Frame):
             return
 
         tooltip = tk.Toplevel(self)
+        tooltip.withdraw()
         tooltip.overrideredirect(True)
         tooltip.attributes("-topmost", True)
-        tooltip.geometry(f"+{event.x_root + 15}+{event.y_root + 15}")
+        try:
+            x_pos, y_pos = self._resolve_tooltip_position(event)
 
-        frame = ttk.Frame(tooltip, padding=6, relief=tk.SOLID, borderwidth=1)
-        frame.pack(fill=tk.BOTH, expand=True)
-        ttk.Label(frame, text=tooltip_text, justify=tk.LEFT).pack()
+            frame = ttk.Frame(tooltip, padding=6, relief=tk.SOLID, borderwidth=1)
+            frame.pack(fill=tk.BOTH, expand=True)
+            ttk.Label(frame, text=tooltip_text, justify=tk.LEFT).pack()
 
-        self._tooltip_window = tooltip
-        tooltip.after(1800, lambda win=tooltip: self._destroy_specific_tooltip(win))
+            tooltip.geometry(f"+{x_pos}+{y_pos}")
+            tooltip.deiconify()
+
+            self._tooltip_window = tooltip
+            tooltip.after(1800, lambda win=tooltip: self._destroy_specific_tooltip(win))
+        except Exception:
+            try:
+                tooltip.destroy()
+            except Exception:
+                pass
+            self._tooltip_window = None
+
+    def _resolve_tooltip_position(self, event):
+        """Resolve safe screen coordinates for tooltip placement."""
+        x_root = getattr(event, 'x_root', None)
+        y_root = getattr(event, 'y_root', None)
+
+        if x_root is None or y_root is None:
+            gui_event = getattr(event, 'guiEvent', None)
+            x_root = getattr(gui_event, 'x_root', x_root)
+            y_root = getattr(gui_event, 'y_root', y_root)
+
+        if x_root is None or y_root is None:
+            if self.canvas is not None:
+                widget = self.canvas.get_tk_widget()
+                x_root = widget.winfo_pointerx()
+                y_root = widget.winfo_pointery()
+            else:
+                x_root = self.winfo_pointerx()
+                y_root = self.winfo_pointery()
+
+        return int(x_root) + 15, int(y_root) + 15
 
     def _build_tooltip_text(self, record):
         """Build short tooltip text for the selected point."""
@@ -1276,7 +1308,10 @@ class PlotDisplayPanel(ttk.Frame):
     def _destroy_tooltip(self):
         """Destroy the current tooltip if one is visible."""
         if self._tooltip_window is not None:
-            self._tooltip_window.destroy()
+            try:
+                self._tooltip_window.destroy()
+            except tk.TclError:
+                pass
             self._tooltip_window = None
 
     def _destroy_specific_tooltip(self, tooltip):

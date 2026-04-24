@@ -28,6 +28,12 @@ The Exploratory Data Visualiser is an interactive Tkinter GUI for exploring rib 
 - Save plots as PNG (300 DPI), PDF, or other formats
 - Professional figure styling
 
+✅ **Point Inspection**
+- Click any plotted point to inspect its source row
+- A details panel appears to the right of the plot
+- Matching points in dense areas are listed for selection
+- The selected point shows coordinates plus Paper, Variable, Value, Reynolds number, P/e, e/D, Alpha, and Aspect ratio
+
 ## Requirements
 
 - Python 3.8+
@@ -93,6 +99,7 @@ app.mainloop()
 4. **Generate Plot**
    - Click "Generate Plot" button
    - Plot appears in the right panel with legend
+    - Click a plotted point to open the point details panel on the right
 
 5. **Save Plot**
    - Click "Save Plot" to export as PNG (300 DPI), PDF, etc.
@@ -117,6 +124,7 @@ app.mainloop()
 ### 3D Surface
 - Interpolated surface from scattered data
 - Shows underlying surface + individual data points
+- The plotted points remain clickable through the overlaid point markers
 - No binning for surface plots
 
 ## Binning
