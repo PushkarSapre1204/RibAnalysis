@@ -63,10 +63,11 @@ def assign_points_to_bins(df, param_col, bins):
     """Assign bin numbers to each row based on parameter value."""
     bin_assignment = np.zeros(len(df), dtype=int)
 
-    for idx, row in df.iterrows():
+    # Use positional indexing to avoid out-of-bounds when df has non-consecutive index labels.
+    for pos, (_, row) in enumerate(df.iterrows()):
         value = row[param_col]
         if pd.isna(value):
-            bin_assignment[idx] = -1
+            bin_assignment[pos] = -1
             continue
 
         for bin_dict in bins:
@@ -74,7 +75,7 @@ def assign_points_to_bins(df, param_col, bins):
             upper = bin_dict['upper']
             bin_num = bin_dict['bin_number']
             if lower <= value <= upper:
-                bin_assignment[idx] = bin_num
+                bin_assignment[pos] = bin_num
                 break
 
     return bin_assignment
@@ -94,6 +95,30 @@ def get_bin_colors_symbols(n_bins):
         }
 
     return bin_styles
+
+
+def _format_bin_value(value):
+    """Format numeric values compactly for legend labels."""
+    if isinstance(value, (int, np.integer)):
+        return str(int(value))
+    if isinstance(value, (float, np.floating)):
+        if np.isclose(value, round(value)):
+            return str(int(round(value)))
+        return f"{value:g}"
+    return str(value)
+
+
+def get_bin_legend_label(parameter_name, bin_dict):
+    """Build legend label with parameter and single value/range."""
+    lower = bin_dict['lower']
+    upper = bin_dict['upper']
+
+    lower_text = _format_bin_value(lower)
+    upper_text = _format_bin_value(upper)
+
+    if np.isclose(lower, upper):
+        return f"{parameter_name}: {lower_text}"
+    return f"{parameter_name}: {lower_text} - {upper_text}"
 
 
 def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
@@ -117,11 +142,11 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
                 ax.scatter(
                     df[mask][x_axis],
                     df[mask][y_axis],
-                    label=f"Bin {bin_num}",
+                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     alpha=0.6,
                     color=style['color'],
                     marker=style['marker'],
-                    s=100
+                    s=70
                 )
 
         ax.legend(loc='best', framealpha=0.9)
@@ -162,7 +187,7 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
                 ax.plot(
                     subset[x_axis],
                     subset[y_axis],
-                    label=f"Bin {bin_num}",
+                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     marker=style['marker'],
                     alpha=0.6,
                     color=style['color'],
@@ -207,11 +232,11 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                     df[mask][x_axis],
                     df[mask][y_axis],
                     df[mask][z_axis],
-                    label=f"Bin {bin_num}",
+                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     alpha=0.6,
                     color=style['color'],
                     marker=style['marker'],
-                    s=100
+                    s=70
                 )
 
         ax.legend(loc='best', framealpha=0.9)
@@ -227,10 +252,11 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     return fig
 
 
-def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None):
-    """Create 3D surface plot using triangulation."""
+def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None):
+    """Create 3D surface plot using triangulation with optional binning."""
     from mpl_toolkits.mplot3d import Axes3D
     from scipy.interpolate import griddata
+    from matplotlib.patches import Patch
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -240,22 +266,73 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
     
-    # Create grid
-    x = df[x_axis].values
-    y = df[y_axis].values
-    z = df[z_axis].values
-    
-    # Create regular grid
-    xi = np.linspace(x.min(), x.max(), 20)
-    yi = np.linspace(y.min(), y.max(), 20)
-    xi, yi = np.meshgrid(xi, yi)
-    
-    # Interpolate z values
-    zi = griddata((x, y), z, (xi, yi), method='linear')
-    
-    # Plot surface
-    ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
-    ax.scatter(x, y, z, color='red', s=50, alpha=0.5)
+    if bins_config and bins_config['enabled']:
+        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+        legend_handles = []
+
+        for bin_dict in bins_config['bins']:
+            bin_num = bin_dict['bin_number']
+            mask = bin_assignment == bin_num
+            if not mask.any():
+                continue
+
+            style = bin_styles[bin_num]
+            subset = df[mask]
+            x = subset[x_axis].values
+            y = subset[y_axis].values
+            z = subset[z_axis].values
+
+            # Surface per bin when there are enough unique coordinates; otherwise only points.
+            if len(subset) >= 3 and np.unique(x).size > 1 and np.unique(y).size > 1:
+                xi = np.linspace(x.min(), x.max(), 20)
+                yi = np.linspace(y.min(), y.max(), 20)
+                xi, yi = np.meshgrid(xi, yi)
+                zi = griddata((x, y), z, (xi, yi), method='linear')
+
+                if np.isnan(zi).all():
+                    zi = griddata((x, y), z, (xi, yi), method='nearest')
+
+                ax.plot_surface(
+                    xi,
+                    yi,
+                    zi,
+                    color=style['color'],
+                    alpha=0.35,
+                    linewidth=0,
+                    antialiased=True
+                )
+
+            ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=0.55)
+
+            legend_handles.append(
+                Patch(
+                    facecolor=style['color'],
+                    edgecolor=style['color'],
+                    alpha=0.55,
+                    label=get_bin_legend_label(bins_config['parameter'], bin_dict)
+                )
+            )
+
+        if legend_handles:
+            ax.legend(handles=legend_handles, loc='best', framealpha=0.9)
+    else:
+        # Create grid
+        x = df[x_axis].values
+        y = df[y_axis].values
+        z = df[z_axis].values
+
+        # Create regular grid
+        xi = np.linspace(x.min(), x.max(), 20)
+        yi = np.linspace(y.min(), y.max(), 20)
+        xi, yi = np.meshgrid(xi, yi)
+
+        # Interpolate z values
+        zi = griddata((x, y), z, (xi, yi), method='linear')
+
+        # Plot surface
+        ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
+        ax.scatter(x, y, z, color='red', s=35, alpha=0.5)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -1354,7 +1431,7 @@ class VisualisierApp(tk.Tk):
                 if plot_mode == 'scatter':
                     fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
                 else:  # surface
-                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
+                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
             
             # Display plot
             self.plot_display.display_plot(fig)
