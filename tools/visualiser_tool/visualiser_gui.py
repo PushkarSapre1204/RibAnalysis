@@ -35,35 +35,69 @@ COLORS = {
 # HELPER FUNCTIONS FOR PLOTTING (placed here as per plan)
 # ============================================================================
 
-def apply_custom_binning(df, bin_param, method='quantile', n_bins=4):
-    """
-    Apply binning to a dataframe for visualization.
-    
-    Args:
-        df: DataFrame to bin
-        bin_param: Column name to bin on
-        method: 'quantile' or 'manual'
-        n_bins: Number of bins for quantile method
-    
-    Returns:
-        DataFrame with new 'Bin' column
-    """
-    df_copy = df.copy()
-    
-    if bin_param not in df_copy.columns:
-        return df_copy
-    
-    if method == 'quantile':
-        df_copy['Bin'] = pd.qcut(df_copy[bin_param], q=n_bins, labels=False, duplicates='drop')
-    elif method == 'manual':
-        # This would need manual bin ranges - for now use quantile
-        df_copy['Bin'] = pd.qcut(df_copy[bin_param], q=n_bins, labels=False, duplicates='drop')
-    
-    return df_copy
+# ============================================================================
+# BINNING HELPER FUNCTIONS
+# ============================================================================
+
+def validate_bin_continuity(bins):
+    """Validate that bins are continuous, ordered, and non-overlapping."""
+    if not bins:
+        return False, "No bins defined"
+
+    sorted_bins = sorted(bins, key=lambda x: x['lower'])
+
+    for bin_dict in sorted_bins:
+        if bin_dict['lower'] >= bin_dict['upper']:
+            return False, f"Bin {bin_dict['bin_number']}: Lower bound must be less than upper bound"
+
+    for i in range(len(sorted_bins) - 1):
+        current_upper = sorted_bins[i]['upper']
+        next_lower = sorted_bins[i + 1]['lower']
+        if current_upper != next_lower:
+            return False, f"Bins are not continuous: Bin {sorted_bins[i]['bin_number']} ends at {current_upper}, but Bin {sorted_bins[i + 1]['bin_number']} starts at {next_lower}"
+
+    return True, ""
 
 
-def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None, x_label=None, y_label=None):
-    """Create 2D scatter plot."""
+def assign_points_to_bins(df, param_col, bins):
+    """Assign bin numbers to each row based on parameter value."""
+    bin_assignment = np.zeros(len(df), dtype=int)
+
+    for idx, row in df.iterrows():
+        value = row[param_col]
+        if pd.isna(value):
+            bin_assignment[idx] = -1
+            continue
+
+        for bin_dict in bins:
+            lower = bin_dict['lower']
+            upper = bin_dict['upper']
+            bin_num = bin_dict['bin_number']
+            if lower <= value <= upper:
+                bin_assignment[idx] = bin_num
+                break
+
+    return bin_assignment
+
+
+def get_bin_colors_symbols(n_bins):
+    """Return style mapping for each bin number using configured colors and markers."""
+    colors_list = list(COLORS.values())
+    markers_list = MARKERS.copy()
+
+    bin_styles = {}
+    for i in range(n_bins):
+        bin_num = i + 1
+        bin_styles[bin_num] = {
+            'color': colors_list[i % len(colors_list)],
+            'marker': markers_list[i % len(markers_list)]
+        }
+
+    return bin_styles
+
+
+def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
+    """Create 2D scatter plot with optional binning."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
     
@@ -71,17 +105,28 @@ def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None, x_label=None, y_l
     x_display = x_label if x_label else x_axis
     y_display = y_label if y_label else y_axis
     
-    if bin_col is None or bin_col not in df.columns:
-        ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
+    if bins_config and bins_config['enabled']:
+        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+
+        for bin_dict in bins_config['bins']:
+            bin_num = bin_dict['bin_number']
+            mask = bin_assignment == bin_num
+            if mask.any():
+                style = bin_styles[bin_num]
+                ax.scatter(
+                    df[mask][x_axis],
+                    df[mask][y_axis],
+                    label=f"Bin {bin_num}",
+                    alpha=0.6,
+                    color=style['color'],
+                    marker=style['marker'],
+                    s=100
+                )
+
+        ax.legend(loc='best', framealpha=0.9)
     else:
-        bins = df[bin_col].unique()
-        colors_list = list(COLORS.values())
-        for i, bin_val in enumerate(sorted(bins)):
-            mask = df[bin_col] == bin_val
-            color = colors_list[i % len(colors_list)]
-            ax.scatter(df[mask][x_axis], df[mask][y_axis], 
-                      label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
-        ax.legend()
+        ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -92,8 +137,8 @@ def create_custom_2d_scatter(df, x_axis, y_axis, bin_col=None, x_label=None, y_l
     return fig
 
 
-def create_custom_2d_line(df, x_axis, y_axis, bin_col=None, x_label=None, y_label=None):
-    """Create 2D line plot."""
+def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
+    """Create 2D line plot with optional binning."""
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
     
@@ -104,18 +149,29 @@ def create_custom_2d_line(df, x_axis, y_axis, bin_col=None, x_label=None, y_labe
     # Sort by x_axis for sensible line
     df_sorted = df.sort_values(x_axis)
     
-    if bin_col is None or bin_col not in df.columns:
-        ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)
+    if bins_config and bins_config['enabled']:
+        bin_assignment = assign_points_to_bins(df_sorted, bins_config['parameter'], bins_config['bins'])
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+
+        for bin_dict in bins_config['bins']:
+            bin_num = bin_dict['bin_number']
+            mask = bin_assignment == bin_num
+            if mask.any():
+                style = bin_styles[bin_num]
+                subset = df_sorted[mask].sort_values(x_axis)
+                ax.plot(
+                    subset[x_axis],
+                    subset[y_axis],
+                    label=f"Bin {bin_num}",
+                    marker=style['marker'],
+                    alpha=0.6,
+                    color=style['color'],
+                    linewidth=2
+                )
+
+        ax.legend(loc='best', framealpha=0.9)
     else:
-        bins = df_sorted[bin_col].unique()
-        colors_list = list(COLORS.values())
-        for i, bin_val in enumerate(sorted(bins)):
-            mask = df_sorted[bin_col] == bin_val
-            color = colors_list[i % len(colors_list)]
-            subset = df_sorted[mask].sort_values(x_axis)
-            ax.plot(subset[x_axis], subset[y_axis], 
-                   label=f'Bin {int(bin_val)}', marker='o', alpha=0.6, color=color)
-        ax.legend()
+        ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -126,8 +182,8 @@ def create_custom_2d_line(df, x_axis, y_axis, bin_col=None, x_label=None, y_labe
     return fig
 
 
-def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None, x_label=None, y_label=None, z_label=None):
-    """Create 3D scatter plot."""
+def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None):
+    """Create 3D scatter plot with optional binning."""
     from mpl_toolkits.mplot3d import Axes3D
     
     # Use display labels if provided, otherwise use column names
@@ -138,17 +194,29 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, bin_col=None, x_label=N
     fig = Figure(figsize=(10, 8), dpi=100)
     ax = fig.add_subplot(111, projection='3d')
     
-    if bin_col is None or bin_col not in df.columns:
-        ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
+    if bins_config and bins_config['enabled']:
+        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+
+        for bin_dict in bins_config['bins']:
+            bin_num = bin_dict['bin_number']
+            mask = bin_assignment == bin_num
+            if mask.any():
+                style = bin_styles[bin_num]
+                ax.scatter(
+                    df[mask][x_axis],
+                    df[mask][y_axis],
+                    df[mask][z_axis],
+                    label=f"Bin {bin_num}",
+                    alpha=0.6,
+                    color=style['color'],
+                    marker=style['marker'],
+                    s=100
+                )
+
+        ax.legend(loc='best', framealpha=0.9)
     else:
-        bins = df[bin_col].unique()
-        colors_list = list(COLORS.values())
-        for i, bin_val in enumerate(sorted(bins)):
-            mask = df[bin_col] == bin_val
-            color = colors_list[i % len(colors_list)]
-            ax.scatter(df[mask][x_axis], df[mask][y_axis], df[mask][z_axis],
-                      label=f'Bin {int(bin_val)}', alpha=0.6, color=color)
-        ax.legend()
+        ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
@@ -446,10 +514,10 @@ class AxisConfigPanel(ttk.Frame):
         }
 
 
-class BinningPanel(ttk.Frame):
-    """Panel for configuring binning parameters."""
+class BinningConfigPanel(ttk.Frame):
+    """Panel for configuring automatic/manual binning with validation."""
     
-    def __init__(self, parent, on_binning_change=None):
+    def __init__(self, parent, on_bins_set=None):
         """
         Initialize binning panel.
         
@@ -553,11 +621,7 @@ class BinningPanel(ttk.Frame):
         is_enabled = self.binning_enabled_var.get()
         new_state = tk.NORMAL if is_enabled else tk.DISABLED
         
-        # Disable/enable the specific widgets we created
         self.bin_param_dropdown.config(state="readonly" if is_enabled else tk.DISABLED)
-        self.method_quantile_btn.config(state=new_state)
-        self.method_manual_btn.config(state=new_state)
-        self.n_bins_spinbox.config(state=new_state)
         
         # Find and update radio buttons in main_frame
         for widget in self.winfo_children()[0].winfo_children():  # main_frame children
@@ -608,7 +672,7 @@ class BinningPanel(ttk.Frame):
         
         # Right column: bins container frame
         self.bins_container = ttk.Frame(self.manual_scrollable_frame)
-        self.bins_container.grid(row=0, column=1, sticky='ns    ew', padx=2, pady=3)
+        self.bins_container.grid(row=0, column=1, sticky='nsew', padx=2, pady=3)
         
         # Add 1 default bin
         self._add_bin_input()
@@ -782,10 +846,10 @@ class BinningPanel(ttk.Frame):
             return None
         
         return {
-            'enabled': self.binning_enabled_var.get(),
+            'enabled': True,
             'parameter': self.bin_param_var.get(),
-            'method': self.binning_method_var.get(),
-            'n_bins': int(self.n_bins_var.get()),
+            'mode': self.binning_mode_var.get(),
+            'bins': self.current_bins
         }
 
 
@@ -886,27 +950,21 @@ class VisualisierApp(tk.Tk):
         self._load_initial_data()
     
     def _find_data_file(self):
-        """Find the research data file."""
-        # Try to find Rib Data.xlsx or similar
+        """Find the research data file (clean_data_master.csv from preprocessing pipeline)."""
         workspace_root = Path(__file__).parent.parent.parent
-        
-        possible_files = [
-            workspace_root / "data" / "Rib Data.xlsx",
-            workspace_root / "data" / "rib_data.xlsx",
-            workspace_root / "data" / "Rib_Data.xlsx",
-        ]
-        
-        for file_path in possible_files:
-            if file_path.exists():
-                self.data_file = str(file_path)
-                return
-        
-        # If not found, try to look in data directory
-        data_dir = workspace_root / "data"
-        if data_dir.exists():
-            xlsx_files = list(data_dir.glob("*.xlsx"))
-            if xlsx_files:
-                self.data_file = str(xlsx_files[0])
+
+        staging_dir = workspace_root / "Staging"
+        master_file = staging_dir / "clean_data_master.csv"
+
+        if master_file.exists():
+            self.data_file = str(master_file)
+            return
+
+        if staging_dir.exists():
+            csv_files = list(staging_dir.glob("clean_data*.csv"))
+            if csv_files:
+                csv_files = sorted(csv_files, key=lambda x: (x.name != "clean_data_master.csv", x.name))
+                self.data_file = str(csv_files[0])
                 return
     
     def _create_layout(self):
@@ -972,13 +1030,6 @@ class VisualisierApp(tk.Tk):
                        value="surface", state=tk.DISABLED)
         self.mode_surface_button.pack(side=tk.LEFT, padx=5)
         
-        ttk.Separator(row2, orient=tk.VERTICAL).pack(side=tk.LEFT, fill=tk.Y, padx=10)
-        
-        self.binning_enabled_var = tk.BooleanVar(value=False)
-        ttk.Checkbutton(row2, text="Enable Binning", 
-                       variable=self.binning_enabled_var,
-                       command=self._on_binning_toggle).pack(side=tk.LEFT, padx=5)
-        
         # ====== Row 3: Axes Configuration ======
         row3 = ttk.Frame(left_side)
         row3.pack(fill=tk.X, pady=2)
@@ -1001,29 +1052,6 @@ class VisualisierApp(tk.Tk):
                                             state="readonly", width=15)
         self.z_axis_dropdown.config(state=tk.DISABLED)
         self.z_axis_dropdown.pack(side=tk.LEFT, padx=5)
-        
-        # ====== Row 4: Binning Configuration ======
-        row4 = ttk.Frame(left_side)
-        row4.pack(fill=tk.X, pady=5)
-        
-        ttk.Label(row4, text="Bin Param:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
-        self.bin_param_var = tk.StringVar()
-        self.bin_param_dropdown = ttk.Combobox(row4, textvariable=self.bin_param_var,
-                                               state="disabled", width=15)
-        self.bin_param_dropdown.pack(side=tk.LEFT, padx=5)
-        
-        ttk.Label(row4, text="Method:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
-        self.binning_method_var = tk.StringVar(value="quantile")
-        ttk.Radiobutton(row4, text="Quantile", variable=self.binning_method_var, 
-                       value="quantile", state=tk.DISABLED).pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(row4, text="Manual", variable=self.binning_method_var, 
-                       value="manual", state=tk.DISABLED).pack(side=tk.LEFT, padx=5)
-        
-        ttk.Label(row4, text="N Bins:", font=("Arial", 9, "bold")).pack(side=tk.LEFT, padx=5)
-        self.n_bins_var = tk.StringVar(value="4")
-        self.n_bins_spinbox = ttk.Spinbox(row4, from_=2, to=10, textvariable=self.n_bins_var, 
-                                          width=5, state=tk.DISABLED)
-        self.n_bins_spinbox.pack(side=tk.LEFT, padx=5)
         
         # ====== Row 5: Action Buttons ======
         row5 = ttk.Frame(left_side)
@@ -1073,12 +1101,61 @@ class VisualisierApp(tk.Tk):
         self._update_selected_papers_display_listbox()
         self._refresh_axis_dropdowns()
         self.binning_panel.set_selected_papers(self.selected_papers)
+
+    def _remove_paper(self):
+        """Remove last selected paper from list."""
+        if self.selected_papers:
+            self.selected_papers.pop()
+            self._update_selected_papers_display_listbox()
+            self._refresh_axis_dropdowns()
+            self.binning_panel.set_selected_papers(self.selected_papers)
+
+    def _clear_papers(self):
+        """Clear all selected papers."""
+        self.selected_papers = []
+        self._update_selected_papers_display_listbox()
+        self._refresh_axis_dropdowns()
+        self.binning_panel.set_selected_papers(self.selected_papers)
     
     def _update_selected_papers_display_listbox(self):
         """Update the listbox display of selected papers."""
         self.selected_papers_listbox.delete(0, tk.END)
         for i, paper in enumerate(self.selected_papers, 1):
             self.selected_papers_listbox.insert(tk.END, f"{i}. {paper}")
+
+    def _refresh_axis_dropdowns(self):
+        """Refresh axis dropdowns based on currently selected papers."""
+        if not self.selected_papers:
+            papers_for_symbols = self.all_papers
+        else:
+            papers_for_symbols = self.selected_papers
+
+        input_vars = [
+            'Reynolds number (Re)',
+            'P/e',
+            'e/D',
+            'Alpha',
+            'Aspect ratio',
+            'Number of ribbed walls'
+        ]
+
+        output_vars = data_loader.get_available_symbols(self.df, papers_for_symbols)
+
+        axis_display_list = (
+            ['INPUT VARIABLES:'] +
+            input_vars +
+            ['─────────────────'] +
+            ['OUTPUT VARIABLES:'] +
+            output_vars
+        )
+
+        self.axis_mapping = {col: col for col in input_vars}
+        for symbol in output_vars:
+            self.axis_mapping[symbol] = ('symbol', symbol)
+
+        self.x_axis_dropdown['values'] = axis_display_list
+        self.y_axis_dropdown['values'] = axis_display_list
+        self.z_axis_dropdown['values'] = axis_display_list
     
     def _on_plot_type_change(self):
         """Handle plot type change (2D vs 3D)."""
@@ -1103,19 +1180,6 @@ class VisualisierApp(tk.Tk):
         elif not is_3d and self.plot_mode_var.get() == "surface":
             self.plot_mode_var.set("scatter")
     
-    def _on_binning_toggle(self):
-        """Handle binning enable/disable toggle."""
-        is_enabled = self.binning_enabled_var.get()
-        new_state = tk.NORMAL if is_enabled else tk.DISABLED
-        
-        self.bin_param_dropdown.config(state="readonly" if is_enabled else tk.DISABLED)
-        self.n_bins_spinbox.config(state=new_state)
-        
-        # Update radio buttons state
-        for widget in self.binning_radio_buttons:
-            if isinstance(widget, ttk.Radiobutton):
-                widget.config(state=new_state)
-    
     def _save_plot(self):
         """Save the current plot."""
         self.plot_display._on_save_click()
@@ -1128,8 +1192,9 @@ class VisualisierApp(tk.Tk):
         """Load initial data and populate UI."""
         if not self.data_file:
             messagebox.showwarning("No Data", 
-                                   "Could not find research data file.\n"
-                                   "Please ensure Rib Data.xlsx is in the data/ directory.")
+                                   "Could not find processed research data file.\n"
+                                   "Please ensure clean_data_master.csv is in the Staging/ directory.\n"
+                                   "Run the preprocessing pipeline to generate it.")
             return
         
         try:
@@ -1176,6 +1241,7 @@ class VisualisierApp(tk.Tk):
             # Set up binning panel with available parameters
             self.binning_panel.set_dataframe(self.df)
             self.binning_panel.set_available_parameters(input_vars)
+            self.binning_panel.set_selected_papers(self.selected_papers)
             
             # Set defaults
             if len(input_vars) > 0:
@@ -1188,15 +1254,16 @@ class VisualisierApp(tk.Tk):
                 if z_idx < len(axis_display_list):
                     self.z_axis_dropdown.current(z_idx)
             
-            if len(input_vars) > 0:
-                self.bin_param_dropdown.current(0)
-            
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load data:\n{str(e)}")
     
     def _on_config_change(self):
         """Handle configuration changes."""
         # Could enable/disable generate button based on validation
+        pass
+
+    def _on_bins_set(self):
+        """Callback when bins are set in binning panel."""
         pass
     
     def _generate_plot(self):
@@ -1280,12 +1347,12 @@ class VisualisierApp(tk.Tk):
             # Generate plot
             if plot_type == '2d':
                 if plot_mode == 'scatter':
-                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, bin_col, x_label, y_label)
+                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
                 else:  # line
-                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, bin_col, x_label, y_label)
+                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
             else:  # 3d
                 if plot_mode == 'scatter':
-                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, bin_col, x_label, y_label, z_label)
+                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
                 else:  # surface
                     fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
             
