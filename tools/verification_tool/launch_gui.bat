@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM Navigate to root directory
-cd /d "c:\Users\Pushkar\OneDrive - KTH\Thesis\RibAnalysis"
+cd /d "%~dp0..\.."
 
 REM Activate virtual environment
 call .venv\Scripts\activate.bat

@@ -8,13 +8,27 @@ Provides an interactive interface to:
 - Optionally save plots to disk
 """
 
+from pathlib import Path
+import os
+import sys
+
+SCRIPT_PATH = Path(__file__).resolve()
+PROJECT_ROOT = SCRIPT_PATH.parents[2]
+VENV_PYTHON = PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"
+
+if VENV_PYTHON.exists() and Path(sys.executable).resolve() != VENV_PYTHON.resolve():
+    os.execv(str(VENV_PYTHON), [str(VENV_PYTHON), str(SCRIPT_PATH), *sys.argv[1:]])
+
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from ribs_core import data_loader as rdv
-from pathlib import Path
 import traceback
+
+# Add parent directory to path for ribs_core imports.
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from ribs_core import data_loader as rdv
 
 class ResearchVisualizerGUI:
     def __init__(self, root):
