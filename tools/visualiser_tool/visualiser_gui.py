@@ -9,7 +9,7 @@ Provides interactive Tkinter interface with 4 main panels:
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+from tkinter import ttk, messagebox, filedialog, simpledialog
 import matplotlib.pyplot as plt
 from matplotlib.backend_bases import MouseButton
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -18,12 +18,26 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import sys
+import json
+import shutil
 
 # Add parent directory to path for ribs_core imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from ribs_core import data_loader
 from ribs_core.config import MARKERS
+from ribs_core.preprocessor import MetaAnalysisPreprocessor
+from ribs_core.project_manager import (
+    FigureSpec,
+    ProjectState,
+    build_project_paths,
+    sanitize_project_name,
+    load_project_file,
+    save_project_file,
+)
+
+# Forward-declare ImportDialog name so static checks won't flag references
+ImportDialog = None
 
 # Define a set of distinct colors for binning visualization
 COLORS = {
@@ -1358,15 +1372,35 @@ class VisualisierApp(tk.Tk):
         self.selected_papers = []
         self.all_papers = []
         self.axis_mapping = {}  # Maps display names to actual column names or symbols
+        self.project = ProjectState.blank()
         
-        # Find data file
-        self._find_data_file()
-        
+        # Create menu and UI
+        self._create_menu_bar()
         # Create main layout
         self._create_layout()
         
         # Load initial data
         self._load_initial_data()
+
+    def _create_menu_bar(self):
+        """Create the main File/Edit menu bar."""
+        menu_bar = tk.Menu(self)
+
+        file_menu = tk.Menu(menu_bar, tearoff=0)
+        file_menu.add_command(label="New Project", command=lambda: self._new_project())
+        file_menu.add_command(label="Open Project...", command=lambda: self._open_project())
+        file_menu.add_command(label="Save Project", command=lambda: self._save_project())
+        file_menu.add_command(label="Save As...", command=lambda: self._save_project_as())
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.destroy)
+
+        edit_menu = tk.Menu(menu_bar, tearoff=0)
+        edit_menu.add_command(label="Import Papers", command=lambda: self._import_project_data())
+        edit_menu.add_command(label="Export Figures", command=lambda: self._export_figures())
+
+        menu_bar.add_cascade(label="File", menu=file_menu)
+        menu_bar.add_cascade(label="Edit", menu=edit_menu)
+        self.config(menu=menu_bar)
     
     def _find_data_file(self):
         """Find the research data file (clean_data_master.csv from preprocessing pipeline)."""
@@ -1476,12 +1510,12 @@ class VisualisierApp(tk.Tk):
         row5 = ttk.Frame(left_side)
         row5.pack(fill=tk.X, pady=2)
         
-        ttk.Button(row5, text="Generate Plot", command=self._generate_plot).pack(side=tk.LEFT, padx=5)
-        ttk.Button(row5, text="Save Plot", command=self._save_plot).pack(side=tk.LEFT, padx=5)
-        ttk.Button(row5, text="Clear", command=self._clear_plot).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Generate Plot", command=lambda: self._generate_plot()).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Save Plot", command=lambda: self._save_plot()).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Clear", command=lambda: self._clear_plot()).pack(side=tk.LEFT, padx=5)
         
         # ====== Binning Controls (below plot controls in left_side) ======
-        self.binning_panel = BinningConfigPanel(left_side, on_bins_set=self._on_bins_set)
+        self.binning_panel = BinningConfigPanel(left_side, on_bins_set=lambda: self._on_bins_set())
         self.binning_panel.pack(fill=tk.X, pady=(5, 0))
         
         # RIGHT SIDE: Selected Papers List
@@ -1608,23 +1642,281 @@ class VisualisierApp(tk.Tk):
         self.plot_display.clear_plot()
     
     def _load_initial_data(self):
-        """Load initial data and populate UI."""
-        if not self.data_file:
-            messagebox.showwarning("No Data", 
-                                   "Could not find processed research data file.\n"
-                                   "Please ensure clean_data_master.csv is in the Staging/ directory.\n"
-                                   "Run the preprocessing pipeline to generate it.")
+        """Initialize the UI in a blank project state."""
+        self.df = None
+        self.data_file = None
+        self.selected_papers = []
+        self.all_papers = []
+        self.axis_mapping = {}
+
+        self.paper_dropdown['values'] = []
+        self.x_axis_dropdown['values'] = []
+        self.y_axis_dropdown['values'] = []
+        self.z_axis_dropdown['values'] = []
+        self.x_axis_var.set('')
+        self.y_axis_var.set('')
+        self.z_axis_var.set('')
+
+        self.binning_panel.set_dataframe(None)
+        self.binning_panel.set_available_parameters([])
+        self.binning_panel.set_selected_papers([])
+        self._update_selected_papers_display_listbox()
+
+    def _new_project(self):
+        """Create a new blank project and set up its folder structure."""
+        base_dir = filedialog.askdirectory(title="Select project directory")
+        if not base_dir:
             return
-        
+
+        project_name = simpledialog.askstring("New Project", "Enter project name:", parent=self)
+        if not project_name:
+            return
+
+        project_root, data_dir, project_file = build_project_paths(Path(base_dir), project_name)
+        project_root.mkdir(parents=True, exist_ok=True)
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+        self.project = ProjectState(
+            name=sanitize_project_name(project_name),
+            root_dir=project_root,
+            data_dir=data_dir,
+            project_file=project_file,
+        )
+        self._load_initial_data()
+        self._sync_project_from_ui()
+        save_project_file(self.project)
+        self.project.dirty = False
+
+    def _open_project(self):
+        """Open an existing project from a .prj file."""
+        project_file = filedialog.askopenfilename(
+            title="Open project file",
+            filetypes=[("Project files", "*.prj")],
+        )
+        if not project_file:
+            return
+
         try:
-            self.df = data_loader.load_research_data(self.data_file)
-            
-            # Get available papers
+            self.project = load_project_file(Path(project_file))
+            self._reload_project_data()
+            self.selected_papers = list(self.project.selected_papers)
+            self._update_selected_papers_display_listbox()
+            self._refresh_axis_dropdowns()
+            self.binning_panel.set_selected_papers(self.selected_papers)
+            self.project.dirty = False
+        except Exception as e:
+            messagebox.showerror("Open Project", f"Failed to open project:\n{str(e)}")
+
+    def _save_project(self):
+        """Save the active project state to its current location."""
+        if not self.project.is_loaded():
+            self._save_project_as()
+            return
+
+        self._sync_project_from_ui()
+        save_project_file(self.project)
+        self.project.dirty = False
+        messagebox.showinfo("Project Saved", f"Saved project to {self.project.project_file}")
+
+    def _save_project_as(self):
+        """Save the active project state into a new project directory."""
+        base_dir = filedialog.askdirectory(title="Choose project save location")
+        if not base_dir:
+            return
+
+        project_name = simpledialog.askstring("Save Project As", "Enter project name:", parent=self)
+        if not project_name:
+            return
+
+        project_root, data_dir, project_file = build_project_paths(Path(base_dir), project_name)
+        project_root.mkdir(parents=True, exist_ok=True)
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+        if self.project.data_dir and self.project.data_dir.exists():
+            for item in self.project.data_dir.iterdir():
+                destination = data_dir / item.name
+                if item.is_dir():
+                    shutil.copytree(item, destination, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(item, destination)
+
+        self.project.name = sanitize_project_name(project_name)
+        self.project.root_dir = project_root
+        self.project.data_dir = data_dir
+        self.project.project_file = project_file
+        self._sync_project_from_ui()
+        save_project_file(self.project)
+        self.project.dirty = False
+        messagebox.showinfo("Project Saved", f"Saved project to {self.project.project_file}")
+
+    def _import_project_data(self):
+        """Open the import dialog to select raw data and metadata files."""
+        if not self.project.is_loaded():
+            messagebox.showwarning("No Project", "Create or open a project before importing data.")
+            return
+
+        ImportDialog(self, on_complete=self._perform_import)
+
+    def _perform_import(self, raw_file: str, metadata_files: list):
+        """Perform the actual import after the dialog completes."""
+        try:
+            if not raw_file or not metadata_files:
+                return
+
+            paper_folder = self.project.next_paper_name()
+            paper_dir = self.project.data_dir / paper_folder
+            paper_dir.mkdir(parents=True, exist_ok=True)
+
+            # Normalize raw file to CSV filename for pipeline compatibility
+            dest_raw = paper_dir / "raw_data.csv"
+            shutil.copy2(raw_file, dest_raw)
+
+            for index, metadata_file in enumerate(metadata_files):
+                destination_name = "manifest.json" if index == 0 else f"metadata_{index + 1}.json"
+                shutil.copy2(metadata_file, paper_dir / destination_name)
+
+            # Run preprocessing on the project's Data folder
+            self._run_project_preprocessor()
+            # Reload master file if generated
+            self._reload_project_data()
+            self.project.dirty = True
+            messagebox.showinfo("Import Complete", f"Imported into {paper_dir}")
+
+        except Exception as e:
+            messagebox.showerror("Import Error", f"Failed to import files:\n{e}")
+
+
+class ImportDialog(tk.Toplevel):
+    """Two-step dialog for importing a raw data file and metadata JSON files.
+
+    Step 1: Show message "Select raw data file (.xlsx, .csv)" with a Browse
+    button. Browse opens a folder chooser; files in the folder are listed and the
+    user picks a CSV/XLSX file from the list.
+
+    Step 2: Ask the user to pick one or more metadata JSON files, then confirm.
+    """
+
+    def __init__(self, parent, on_complete=None):
+        super().__init__(parent)
+        self.title("Import Data")
+        self.parent = parent
+        self.on_complete = on_complete
+        self.raw_file = None
+        self.metadata_files = []
+
+        self._build_ui()
+        self.transient(parent)
+        self.grab_set()
+        # do not block the caller; return to allow mainloop to continue
+
+    def _build_ui(self):
+        frm = ttk.Frame(self, padding=10)
+        frm.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(frm, text="Select raw data file (.xlsx, .csv)").pack(anchor=tk.W)
+
+        browse_row = ttk.Frame(frm)
+        browse_row.pack(fill=tk.X, pady=5)
+        self.folder_var = tk.StringVar()
+        ttk.Entry(browse_row, textvariable=self.folder_var, width=60, state='readonly').pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(browse_row, text="Browse", command=self._on_browse_folder).pack(side=tk.LEFT)
+
+        self.files_listbox = tk.Listbox(frm, height=6)
+        self.files_listbox.pack(fill=tk.BOTH, expand=True, pady=(5, 5))
+
+        select_row = ttk.Frame(frm)
+        select_row.pack(fill=tk.X)
+        ttk.Button(select_row, text="Select Raw File", command=self._select_raw_from_list).pack(side=tk.LEFT)
+        ttk.Button(select_row, text="Next: Select Metadata", command=self._on_next).pack(side=tk.RIGHT)
+
+    def _on_browse_folder(self):
+        folder = filedialog.askdirectory(title="Browse folder containing raw data")
+        if not folder:
+            return
+
+        self.folder_var.set(folder)
+        p = Path(folder)
+        candidates = sorted([str(f.name) for f in p.iterdir() if f.is_file() and f.suffix.lower() in ('.csv', '.xlsx', '.xls')])
+        self.files_listbox.delete(0, tk.END)
+        for f in candidates:
+            self.files_listbox.insert(tk.END, f)
+
+    def _select_raw_from_list(self):
+        sel = self.files_listbox.curselection()
+        if not sel:
+            messagebox.showwarning("Select File", "Please select a raw data file from the list.")
+            return
+
+        filename = self.files_listbox.get(sel[0])
+        folder = self.folder_var.get()
+        self.raw_file = str(Path(folder) / filename)
+        messagebox.showinfo("Raw File Selected", f"Selected: {self.raw_file}")
+
+    def _on_next(self):
+        if not self.raw_file:
+            messagebox.showwarning("No Raw File", "Please select a raw data file first.")
+            return
+
+        metadata = filedialog.askopenfilenames(title="Select metadata files (.json)", filetypes=[("JSON files", "*.json")])
+        if not metadata:
+            return
+
+        self.metadata_files = list(metadata)
+
+        if messagebox.askyesno("Confirm Import", f"Import raw file:\n{self.raw_file}\nwith {len(self.metadata_files)} metadata file(s)?"):
+            if self.on_complete:
+                self.on_complete(self.raw_file, self.metadata_files)
+            self.destroy()
+
+    def _export_figures(self):
+        """Export the currently displayed figure as an image file."""
+        self.plot_display._on_save_click()
+
+    def _sync_project_from_ui(self):
+        """Store the current UI state into the project model."""
+        self.project.selected_papers = list(self.selected_papers)
+        self.project.available_papers = list(self.all_papers)
+
+        figure_spec = self._build_active_figure_spec()
+        self.project.figures = [figure_spec] if figure_spec else []
+
+    def _build_active_figure_spec(self):
+        """Build a project figure definition from the current plot controls."""
+        if not self.selected_papers or not self.x_axis_var.get() or not self.y_axis_var.get():
+            return None
+
+        return FigureSpec(
+            papers_included=list(self.selected_papers),
+            x_variable=self.x_axis_var.get(),
+            y_variable=self.y_axis_var.get(),
+            z_variable=self.z_axis_var.get(),
+            plot_representation=f"{self.plot_type_var.get()}_{self.plot_mode_var.get()}",
+            binning_data=self.binning_panel.get_bins_config() or {},
+        )
+
+    def _run_project_preprocessor(self):
+        """Run preprocessing against the project's Data folder."""
+        if not self.project.data_dir:
+            return
+
+        preprocessor = MetaAnalysisPreprocessor(self.project.data_dir, verbose=False)
+        preprocessor.run_all_papers()
+
+    def _reload_project_data(self):
+        """Reload the project dataframe and UI from the project's master CSV."""
+        if not self.project.data_dir:
+            return
+
+        master_file = self.project.data_dir / "clean_data_master.csv"
+        if not master_file.exists():
+            return
+
+        try:
+            self.df = data_loader.load_research_data(str(master_file))
             if 'Paper Title' in self.df.columns:
                 self.all_papers = sorted(self.df['Paper Title'].unique().tolist())
                 self.paper_dropdown['values'] = self.all_papers
-            
-            # Build combined axis dropdown list with input and output variables
+
             input_vars = [
                 'Reynolds number (Re)',
                 'P/e',
@@ -1633,48 +1925,34 @@ class VisualisierApp(tk.Tk):
                 'Aspect ratio',
                 'Number of ribbed walls'
             ]
-            
-            # Get output variables (symbols) from the data
             output_vars = data_loader.get_available_symbols(self.df, self.all_papers)
-            
-            # Build combined display list with sections
+
             axis_display_list = (
-                ['INPUT VARIABLES:'] + 
-                input_vars + 
-                ['─────────────────'] +  # Separator
-                ['OUTPUT VARIABLES:'] + 
+                ['INPUT VARIABLES:'] +
+                input_vars +
+                ['─────────────────'] +
+                ['OUTPUT VARIABLES:'] +
                 output_vars
             )
-            
-            # Build mapping from display names to actual column names
+
             self.axis_mapping = {col: col for col in input_vars}
-            # Output variables map to themselves (we'll handle them specially in plotting)
             for symbol in output_vars:
-                self.axis_mapping[symbol] = ('symbol', symbol)  # Tuple to indicate it's a symbol
-            
-            # Set axis dropdowns with combined list
+                self.axis_mapping[symbol] = ('symbol', symbol)
+
             self.x_axis_dropdown['values'] = axis_display_list
             self.y_axis_dropdown['values'] = axis_display_list
             self.z_axis_dropdown['values'] = axis_display_list
-            
-            # Set up binning panel with available parameters
             self.binning_panel.set_dataframe(self.df)
             self.binning_panel.set_available_parameters(input_vars)
             self.binning_panel.set_selected_papers(self.selected_papers)
-            
-            # Set defaults
-            if len(input_vars) > 0:
-                self.x_axis_dropdown.current(1)  # Skip header
-            if len(input_vars) > 1:
-                self.y_axis_dropdown.current(2)  # Skip header and first item
-            if len(input_vars) > 2 and len(output_vars) > 0:
-                # Set Z axis to first output variable
-                z_idx = len(input_vars) + 2  # After input vars and separator
-                if z_idx < len(axis_display_list):
-                    self.z_axis_dropdown.current(z_idx)
-            
+            self.paper_dropdown['values'] = self.all_papers
+
+            if self.selected_papers:
+                self._update_selected_papers_display_listbox()
+                self._refresh_axis_dropdowns()
+
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to load data:\n{str(e)}")
+            messagebox.showerror("Error", f"Failed to reload project data:\n{str(e)}")
     
     def _on_config_change(self):
         """Handle configuration changes."""
