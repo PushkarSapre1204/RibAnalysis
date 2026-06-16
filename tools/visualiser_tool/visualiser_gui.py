@@ -1785,89 +1785,6 @@ class VisualisierApp(tk.Tk):
         except Exception as e:
             messagebox.showerror("Import Error", f"Failed to import files:\n{e}")
 
-
-class ImportDialog(tk.Toplevel):
-    """Two-step dialog for importing a raw data file and metadata JSON files.
-
-    Step 1: Show message "Select raw data file (.xlsx, .csv)" with a Browse
-    button. Browse opens a folder chooser; files in the folder are listed and the
-    user picks a CSV/XLSX file from the list.
-
-    Step 2: Ask the user to pick one or more metadata JSON files, then confirm.
-    """
-
-    def __init__(self, parent, on_complete=None):
-        super().__init__(parent)
-        self.title("Import Data")
-        self.parent = parent
-        self.on_complete = on_complete
-        self.raw_file = None
-        self.metadata_files = []
-
-        self._build_ui()
-        self.transient(parent)
-        self.grab_set()
-        # do not block the caller; return to allow mainloop to continue
-
-    def _build_ui(self):
-        frm = ttk.Frame(self, padding=10)
-        frm.pack(fill=tk.BOTH, expand=True)
-
-        ttk.Label(frm, text="Select raw data file (.xlsx, .csv)").pack(anchor=tk.W)
-
-        browse_row = ttk.Frame(frm)
-        browse_row.pack(fill=tk.X, pady=5)
-        self.folder_var = tk.StringVar()
-        ttk.Entry(browse_row, textvariable=self.folder_var, width=60, state='readonly').pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(browse_row, text="Browse", command=self._on_browse_folder).pack(side=tk.LEFT)
-
-        self.files_listbox = tk.Listbox(frm, height=6)
-        self.files_listbox.pack(fill=tk.BOTH, expand=True, pady=(5, 5))
-
-        select_row = ttk.Frame(frm)
-        select_row.pack(fill=tk.X)
-        ttk.Button(select_row, text="Select Raw File", command=self._select_raw_from_list).pack(side=tk.LEFT)
-        ttk.Button(select_row, text="Next: Select Metadata", command=self._on_next).pack(side=tk.RIGHT)
-
-    def _on_browse_folder(self):
-        folder = filedialog.askdirectory(title="Browse folder containing raw data")
-        if not folder:
-            return
-
-        self.folder_var.set(folder)
-        p = Path(folder)
-        candidates = sorted([str(f.name) for f in p.iterdir() if f.is_file() and f.suffix.lower() in ('.csv', '.xlsx', '.xls')])
-        self.files_listbox.delete(0, tk.END)
-        for f in candidates:
-            self.files_listbox.insert(tk.END, f)
-
-    def _select_raw_from_list(self):
-        sel = self.files_listbox.curselection()
-        if not sel:
-            messagebox.showwarning("Select File", "Please select a raw data file from the list.")
-            return
-
-        filename = self.files_listbox.get(sel[0])
-        folder = self.folder_var.get()
-        self.raw_file = str(Path(folder) / filename)
-        messagebox.showinfo("Raw File Selected", f"Selected: {self.raw_file}")
-
-    def _on_next(self):
-        if not self.raw_file:
-            messagebox.showwarning("No Raw File", "Please select a raw data file first.")
-            return
-
-        metadata = filedialog.askopenfilenames(title="Select metadata files (.json)", filetypes=[("JSON files", "*.json")])
-        if not metadata:
-            return
-
-        self.metadata_files = list(metadata)
-
-        if messagebox.askyesno("Confirm Import", f"Import raw file:\n{self.raw_file}\nwith {len(self.metadata_files)} metadata file(s)?"):
-            if self.on_complete:
-                self.on_complete(self.raw_file, self.metadata_files)
-            self.destroy()
-
     def _export_figures(self):
         """Export the currently displayed figure as an image file."""
         self.plot_display._on_save_click()
@@ -1953,7 +1870,35 @@ class ImportDialog(tk.Toplevel):
 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to reload project data:\n{str(e)}")
-    
+
+    def _perform_import(self, raw_file: str, metadata_files: list):
+        """Perform the actual import after the dialog completes."""
+        try:
+            if not raw_file or not metadata_files:
+                return
+
+            paper_folder = self.project.next_paper_name()
+            paper_dir = self.project.data_dir / paper_folder
+            paper_dir.mkdir(parents=True, exist_ok=True)
+
+            # Normalize raw file to CSV filename for pipeline compatibility
+            dest_raw = paper_dir / "raw_data.csv"
+            shutil.copy2(raw_file, dest_raw)
+
+            for index, metadata_file in enumerate(metadata_files):
+                destination_name = "manifest.json" if index == 0 else f"metadata_{index + 1}.json"
+                shutil.copy2(metadata_file, paper_dir / destination_name)
+
+            # Run preprocessing on the project's Data folder
+            self._run_project_preprocessor()
+            # Reload master file if generated
+            self._reload_project_data()
+            self.project.dirty = True
+            messagebox.showinfo("Import Complete", f"Imported into {paper_dir}")
+
+        except Exception as e:
+            messagebox.showerror("Import Error", f"Failed to import files:\n{e}")
+
     def _on_config_change(self):
         """Handle configuration changes."""
         # Could enable/disable generate button based on validation
@@ -1962,7 +1907,7 @@ class ImportDialog(tk.Toplevel):
     def _on_bins_set(self):
         """Callback when bins are set in binning panel."""
         pass
-    
+
     def _generate_plot(self):
         """Generate plot based on current configuration."""
         try:
@@ -1970,119 +1915,202 @@ class ImportDialog(tk.Toplevel):
             if not self.selected_papers:
                 messagebox.showwarning("No Papers", "Please select at least one paper.")
                 return
-            
+
+            if self.df is None:
+                messagebox.showwarning("No Data", "No project data is loaded yet.")
+                return
+
             # Filter data by selected papers
             filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
-            
+
             # Get axes configuration (display values)
             x_axis_display = self.x_axis_var.get()
             y_axis_display = self.y_axis_var.get()
             z_axis_display = self.z_axis_var.get()
             plot_type = self.plot_type_var.get()
             plot_mode = self.plot_mode_var.get()
-            
+
             # Validate axes
             if not x_axis_display or not y_axis_display:
-                messagebox.showwarning("Missing Axes", 
-                                       "Please select X and Y axes.")
+                messagebox.showwarning("Missing Axes", "Please select X and Y axes.")
                 return
-            
+
             if plot_type == '3d' and not z_axis_display:
-                messagebox.showwarning("Missing Axis", 
-                                       "Please select Z axis for 3D plots.")
+                messagebox.showwarning("Missing Axis", "Please select Z axis for 3D plots.")
                 return
-            
+
             # Resolve axis display names to actual column names
             x_axis, x_is_symbol = self._resolve_axis(x_axis_display)
             y_axis, y_is_symbol = self._resolve_axis(y_axis_display)
             z_axis, z_is_symbol = self._resolve_axis(z_axis_display) if z_axis_display else (None, False)
-            
+
             if not x_axis or not y_axis:
                 messagebox.showwarning("Invalid Axis", "Please select valid axes (not section headers).")
                 return
-            
+
             # Prepare display labels (to preserve original names in plot titles)
             x_label = x_axis_display if x_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else x_axis
             y_label = y_axis_display if y_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else y_axis
             z_label = z_axis_display if z_axis_display and z_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else (z_axis if z_axis else None)
-            
+
             # Filter by symbols if selected
             if x_is_symbol:
                 filtered_df = filtered_df[filtered_df['Variable'] == x_axis].copy()
                 x_axis = 'Value'
-            
+
             if y_is_symbol:
                 filtered_df = filtered_df[filtered_df['Variable'] == y_axis].copy()
                 y_axis = 'Value'
-            
+
             if z_axis and z_is_symbol:
                 filtered_df = filtered_df[filtered_df['Variable'] == z_axis].copy()
                 z_axis = 'Value'
-            
+
             # Validate that we have data after filtering
             if filtered_df.empty:
                 messagebox.showwarning("No Data", "No data available for selected papers and symbols.")
                 return
-            
+
             # Remove rows with NaN values in the axis columns to ensure valid plotting data
             axis_cols = [x_axis, y_axis]
             if z_axis:
                 axis_cols.append(z_axis)
-            
+
             filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
-            
+
             # Validate we still have data after dropping NaN
             if filtered_df.empty:
-                messagebox.showwarning("No Valid Data", 
-                                       f"No valid numeric data available for the selected axes.\n"
-                                       f"Some axis columns may contain non-numeric or missing values.")
+                messagebox.showwarning(
+                    "No Valid Data",
+                    "No valid numeric data available for the selected axes.\n"
+                    "Some axis columns may contain non-numeric or missing values."
+                )
                 return
-            
+
             # Prepare binning configuration from panel
             bins_config = self.binning_panel.get_bins_config()
-            
+
             # Generate plot
             if plot_type == '2d':
                 if plot_mode == 'scatter':
                     fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
-                else:  # line
+                else:
                     fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
-            else:  # 3d
+            else:
                 if plot_mode == 'scatter':
                     fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
-                else:  # surface
+                else:
                     fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
-            
-            # Display plot
+
             self.plot_display.display_plot(fig)
-            
+
         except Exception as e:
             messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
-    
+
     def _resolve_axis(self, axis_display):
         """
         Resolve axis display name to actual column name.
-        
+
         Args:
             axis_display: Display name from dropdown
-            
+
         Returns:
             Tuple of (actual_column_name, is_symbol)
             - is_symbol: True if it's an output variable (symbol), False if input variable
         """
         if axis_display in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:']:
             return None, False
-        
+
         if axis_display in self.axis_mapping:
             mapping = self.axis_mapping[axis_display]
             if isinstance(mapping, tuple):
-                # It's a symbol: ('symbol', 'Nu')
                 return mapping[1], True
-            else:
-                # It's a regular column name
-                return mapping, False
-        
+            return mapping, False
+
         return axis_display, False
+
+
+class ImportDialog(tk.Toplevel):
+    """Two-step dialog for importing a raw data file and metadata JSON files.
+
+    Step 1: Show message "Select raw data file (.xlsx, .csv)" with a Browse
+    button. Browse opens a folder chooser; files in the folder are listed and the
+    user picks a CSV/XLSX file from the list.
+
+    Step 2: Ask the user to pick one or more metadata JSON files, then confirm.
+    """
+
+    def __init__(self, parent, on_complete=None):
+        super().__init__(parent)
+        self.title("Import Data")
+        self.parent = parent
+        self.on_complete = on_complete
+        self.raw_file = None
+        self.metadata_files = []
+
+        self._build_ui()
+        self.transient(parent)
+        self.grab_set()
+        # do not block the caller; return to allow mainloop to continue
+
+    def _build_ui(self):
+        frm = ttk.Frame(self, padding=10)
+        frm.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(frm, text="Select raw data file (.xlsx, .csv)").pack(anchor=tk.W)
+
+        browse_row = ttk.Frame(frm)
+        browse_row.pack(fill=tk.X, pady=5)
+        self.folder_var = tk.StringVar()
+        ttk.Entry(browse_row, textvariable=self.folder_var, width=60, state='readonly').pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(browse_row, text="Browse", command=self._on_browse_folder).pack(side=tk.LEFT)
+
+        self.files_listbox = tk.Listbox(frm, height=6)
+        self.files_listbox.pack(fill=tk.BOTH, expand=True, pady=(5, 5))
+
+        select_row = ttk.Frame(frm)
+        select_row.pack(fill=tk.X)
+        ttk.Button(select_row, text="Select Raw File", command=self._select_raw_from_list).pack(side=tk.LEFT)
+        ttk.Button(select_row, text="Next: Select Metadata", command=self._on_next).pack(side=tk.RIGHT)
+
+    def _on_browse_folder(self):
+        folder = filedialog.askdirectory(title="Browse folder containing raw data")
+        if not folder:
+            return
+
+        self.folder_var.set(folder)
+        p = Path(folder)
+        candidates = sorted([str(f.name) for f in p.iterdir() if f.is_file() and f.suffix.lower() in ('.csv', '.xlsx', '.xls')])
+        self.files_listbox.delete(0, tk.END)
+        for f in candidates:
+            self.files_listbox.insert(tk.END, f)
+
+    def _select_raw_from_list(self):
+        sel = self.files_listbox.curselection()
+        if not sel:
+            messagebox.showwarning("Select File", "Please select a raw data file from the list.")
+            return
+
+        filename = self.files_listbox.get(sel[0])
+        folder = self.folder_var.get()
+        self.raw_file = str(Path(folder) / filename)
+        messagebox.showinfo("Raw File Selected", f"Selected: {self.raw_file}")
+
+    def _on_next(self):
+        if not self.raw_file:
+            messagebox.showwarning("No Raw File", "Please select a raw data file first.")
+            return
+
+        metadata = filedialog.askopenfilenames(title="Select metadata files (.json)", filetypes=[("JSON files", "*.json")])
+        if not metadata:
+            return
+
+        self.metadata_files = list(metadata)
+
+        if messagebox.askyesno("Confirm Import", f"Import raw file:\n{self.raw_file}\nwith {len(self.metadata_files)} metadata file(s)?"):
+            if self.on_complete:
+                self.on_complete(self.raw_file, self.metadata_files)
+            self.destroy()
 
 
 def main():
