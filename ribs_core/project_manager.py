@@ -22,6 +22,87 @@ def build_project_paths(root_dir: Path, project_name: str) -> Tuple[Path, Path, 
     return project_root, data_dir, project_file
 
 
+def get_project_config_path(project_root: Path) -> Path:
+    """Return the path to the project-local config file."""
+    return project_root / "config.py"
+
+
+def copy_default_config_to_project(project_root: Path) -> Path:
+    """Copy the default config.py from ribs_core to the project directory."""
+    project_root = Path(project_root)
+    project_root.mkdir(parents=True, exist_ok=True)
+    
+    # Get path to the default config
+    ribs_core_dir = Path(__file__).parent
+    default_config = ribs_core_dir / "config.py"
+    
+    if not default_config.exists():
+        raise FileNotFoundError(f"Default config not found at {default_config}")
+    
+    # Copy to project
+    config_path = get_project_config_path(project_root)
+    config_path.write_text(default_config.read_text(encoding="utf-8"), encoding="utf-8")
+    return config_path
+
+
+def load_project_config(config_file: Path) -> Dict[str, Any]:
+    """Load project config from a project-local config.py file."""
+    config_file = Path(config_file)
+    if not config_file.exists():
+        raise FileNotFoundError(f"Project config not found at {config_file}")
+    
+    # Execute the config file and extract relevant variables
+    config_globals: Dict[str, Any] = {}
+    exec(config_file.read_text(encoding="utf-8"), config_globals)
+    
+    # Extract style-related config (markers, colors, etc.)
+    result = {
+        "MARKERS": config_globals.get("MARKERS", []),
+        "SEABORN_PALETTE": config_globals.get("SEABORN_PALETTE", "husl"),
+        "N_COLORS": config_globals.get("N_COLORS", 12),
+        "SCATTER_SIZE": config_globals.get("SCATTER_SIZE", 80),
+        "SCATTER_ALPHA": config_globals.get("SCATTER_ALPHA", 0.7),
+        "LEGEND_LOCATION": config_globals.get("LEGEND_LOCATION", "best"),
+        "GRID_STYLE": config_globals.get("GRID_STYLE", "--"),
+        "GRID_ALPHA": config_globals.get("GRID_ALPHA", 0.3),
+        "OUTPUT_DPI": config_globals.get("OUTPUT_DPI", 300),
+    }
+    return result
+
+
+def save_project_config(config_file: Path, config_dict: Dict[str, Any]) -> Path:
+    """Save project config to a project-local config.py file."""
+    config_file = Path(config_file)
+    config_file.parent.mkdir(parents=True, exist_ok=True)
+    
+    # Build the config file content
+    lines = [
+        '"""\n',
+        'Project-specific configuration.\n',
+        'This file is auto-generated and overwritten on each save.\n',
+        'Edit via the View menu in the visualiser.\n',
+        '"""\n',
+        '\n',
+        "# Marker styles - used for legend differentiation\n",
+        f"MARKERS = {config_dict.get('MARKERS', [])}\n",
+        '\n',
+        "# Color palette\n",
+        f"SEABORN_PALETTE = {repr(config_dict.get('SEABORN_PALETTE', 'husl'))}\n",
+        f"N_COLORS = {config_dict.get('N_COLORS', 12)}\n",
+        '\n',
+        "# Plot styling\n",
+        f"SCATTER_SIZE = {config_dict.get('SCATTER_SIZE', 80)}\n",
+        f"SCATTER_ALPHA = {config_dict.get('SCATTER_ALPHA', 0.7)}\n",
+        f"LEGEND_LOCATION = {repr(config_dict.get('LEGEND_LOCATION', 'best'))}\n",
+        f"GRID_STYLE = {repr(config_dict.get('GRID_STYLE', '--'))}\n",
+        f"GRID_ALPHA = {config_dict.get('GRID_ALPHA', 0.3)}\n",
+        f"OUTPUT_DPI = {config_dict.get('OUTPUT_DPI', 300)}\n",
+    ]
+    
+    config_file.write_text("".join(lines), encoding="utf-8")
+    return config_file
+
+
 @dataclass
 class FigureSpec:
     """Serializable figure definition stored in a project file."""
@@ -68,6 +149,12 @@ class ProjectState:
 
     def is_loaded(self) -> bool:
         return self.root_dir is not None and self.data_dir is not None
+
+    def get_config_file_path(self) -> Optional[Path]:
+        """Return the path to this project's config file."""
+        if self.root_dir is None:
+            return None
+        return get_project_config_path(self.root_dir)
 
     def next_paper_name(self) -> str:
         """Return the next sequential paper folder name."""

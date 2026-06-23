@@ -34,6 +34,10 @@ from ribs_core.project_manager import (
     sanitize_project_name,
     load_project_file,
     save_project_file,
+    copy_default_config_to_project,
+    get_project_config_path,
+    load_project_config,
+    save_project_config,
 )
 
 # Forward-declare ImportDialog name so static checks won't flag references
@@ -1022,6 +1026,33 @@ class BinningConfigPanel(ttk.Frame):
             'mode': self.binning_mode_var.get(),
             'bins': self.current_bins
         }
+    
+    def load_binning_config(self, config_dict):
+        """Load binning configuration from a dict."""
+        if not config_dict:
+            self.binning_enabled_var.set(False)
+            return
+        
+        self.binning_enabled_var.set(config_dict.get('enabled', False))
+        if config_dict.get('enabled'):
+            self.bin_param_var.set(config_dict.get('parameter', ''))
+            self.binning_mode_var.set(config_dict.get('mode', 'automatic'))
+            self.current_bins = config_dict.get('bins', [])
+    
+    def reset(self):
+        """Reset binning configuration to defaults."""
+        self.binning_enabled_var.set(False)
+        self.bin_param_var.set('')
+        self.binning_mode_var.set('automatic')
+        self.current_bins = None
+        
+        # Clear manual bin inputs
+        for bin_data in self.bin_frames:
+            bin_data['frame'].destroy()
+        self.bin_frames = []
+        
+        # Add 1 default bin
+        self._add_bin_input()
 
 
 class PlotDisplayPanel(ttk.Frame):
@@ -1354,6 +1385,155 @@ class PlotDisplayPanel(ttk.Frame):
 
 
 # ============================================================================
+# PLOT TAB WRAPPER
+# ============================================================================
+
+class PlotTab(ttk.Frame):
+    """Wrapper for a figure with metadata and unsaved changes tracking."""
+    
+    def __init__(self, parent, figure_spec=None):
+        """
+        Initialize plot tab.
+        
+        Args:
+            parent: Parent widget
+            figure_spec: FigureSpec associated with this tab (None for unsaved)
+        """
+        super().__init__(parent)
+        self.figure_spec = figure_spec
+        self.has_unsaved_changes = False
+        self.plot_display = PlotDisplayPanel(self)
+        self.plot_display.pack(fill=tk.BOTH, expand=True)
+
+
+# ============================================================================
+# PROJECT BROWSER PANEL
+# ============================================================================
+
+class ProjectBrowser(ttk.Frame):
+    """Panel for browsing and managing figures in the current project."""
+    
+    def __init__(self, parent, on_figure_selected=None, on_figure_double_clicked=None, on_figure_deleted=None, on_new_figure=None):
+        """
+        Initialize project browser panel.
+        
+        Args:
+            parent: Parent widget
+            on_figure_selected: Callback when a figure is selected (receives FigureSpec)
+            on_figure_double_clicked: Callback when a figure is double-clicked (receives FigureSpec)
+            on_figure_deleted: Callback when a figure is deleted (receives figure index)
+            on_new_figure: Callback when "New Figure" button is clicked
+        """
+        super().__init__(parent)
+        self.on_figure_selected = on_figure_selected
+        self.on_figure_double_clicked = on_figure_double_clicked
+        self.on_figure_deleted = on_figure_deleted
+        self.on_new_figure = on_new_figure
+        self.figures = []  # List of FigureSpec objects
+        self.selected_index = None
+        
+        self._create_widgets()
+    
+    def _create_widgets(self):
+        """Create GUI widgets for project browser."""
+        # Header frame
+        header_frame = ttk.Frame(self)
+        header_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        ttk.Label(header_frame, text="Figures", font=("Arial", 10, "bold")).pack(side=tk.LEFT)
+        ttk.Button(header_frame, text="+ New", command=lambda: self.on_new_figure() if self.on_new_figure else None).pack(side=tk.RIGHT, padx=2)
+        
+        # Listbox with scrollbar
+        list_frame = ttk.Frame(self)
+        list_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=(0, 5))
+        
+        scrollbar = ttk.Scrollbar(list_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.figures_listbox = tk.Listbox(list_frame, yscrollcommand=scrollbar.set, height=10)
+        self.figures_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.figures_listbox.yview)
+        
+        self.figures_listbox.bind("<<ListboxSelect>>", self._on_select)
+        self.figures_listbox.bind("<Button-3>", self._on_right_click)  # Right-click context menu
+        self.figures_listbox.bind("<Double-Button-1>", self._on_double_click)  # Double-click to open in tab
+    
+    def _on_double_click(self, event):
+        """Handle double-click on figure to open in tab."""
+        idx = self.figures_listbox.nearest(event.y)
+        if 0 <= idx < len(self.figures):
+            if self.on_figure_double_clicked:
+                self.on_figure_double_clicked(self.figures[idx])
+
+
+    
+    def _on_select(self, event):
+        """Handle figure selection."""
+        selection = self.figures_listbox.curselection()
+        if not selection:
+            return
+        
+        idx = selection[0]
+        self.selected_index = idx
+        
+        if self.on_figure_selected and idx < len(self.figures):
+            self.on_figure_selected(self.figures[idx])
+    
+    def _on_right_click(self, event):
+        """Handle right-click context menu."""
+        # Get the item under cursor
+        idx = self.figures_listbox.nearest(event.y)
+        if idx < 0 or idx >= len(self.figures):
+            return
+        
+        # Create context menu
+        menu = tk.Menu(self, tearoff=False)
+        menu.add_command(label="Open in Tab", command=lambda: self._open_from_menu(idx))
+        menu.add_separator()
+        menu.add_command(label="Delete", command=lambda: self._delete_figure_with_confirmation(idx))
+        menu.post(event.x_root, event.y_root)
+    
+    def _open_from_menu(self, idx):
+        """Open figure from context menu."""
+        if 0 <= idx < len(self.figures):
+            if self.on_figure_double_clicked:
+                self.on_figure_double_clicked(self.figures[idx])
+    
+    def _delete_figure_with_confirmation(self, idx):
+        """Delete figure with confirmation dialog."""
+        if 0 <= idx < len(self.figures):
+            import tkinter.messagebox as mb
+            if mb.askyesno("Delete Figure", f"Are you sure you want to delete Figure {idx + 1}?"):
+                self._delete_figure(idx)
+    
+    def _delete_figure(self, idx):
+        """Delete figure at given index."""
+        if 0 <= idx < len(self.figures):
+            self.figures.pop(idx)
+            self._refresh_listbox()
+            if self.on_figure_deleted:
+                self.on_figure_deleted(idx)
+    
+    def _refresh_listbox(self):
+        """Refresh the listbox display."""
+        self.figures_listbox.delete(0, tk.END)
+        for i, fig in enumerate(self.figures):
+            # Create a descriptive label for each figure
+            label = f"Fig {i+1}: {fig.plot_representation} ({len(fig.papers_included)} papers)"
+            self.figures_listbox.insert(tk.END, label)
+    
+    def set_figures(self, figures):
+        """Update the figures list."""
+        self.figures = figures
+        self._refresh_listbox()
+    
+    def add_figure(self, figure_spec):
+        """Add a new figure to the list."""
+        self.figures.append(figure_spec)
+        self._refresh_listbox()
+
+
+# ============================================================================
 # MAIN APPLICATION
 # ============================================================================
 
@@ -1363,7 +1543,7 @@ class VisualisierApp(tk.Tk):
     def __init__(self):
         """Initialize the application."""
         super().__init__()
-        self.title("Exploratory Data Visualiser")
+        self.title("Rib Analyser")
         self.geometry("1400x900")
         
         # Data
@@ -1397,9 +1577,13 @@ class VisualisierApp(tk.Tk):
         edit_menu = tk.Menu(menu_bar, tearoff=0)
         edit_menu.add_command(label="Import Papers", command=lambda: self._import_project_data())
         edit_menu.add_command(label="Export Figures", command=lambda: self._export_figures())
+        
+        view_menu = tk.Menu(menu_bar, tearoff=0)
+        view_menu.add_command(label="Plot Properties", command=lambda: self._open_view_config())
 
         menu_bar.add_cascade(label="File", menu=file_menu)
         menu_bar.add_cascade(label="Edit", menu=edit_menu)
+        menu_bar.add_cascade(label="View", menu=view_menu)
         self.config(menu=menu_bar)
     
     def _find_data_file(self):
@@ -1511,6 +1695,7 @@ class VisualisierApp(tk.Tk):
         row5.pack(fill=tk.X, pady=2)
         
         ttk.Button(row5, text="Generate Plot", command=lambda: self._generate_plot()).pack(side=tk.LEFT, padx=5)
+        ttk.Button(row5, text="Save to Project", command=lambda: self._save_figure_to_project()).pack(side=tk.LEFT, padx=5)
         ttk.Button(row5, text="Save Plot", command=lambda: self._save_plot()).pack(side=tk.LEFT, padx=5)
         ttk.Button(row5, text="Clear", command=lambda: self._clear_plot()).pack(side=tk.LEFT, padx=5)
         
@@ -1531,12 +1716,30 @@ class VisualisierApp(tk.Tk):
         self.selected_papers_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.selected_papers_listbox.yview)
         
-        # ====== CONTENT AREA (BLUE REGION - PLOT CANVAS ONLY) ======
-        content_area = ttk.LabelFrame(main_frame, text="Plot Display", padding=0)
-        content_area.pack(fill=tk.BOTH, expand=True, padx=0, pady=(5, 0))
+        # ====== CONTENT AREA (SPLIT VIEW: BROWSER + TABS) ======
+        split_view = ttk.PanedWindow(main_frame, orient=tk.HORIZONTAL)
+        split_view.pack(fill=tk.BOTH, expand=True, padx=0, pady=(5, 0))
         
-        # ====== PLOT DISPLAY AREA (CANVAS ONLY) ======
-        self.plot_display = PlotDisplayPanel(content_area)
+        # LEFT: Project Browser
+        self.project_browser = ProjectBrowser(
+            split_view,
+            on_figure_selected=lambda fig: self._on_figure_selected_from_browser(fig),
+            on_figure_double_clicked=lambda fig: self._open_figure_in_tab(fig),
+            on_figure_deleted=lambda idx: self._on_figure_deleted(idx),
+            on_new_figure=lambda: self._on_new_figure_clicked()
+        )
+        split_view.add(self.project_browser, weight=0)  # Fixed width for browser
+        
+        # RIGHT: Notebook with figure tabs + plot display
+        self.figure_notebook = ttk.Notebook(split_view)
+        split_view.add(self.figure_notebook, weight=1)  # Expandable plot area
+        
+        # Create a tab for the plot display
+        plot_tab = ttk.Frame(self.figure_notebook)
+        self.figure_notebook.add(plot_tab, text="Plot Display")
+        
+        # Add plot display to the tab
+        self.plot_display = PlotDisplayPanel(plot_tab)
         self.plot_display.pack(fill=tk.BOTH, expand=True)
     
     def _add_paper(self):
@@ -1675,6 +1878,12 @@ class VisualisierApp(tk.Tk):
         project_root, data_dir, project_file = build_project_paths(Path(base_dir), project_name)
         project_root.mkdir(parents=True, exist_ok=True)
         data_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Copy default config to project
+        try:
+            copy_default_config_to_project(project_root)
+        except Exception as e:
+            messagebox.showwarning("Config Copy", f"Warning: Could not copy default config:\n{str(e)}")
 
         self.project = ProjectState(
             name=sanitize_project_name(project_name),
@@ -1867,6 +2076,10 @@ class VisualisierApp(tk.Tk):
             if self.selected_papers:
                 self._update_selected_papers_display_listbox()
                 self._refresh_axis_dropdowns()
+            
+            # Load figures from project into the browser
+            if self.project.figures:
+                self.project_browser.set_figures(self.project.figures)
 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to reload project data:\n{str(e)}")
@@ -2003,6 +2216,11 @@ class VisualisierApp(tk.Tk):
                     fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
 
             self.plot_display.display_plot(fig)
+            
+            # Save the figure as a FigureSpec and create a tab
+            figure_spec = self._save_current_figure()
+            # Note: Tab creation will be done manually when user wants to save this as a project figure
+            # For now, we just display it in the main plot display area
 
         except Exception as e:
             messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
@@ -2028,6 +2246,301 @@ class VisualisierApp(tk.Tk):
             return mapping, False
 
         return axis_display, False
+
+    def _on_figure_selected_from_browser(self, figure_spec):
+        """Handle figure selection from the project browser."""
+        # Load the figure's configuration into the UI
+        if figure_spec.papers_included:
+            self.selected_papers = figure_spec.papers_included
+            self._update_selected_papers_display_listbox()
+            self.binning_panel.set_selected_papers(self.selected_papers)
+        
+        # Set plot type and mode
+        plot_type, plot_mode = figure_spec.plot_representation.split('_')
+        self.plot_type_var.set(plot_type)
+        self.plot_mode_var.set(plot_mode)
+        self._on_plot_type_change()
+        
+        # Set axes
+        if figure_spec.x_variable:
+            self.x_axis_var.set(figure_spec.x_variable)
+        if figure_spec.y_variable:
+            self.y_axis_var.set(figure_spec.y_variable)
+        if figure_spec.z_variable:
+            self.z_axis_var.set(figure_spec.z_variable)
+        
+        # Load binning data if present
+        if figure_spec.binning_data:
+            self.binning_panel.load_binning_config(figure_spec.binning_data)
+    
+    def _on_figure_deleted(self, index):
+        """Handle figure deletion from the browser."""
+        # Update project state
+        if self.project and 0 <= index < len(self.project.figures):
+            self.project.figures.pop(index)
+            self.project.dirty = True
+    
+    def _on_new_figure_clicked(self):
+        """Handle new figure button click."""
+        # Clear the current selection to start fresh
+        self.selected_papers = []
+        self._update_selected_papers_display_listbox()
+        self.plot_type_var.set("2d")
+        self.plot_mode_var.set("scatter")
+        self._on_plot_type_change()
+        self.x_axis_var.set("")
+        self.y_axis_var.set("")
+        self.z_axis_var.set("")
+        self.binning_panel.reset()
+        self.plot_display.clear()
+        messagebox.showinfo("New Figure", "Configure your figure using the controls above, then click 'Generate Plot'")
+    
+    def _save_current_figure(self):
+        """Save the currently displayed figure as a FigureSpec and add to project."""
+        # Create figure spec from current UI state
+        plot_type = self.plot_type_var.get()
+        plot_mode = self.plot_mode_var.get()
+        plot_representation = f"{plot_type}_{plot_mode}"
+        
+        figure_spec = FigureSpec(
+            papers_included=self.selected_papers.copy(),
+            x_variable=self.x_axis_var.get(),
+            y_variable=self.y_axis_var.get(),
+            z_variable=self.z_axis_var.get(),
+            plot_representation=plot_representation,
+            binning_data=self.binning_panel.get_bins_config() or {},
+        )
+        
+        # Add to project
+        self.project.figures.append(figure_spec)
+        self.project.dirty = True
+        
+        # Update browser
+        self.project_browser.set_figures(self.project.figures)
+        
+        return figure_spec
+    
+    def _open_figure_in_tab(self, figure_spec):
+        """Open a figure in a new tab based on its FigureSpec."""
+        # Create a new tab
+        tab = PlotTab(self.figure_notebook, figure_spec=figure_spec)
+        
+        # Add tab to notebook with close button (later)
+        tab_index = self.figure_notebook.index("end")
+        tab_name = f"Fig {len(self.project.figures)}"
+        self.figure_notebook.add(tab, text=tab_name)
+        
+        # Load the figure configuration into the UI
+        self._on_figure_selected_from_browser(figure_spec)
+        
+        # Generate and display the plot in this tab
+        try:
+            if not self.selected_papers:
+                messagebox.showwarning("No Papers", "Figure has no papers selected.")
+                return
+            
+            filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
+            if filtered_df.empty:
+                messagebox.showwarning("No Data", "No data for selected papers.")
+                return
+            
+            # Resolve axes
+            x_axis, x_is_symbol = self._resolve_axis(figure_spec.x_variable) if figure_spec.x_variable else (None, False)
+            y_axis, y_is_symbol = self._resolve_axis(figure_spec.y_variable) if figure_spec.y_variable else (None, False)
+            z_axis, z_is_symbol = self._resolve_axis(figure_spec.z_variable) if figure_spec.z_variable else (None, False)
+            
+            if not x_axis or not y_axis:
+                messagebox.showwarning("Invalid Axes", "Figure has invalid axis configuration.")
+                return
+            
+            # Get axis labels
+            x_label, y_label, z_label = x_axis, y_axis, z_axis or ""
+            
+            # Get plot type and mode
+            plot_type, plot_mode = figure_spec.plot_representation.split('_')
+            
+            # Generate plot
+            if plot_type == '2d':
+                if plot_mode == 'scatter':
+                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, figure_spec.binning_data)
+                else:
+                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, figure_spec.binning_data)
+            else:
+                if plot_mode == 'scatter':
+                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, figure_spec.binning_data)
+                else:
+                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, figure_spec.binning_data)
+            
+            # Display in the tab's plot display
+            tab.plot_display.display_plot(fig)
+            
+            # Select the new tab
+            self.figure_notebook.select(tab_index)
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open figure:\n{str(e)}")
+            self.figure_notebook.forget(tab_index)
+    
+    def _save_figure_to_project(self):
+        """Save the current figure to the project and create a tab for it."""
+        if not self.project or not self.project.is_loaded():
+            messagebox.showwarning("No Project", "Please open or create a project first.")
+            return
+        
+        if not self.plot_display.current_fig:
+            messagebox.showwarning("No Plot", "Generate a plot first before saving.")
+            return
+        
+        # Create figure spec and add to project
+        figure_spec = self._save_current_figure()
+        
+        # Open the figure in a new tab
+        try:
+            self._open_figure_in_tab(figure_spec)
+            messagebox.showinfo("Success", "Figure saved to project and opened in a new tab.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save figure:\n{str(e)}")
+    
+    def _open_view_config(self):
+        """Open the View/Plot Properties configuration dialog."""
+        dialog = PlotPropertiesDialog(self, project=self.project if self.project.is_loaded() else None)
+
+
+# ============================================================================
+# PLOT PROPERTIES DIALOG
+# ============================================================================
+
+class PlotPropertiesDialog(tk.Toplevel):
+    """Dialog for configuring plot styling properties."""
+    
+    def __init__(self, parent, project=None):
+        """
+        Initialize plot properties dialog.
+        
+        Args:
+            parent: Parent window
+            project: ProjectState object (None if no project loaded)
+        """
+        super().__init__(parent)
+        self.title("Plot Properties")
+        self.geometry("400x500")
+        self.project = project
+        self.config_dict = {}
+        
+        # Load config from project if available
+        if project and project.is_loaded():
+            config_path = project.get_config_file_path()
+            if config_path and config_path.exists():
+                try:
+                    self.config_dict = load_project_config(config_path)
+                except Exception as e:
+                    messagebox.showwarning("Config Load", f"Could not load project config:\n{str(e)}")
+                    self.config_dict = self._get_default_config()
+            else:
+                self.config_dict = self._get_default_config()
+        else:
+            self.config_dict = self._get_default_config()
+        
+        self._create_widgets()
+    
+    def _get_default_config(self):
+        """Get default plot configuration."""
+        from ribs_core import config as default_config
+        return {
+            "MARKERS": getattr(default_config, "MARKERS", []),
+            "SEABORN_PALETTE": getattr(default_config, "SEABORN_PALETTE", "husl"),
+            "N_COLORS": getattr(default_config, "N_COLORS", 12),
+            "SCATTER_SIZE": getattr(default_config, "SCATTER_SIZE", 80),
+            "SCATTER_ALPHA": getattr(default_config, "SCATTER_ALPHA", 0.7),
+            "LEGEND_LOCATION": getattr(default_config, "LEGEND_LOCATION", "best"),
+        }
+    
+    def _create_widgets(self):
+        """Create dialog widgets."""
+        main_frame = ttk.Frame(self, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Title
+        ttk.Label(main_frame, text="Plot Style Configuration", font=("Arial", 12, "bold")).pack(anchor=tk.W, pady=(0, 10))
+        
+        # Notebook for tabs
+        notebook = ttk.Notebook(main_frame)
+        notebook.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        
+        # Markers tab
+        markers_frame = ttk.Frame(notebook, padding=10)
+        notebook.add(markers_frame, text="Markers")
+        
+        ttk.Label(markers_frame, text="Marker Symbol:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.marker_var = tk.StringVar(value=str(self.config_dict.get("MARKERS", ["o"])[0]))
+        marker_combo = ttk.Combobox(markers_frame, textvariable=self.marker_var, 
+                                     values=self.config_dict.get("MARKERS", ["o", "s", "^", "D", "v"]),
+                                     state="readonly", width=30)
+        marker_combo.pack(anchor=tk.W, pady=(0, 10))
+        
+        ttk.Label(markers_frame, text="Marker Size:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.size_var = tk.StringVar(value=str(self.config_dict.get("SCATTER_SIZE", 80)))
+        ttk.Spinbox(markers_frame, from_=10, to=200, textvariable=self.size_var, width=10).pack(anchor=tk.W, pady=(0, 10))
+        
+        ttk.Label(markers_frame, text="Marker Opacity (0.0-1.0):", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.alpha_var = tk.StringVar(value=str(self.config_dict.get("SCATTER_ALPHA", 0.7)))
+        ttk.Spinbox(markers_frame, from_=0.0, to=1.0, increment=0.1, textvariable=self.alpha_var, width=10).pack(anchor=tk.W, pady=(0, 10))
+        
+        # Colors tab
+        colors_frame = ttk.Frame(notebook, padding=10)
+        notebook.add(colors_frame, text="Colors")
+        
+        ttk.Label(colors_frame, text="Color Palette:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.palette_var = tk.StringVar(value=self.config_dict.get("SEABORN_PALETTE", "husl"))
+        palette_combo = ttk.Combobox(colors_frame, textvariable=self.palette_var,
+                                     values=["husl", "Set1", "Set2", "viridis", "plasma", "coolwarm"],
+                                     state="readonly", width=30)
+        palette_combo.pack(anchor=tk.W, pady=(0, 10))
+        
+        ttk.Label(colors_frame, text="Number of Colors:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.n_colors_var = tk.StringVar(value=str(self.config_dict.get("N_COLORS", 12)))
+        ttk.Spinbox(colors_frame, from_=5, to=30, textvariable=self.n_colors_var, width=10).pack(anchor=tk.W, pady=(0, 10))
+        
+        ttk.Label(colors_frame, text="Legend Location:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.legend_var = tk.StringVar(value=self.config_dict.get("LEGEND_LOCATION", "best"))
+        legend_combo = ttk.Combobox(colors_frame, textvariable=self.legend_var,
+                                    values=["best", "upper left", "upper right", "lower left", "lower right"],
+                                    state="readonly", width=30)
+        legend_combo.pack(anchor=tk.W)
+        
+        # Buttons
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        ttk.Button(button_frame, text="Save", command=self._save_config).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(button_frame, text="Cancel", command=self.destroy).pack(side=tk.RIGHT)
+    
+    def _save_config(self):
+        """Save the current configuration."""
+        updated_config = {
+            "MARKERS": self.config_dict.get("MARKERS", []),
+            "SEABORN_PALETTE": self.palette_var.get(),
+            "N_COLORS": int(self.n_colors_var.get()),
+            "SCATTER_SIZE": int(self.size_var.get()),
+            "SCATTER_ALPHA": float(self.alpha_var.get()),
+            "LEGEND_LOCATION": self.legend_var.get(),
+            "GRID_STYLE": self.config_dict.get("GRID_STYLE", "--"),
+            "GRID_ALPHA": self.config_dict.get("GRID_ALPHA", 0.3),
+            "OUTPUT_DPI": self.config_dict.get("OUTPUT_DPI", 300),
+        }
+        
+        if self.project and self.project.is_loaded():
+            config_path = self.project.get_config_file_path()
+            if config_path:
+                try:
+                    save_project_config(config_path, updated_config)
+                    messagebox.showinfo("Success", "Plot properties saved to project.")
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to save config:\n{str(e)}")
+        else:
+            messagebox.showinfo("Info", "Configuration updated. Open/create a project to save permanently.")
+        
+        self.destroy()
 
 
 class ImportDialog(tk.Toplevel):
