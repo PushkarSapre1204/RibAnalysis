@@ -44,7 +44,7 @@ from ribs_core.project_manager import (
 ImportDialog = None
 
 # Define a set of distinct colors for binning visualization
-COLORS = {
+DEFAULT_COLORS = {
     'C0': '#1f77b4', 'C1': '#ff7f0e', 'C2': '#2ca02c', 'C3': '#d62728',
     'C4': '#9467bd', 'C5': '#8c564b', 'C6': '#e377c2', 'C7': '#7f7f7f',
     'C8': '#bcbd22', 'C9': '#17becf'
@@ -100,10 +100,18 @@ def assign_points_to_bins(df, param_col, bins):
     return bin_assignment
 
 
-def get_bin_colors_symbols(n_bins):
-    """Return style mapping for each bin number using configured colors and markers."""
-    colors_list = list(COLORS.values())
-    markers_list = MARKERS.copy()
+def get_bin_colors_symbols(n_bins, project_config=None):
+    """Return style mapping for each bin number using configured colors and markers.
+
+    Args:
+        n_bins: Number of bins
+        project_config: Optional dict from project-local config (keys: MARKERS, etc.)
+    """
+    colors_list = list(DEFAULT_COLORS.values())
+    if project_config and project_config.get('MARKERS'):
+        markers_list = list(project_config['MARKERS'])
+    else:
+        markers_list = MARKERS.copy()
 
     bin_styles = {}
     for i in range(n_bins):
@@ -203,8 +211,14 @@ def _attach_point_metadata(fig, artist, df_subset, x_axis, y_axis, z_axis=None, 
     return artist
 
 
-def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
+def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None, project_config=None):
     """Create 2D scatter plot with optional binning."""
+    scatter_size = (project_config or {}).get('SCATTER_SIZE', 70)
+    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
+    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
+    grid_style = (project_config or {}).get('GRID_STYLE', '--')
+    grid_alpha = (project_config or {}).get('GRID_ALPHA', 0.3)
+
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
     fig._clickable_artists = []
@@ -215,7 +229,7 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
 
         for bin_dict in bins_config['bins']:
             bin_num = bin_dict['bin_number']
@@ -227,29 +241,34 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
                     subset[x_axis],
                     subset[y_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
-                    alpha=0.6,
+                    alpha=scatter_alpha,
                     color=style['color'],
                     marker=style['marker'],
-                    s=70
+                    s=scatter_size
                 )
                 _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, None, x_label, y_label, None)
 
-        ax.legend(loc='best', framealpha=0.9)
+        ax.legend(loc=legend_loc, framealpha=0.9)
     else:
-        scatter = ax.scatter(df[x_axis], df[y_axis], alpha=0.6)
+        scatter = ax.scatter(df[x_axis], df[y_axis], alpha=scatter_alpha, s=scatter_size)
         _attach_point_metadata(fig, scatter, df, x_axis, y_axis, None, x_label, y_label, None)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
     ax.set_title(f'{x_display} vs {y_display}')
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, linestyle=grid_style, alpha=grid_alpha)
     fig.tight_layout()
     
     return fig
 
 
-def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None):
+def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None, project_config=None):
     """Create 2D line plot with optional binning."""
+    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
+    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
+    grid_style = (project_config or {}).get('GRID_STYLE', '--')
+    grid_alpha = (project_config or {}).get('GRID_ALPHA', 0.3)
+
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
     fig._clickable_artists = []
@@ -263,7 +282,7 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df_sorted, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
 
         for bin_dict in bins_config['bins']:
             bin_num = bin_dict['bin_number']
@@ -276,31 +295,34 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
                     subset[y_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
                     marker=style['marker'],
-                    alpha=0.6,
+                    alpha=scatter_alpha,
                     color=style['color'],
                     linewidth=2
                 )[0]
                 line.set_pickradius(5)
                 _attach_point_metadata(fig, line, subset, x_axis, y_axis, None, x_label, y_label, None)
 
-        ax.legend(loc='best', framealpha=0.9)
+        ax.legend(loc=legend_loc, framealpha=0.9)
     else:
-        line = ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=0.6)[0]
+        line = ax.plot(df_sorted[x_axis], df_sorted[y_axis], marker='o', alpha=scatter_alpha)[0]
         line.set_pickradius(5)
         _attach_point_metadata(fig, line, df_sorted, x_axis, y_axis, None, x_label, y_label, None)
     
     ax.set_xlabel(x_display)
     ax.set_ylabel(y_display)
     ax.set_title(f'{x_display} vs {y_display} (Line)')
-    ax.grid(True, alpha=0.3)
+    ax.grid(True, linestyle=grid_style, alpha=grid_alpha)
     fig.tight_layout()
     
     return fig
 
 
-def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None):
+def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None, project_config=None):
     """Create 3D scatter plot with optional binning."""
     from mpl_toolkits.mplot3d import Axes3D
+    scatter_size = (project_config or {}).get('SCATTER_SIZE', 70)
+    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
+    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -313,7 +335,7 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
 
         for bin_dict in bins_config['bins']:
             bin_num = bin_dict['bin_number']
@@ -326,16 +348,16 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                     subset[y_axis],
                     subset[z_axis],
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict),
-                    alpha=0.6,
+                    alpha=scatter_alpha,
                     color=style['color'],
                     marker=style['marker'],
-                    s=70
+                    s=scatter_size
                 )
                 _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
-        ax.legend(loc='best', framealpha=0.9)
+        ax.legend(loc=legend_loc, framealpha=0.9)
     else:
-        scatter = ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=0.6)
+        scatter = ax.scatter(df[x_axis], df[y_axis], df[z_axis], alpha=scatter_alpha, s=scatter_size)
         _attach_point_metadata(fig, scatter, df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
     
     ax.set_xlabel(x_display)
@@ -347,11 +369,13 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     return fig
 
 
-def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None):
+def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None, project_config=None):
     """Create 3D surface plot using triangulation with optional binning."""
     from mpl_toolkits.mplot3d import Axes3D
     from scipy.interpolate import griddata
     from matplotlib.patches import Patch
+    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.55)
+    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -364,7 +388,7 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     
     if bins_config and bins_config['enabled']:
         bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']))
+        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
         legend_handles = []
 
         for bin_dict in bins_config['bins']:
@@ -399,20 +423,20 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                     antialiased=True
                 )
 
-            scatter = ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=0.55)
+            scatter = ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=scatter_alpha)
             _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
             legend_handles.append(
                 Patch(
                     facecolor=style['color'],
                     edgecolor=style['color'],
-                    alpha=0.55,
+                    alpha=scatter_alpha,
                     label=get_bin_legend_label(bins_config['parameter'], bin_dict)
                 )
             )
 
         if legend_handles:
-            ax.legend(handles=legend_handles, loc='best', framealpha=0.9)
+            ax.legend(handles=legend_handles, loc=legend_loc, framealpha=0.9)
     else:
         # Create grid
         x = df[x_axis].values
@@ -429,7 +453,7 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
 
         # Plot surface
         ax.plot_surface(xi, yi, zi, cmap='viridis', alpha=0.8)
-        scatter = ax.scatter(x, y, z, color='red', s=35, alpha=0.5)
+        scatter = ax.scatter(x, y, z, color='red', s=35, alpha=scatter_alpha)
         _attach_point_metadata(fig, scatter, df, x_axis, y_axis, z_axis, x_label, y_label, z_label)
     
     ax.set_xlabel(x_display)
@@ -1518,13 +1542,17 @@ class ProjectBrowser(ttk.Frame):
         """Refresh the listbox display."""
         self.figures_listbox.delete(0, tk.END)
         for i, fig in enumerate(self.figures):
-            # Create a descriptive label for each figure
-            label = f"Fig {i+1}: {fig.plot_representation} ({len(fig.papers_included)} papers)"
+            # Create a descriptive label: "Fig 1: X vs Y (2D Scatter)"
+            x_name = fig.x_variable or '?'
+            y_name = fig.y_variable or '?'
+            # Format plot_representation from e.g. '2d_scatter' to '2D Scatter'
+            rep = fig.plot_representation.replace('_', ' ').title() if fig.plot_representation else 'Plot'
+            label = f"Fig {i+1}: {x_name} vs {y_name} ({rep})"
             self.figures_listbox.insert(tk.END, label)
     
     def set_figures(self, figures):
         """Update the figures list."""
-        self.figures = figures
+        self.figures = list(figures)
         self._refresh_listbox()
     
     def add_figure(self, figure_spec):
@@ -1553,6 +1581,7 @@ class VisualisierApp(tk.Tk):
         self.all_papers = []
         self.axis_mapping = {}  # Maps display names to actual column names or symbols
         self.project = ProjectState.blank()
+        self.project_config = {}  # Project-local style config loaded from config.py
         
         # Create menu and UI
         self._create_menu_bar()
@@ -1741,6 +1770,9 @@ class VisualisierApp(tk.Tk):
         # Add plot display to the tab
         self.plot_display = PlotDisplayPanel(plot_tab)
         self.plot_display.pack(fill=tk.BOTH, expand=True)
+
+        # Bind tab close via middle-click
+        self.figure_notebook.bind('<Button-2>', self._on_tab_middle_click)
     
     def _add_paper(self):
         """Add selected paper to list."""
@@ -1891,6 +1923,8 @@ class VisualisierApp(tk.Tk):
             data_dir=data_dir,
             project_file=project_file,
         )
+        # Load the freshly copied config
+        self._load_project_config()
         self._load_initial_data()
         self._sync_project_from_ui()
         save_project_file(self.project)
@@ -1907,6 +1941,8 @@ class VisualisierApp(tk.Tk):
 
         try:
             self.project = load_project_file(Path(project_file))
+            # Load project-local config if it exists
+            self._load_project_config()
             self._reload_project_data()
             self.selected_papers = list(self.project.selected_papers)
             self._update_selected_papers_display_listbox()
@@ -1924,6 +1960,8 @@ class VisualisierApp(tk.Tk):
 
         self._sync_project_from_ui()
         save_project_file(self.project)
+        # Also persist project config
+        self._save_project_config()
         self.project.dirty = False
         messagebox.showinfo("Project Saved", f"Saved project to {self.project.project_file}")
 
@@ -1955,6 +1993,8 @@ class VisualisierApp(tk.Tk):
         self.project.project_file = project_file
         self._sync_project_from_ui()
         save_project_file(self.project)
+        # Also persist project config
+        self._save_project_config()
         self.project.dirty = False
         messagebox.showinfo("Project Saved", f"Saved project to {self.project.project_file}")
 
@@ -1999,12 +2039,15 @@ class VisualisierApp(tk.Tk):
         self.plot_display._on_save_click()
 
     def _sync_project_from_ui(self):
-        """Store the current UI state into the project model."""
+        """Store the current UI state into the project model.
+
+        Preserves the existing figures list (managed by Save to Project /
+        browser delete).  Only syncs paper selection and available papers.
+        """
         self.project.selected_papers = list(self.selected_papers)
         self.project.available_papers = list(self.all_papers)
-
-        figure_spec = self._build_active_figure_spec()
-        self.project.figures = [figure_spec] if figure_spec else []
+        # NOTE: figures list is NOT overwritten here; it is managed by
+        # _save_figure_to_project / browser delete.
 
     def _build_active_figure_spec(self):
         """Build a project figure definition from the current plot controls."""
@@ -2084,33 +2127,7 @@ class VisualisierApp(tk.Tk):
         except Exception as e:
             messagebox.showerror("Error", f"Failed to reload project data:\n{str(e)}")
 
-    def _perform_import(self, raw_file: str, metadata_files: list):
-        """Perform the actual import after the dialog completes."""
-        try:
-            if not raw_file or not metadata_files:
-                return
-
-            paper_folder = self.project.next_paper_name()
-            paper_dir = self.project.data_dir / paper_folder
-            paper_dir.mkdir(parents=True, exist_ok=True)
-
-            # Normalize raw file to CSV filename for pipeline compatibility
-            dest_raw = paper_dir / "raw_data.csv"
-            shutil.copy2(raw_file, dest_raw)
-
-            for index, metadata_file in enumerate(metadata_files):
-                destination_name = "manifest.json" if index == 0 else f"metadata_{index + 1}.json"
-                shutil.copy2(metadata_file, paper_dir / destination_name)
-
-            # Run preprocessing on the project's Data folder
-            self._run_project_preprocessor()
-            # Reload master file if generated
-            self._reload_project_data()
-            self.project.dirty = True
-            messagebox.showinfo("Import Complete", f"Imported into {paper_dir}")
-
-        except Exception as e:
-            messagebox.showerror("Import Error", f"Failed to import files:\n{e}")
+    # (duplicate _perform_import removed — kept only the version near line 1969)
 
     def _on_config_change(self):
         """Handle configuration changes."""
@@ -2203,24 +2220,20 @@ class VisualisierApp(tk.Tk):
             # Prepare binning configuration from panel
             bins_config = self.binning_panel.get_bins_config()
 
-            # Generate plot
+            # Generate plot (pass project config for styling)
+            pc = self.project_config or None
             if plot_type == '2d':
                 if plot_mode == 'scatter':
-                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
+                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
                 else:
-                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config)
+                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
             else:
                 if plot_mode == 'scatter':
-                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
+                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
                 else:
-                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config)
+                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
 
             self.plot_display.display_plot(fig)
-            
-            # Save the figure as a FigureSpec and create a tab
-            figure_spec = self._save_current_figure()
-            # Note: Tab creation will be done manually when user wants to save this as a project figure
-            # For now, we just display it in the main plot display area
 
         except Exception as e:
             messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
@@ -2292,17 +2305,16 @@ class VisualisierApp(tk.Tk):
         self.y_axis_var.set("")
         self.z_axis_var.set("")
         self.binning_panel.reset()
-        self.plot_display.clear()
+        self.plot_display.clear_plot()
         messagebox.showinfo("New Figure", "Configure your figure using the controls above, then click 'Generate Plot'")
     
     def _save_current_figure(self):
-        """Save the currently displayed figure as a FigureSpec and add to project."""
-        # Create figure spec from current UI state
+        """Build a FigureSpec from the current UI state (does NOT add to project)."""
         plot_type = self.plot_type_var.get()
         plot_mode = self.plot_mode_var.get()
         plot_representation = f"{plot_type}_{plot_mode}"
         
-        figure_spec = FigureSpec(
+        return FigureSpec(
             papers_included=self.selected_papers.copy(),
             x_variable=self.x_axis_var.get(),
             y_variable=self.y_axis_var.get(),
@@ -2310,100 +2322,194 @@ class VisualisierApp(tk.Tk):
             plot_representation=plot_representation,
             binning_data=self.binning_panel.get_bins_config() or {},
         )
-        
-        # Add to project
-        self.project.figures.append(figure_spec)
-        self.project.dirty = True
-        
-        # Update browser
-        self.project_browser.set_figures(self.project.figures)
-        
-        return figure_spec
     
+    def _regenerate_figure_from_spec(self, figure_spec):
+        """Regenerate a matplotlib Figure from a FigureSpec.
+
+        Handles symbol-based output variables correctly by filtering the
+        dataframe before passing to plot functions.
+        """
+        if self.df is None:
+            return None
+
+        papers = figure_spec.papers_included
+        if not papers:
+            return None
+
+        filtered_df = self.df[self.df['Paper Title'].isin(papers)].copy()
+        if filtered_df.empty:
+            return None
+
+        # Resolve axes — use the same logic as _generate_plot
+        x_axis, x_is_symbol = self._resolve_axis(figure_spec.x_variable) if figure_spec.x_variable else (None, False)
+        y_axis, y_is_symbol = self._resolve_axis(figure_spec.y_variable) if figure_spec.y_variable else (None, False)
+        z_axis, z_is_symbol = self._resolve_axis(figure_spec.z_variable) if figure_spec.z_variable else (None, False)
+
+        if not x_axis or not y_axis:
+            return None
+
+        # Preserve display labels
+        x_label = figure_spec.x_variable
+        y_label = figure_spec.y_variable
+        z_label = figure_spec.z_variable if figure_spec.z_variable else None
+
+        # Filter by symbols (output variables)
+        if x_is_symbol:
+            filtered_df = filtered_df[filtered_df['Variable'] == x_axis].copy()
+            x_axis = 'Value'
+        if y_is_symbol:
+            filtered_df = filtered_df[filtered_df['Variable'] == y_axis].copy()
+            y_axis = 'Value'
+        if z_axis and z_is_symbol:
+            filtered_df = filtered_df[filtered_df['Variable'] == z_axis].copy()
+            z_axis = 'Value'
+
+        # Drop NaN in axis columns
+        axis_cols = [x_axis, y_axis]
+        if z_axis:
+            axis_cols.append(z_axis)
+        filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
+        if filtered_df.empty:
+            return None
+
+        # Binning config (may be dict or None)
+        bins_config = figure_spec.binning_data if figure_spec.binning_data else None
+
+        # Parse plot type and mode
+        parts = figure_spec.plot_representation.split('_', 1)
+        plot_type = parts[0] if len(parts) > 0 else '2d'
+        plot_mode = parts[1] if len(parts) > 1 else 'scatter'
+
+        pc = self.project_config or None
+
+        if plot_type == '2d':
+            if plot_mode == 'scatter':
+                return create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
+            else:
+                return create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
+        else:
+            if plot_mode == 'scatter':
+                return create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
+            else:
+                return create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
+
     def _open_figure_in_tab(self, figure_spec):
         """Open a figure in a new tab based on its FigureSpec."""
-        # Create a new tab
         tab = PlotTab(self.figure_notebook, figure_spec=figure_spec)
-        
-        # Add tab to notebook with close button (later)
         tab_index = self.figure_notebook.index("end")
-        tab_name = f"Fig {len(self.project.figures)}"
+
+        # Build descriptive tab name
+        x_name = figure_spec.x_variable or '?'
+        y_name = figure_spec.y_variable or '?'
+        tab_name = f"{x_name} vs {y_name}"
         self.figure_notebook.add(tab, text=tab_name)
-        
-        # Load the figure configuration into the UI
+
+        # Load the figure configuration into the UI controls
         self._on_figure_selected_from_browser(figure_spec)
-        
-        # Generate and display the plot in this tab
+
+        # Regenerate and display in the tab
         try:
-            if not self.selected_papers:
-                messagebox.showwarning("No Papers", "Figure has no papers selected.")
+            fig = self._regenerate_figure_from_spec(figure_spec)
+            if fig is None:
+                messagebox.showwarning("No Data", "Could not regenerate figure (no matching data).")
+                self.figure_notebook.forget(tab_index)
                 return
-            
-            filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
-            if filtered_df.empty:
-                messagebox.showwarning("No Data", "No data for selected papers.")
-                return
-            
-            # Resolve axes
-            x_axis, x_is_symbol = self._resolve_axis(figure_spec.x_variable) if figure_spec.x_variable else (None, False)
-            y_axis, y_is_symbol = self._resolve_axis(figure_spec.y_variable) if figure_spec.y_variable else (None, False)
-            z_axis, z_is_symbol = self._resolve_axis(figure_spec.z_variable) if figure_spec.z_variable else (None, False)
-            
-            if not x_axis or not y_axis:
-                messagebox.showwarning("Invalid Axes", "Figure has invalid axis configuration.")
-                return
-            
-            # Get axis labels
-            x_label, y_label, z_label = x_axis, y_axis, z_axis or ""
-            
-            # Get plot type and mode
-            plot_type, plot_mode = figure_spec.plot_representation.split('_')
-            
-            # Generate plot
-            if plot_type == '2d':
-                if plot_mode == 'scatter':
-                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, figure_spec.binning_data)
-                else:
-                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, figure_spec.binning_data)
-            else:
-                if plot_mode == 'scatter':
-                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, figure_spec.binning_data)
-                else:
-                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, figure_spec.binning_data)
-            
-            # Display in the tab's plot display
+
             tab.plot_display.display_plot(fig)
-            
-            # Select the new tab
             self.figure_notebook.select(tab_index)
-            
+
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open figure:\n{str(e)}")
-            self.figure_notebook.forget(tab_index)
-    
+            try:
+                self.figure_notebook.forget(tab_index)
+            except Exception:
+                pass
+
     def _save_figure_to_project(self):
         """Save the current figure to the project and create a tab for it."""
         if not self.project or not self.project.is_loaded():
             messagebox.showwarning("No Project", "Please open or create a project first.")
             return
-        
+
         if not self.plot_display.current_fig:
             messagebox.showwarning("No Plot", "Generate a plot first before saving.")
             return
-        
-        # Create figure spec and add to project
+
+        # Build the FigureSpec and add it to the project
         figure_spec = self._save_current_figure()
-        
+        self.project.figures.append(figure_spec)
+        self.project.dirty = True
+        self.project_browser.set_figures(self.project.figures)
+
         # Open the figure in a new tab
         try:
             self._open_figure_in_tab(figure_spec)
             messagebox.showinfo("Success", "Figure saved to project and opened in a new tab.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save figure:\n{str(e)}")
-    
+
+    def _on_tab_middle_click(self, event):
+        """Handle middle-click on a notebook tab to close it."""
+        try:
+            clicked_tab = self.figure_notebook.identify(event.x, event.y)
+            if not clicked_tab:
+                return
+            tab_index = self.figure_notebook.index(f"@{event.x},{event.y}")
+        except Exception:
+            return
+
+        # Never close the first "Plot Display" tab
+        if tab_index == 0:
+            return
+
+        tab_widget = self.figure_notebook.nametowidget(self.figure_notebook.tabs()[tab_index])
+        if isinstance(tab_widget, PlotTab) and tab_widget.has_unsaved_changes:
+            if not messagebox.askyesno("Close Tab", "This tab has unsaved changes. Close anyway?"):
+                return
+
+        self.figure_notebook.forget(tab_index)
+
+    def _load_project_config(self):
+        """Load the project-local config file into self.project_config."""
+        if not self.project.is_loaded():
+            self.project_config = {}
+            return
+
+        config_path = self.project.get_config_file_path()
+        if config_path and config_path.exists():
+            try:
+                self.project_config = load_project_config(config_path)
+            except Exception:
+                self.project_config = {}
+        else:
+            self.project_config = {}
+
+    def _save_project_config(self):
+        """Persist the current project_config dict to the project-local config file."""
+        if not self.project.is_loaded() or not self.project_config:
+            return
+
+        config_path = self.project.get_config_file_path()
+        if config_path:
+            try:
+                save_project_config(config_path, self.project_config)
+            except Exception:
+                pass  # non-fatal
+
     def _open_view_config(self):
         """Open the View/Plot Properties configuration dialog."""
-        dialog = PlotPropertiesDialog(self, project=self.project if self.project.is_loaded() else None)
+        PlotPropertiesDialog(
+            self,
+            project=self.project if self.project.is_loaded() else None,
+            on_apply=self._on_view_config_applied,
+        )
+
+    def _on_view_config_applied(self, config_dict):
+        """Called when the user clicks Apply in the Plot Properties dialog."""
+        self.project_config = config_dict
+        # Regenerate the current plot if one exists
+        if self.plot_display.current_fig:
+            self._generate_plot()
 
 
 # ============================================================================
@@ -2413,18 +2519,20 @@ class VisualisierApp(tk.Tk):
 class PlotPropertiesDialog(tk.Toplevel):
     """Dialog for configuring plot styling properties."""
     
-    def __init__(self, parent, project=None):
+    def __init__(self, parent, project=None, on_apply=None):
         """
         Initialize plot properties dialog.
         
         Args:
             parent: Parent window
             project: ProjectState object (None if no project loaded)
+            on_apply: Callback receiving the updated config dict on Apply
         """
         super().__init__(parent)
         self.title("Plot Properties")
         self.geometry("400x500")
         self.project = project
+        self.on_apply = on_apply
         self.config_dict = {}
         
         # Load config from project if available
@@ -2453,6 +2561,9 @@ class PlotPropertiesDialog(tk.Toplevel):
             "SCATTER_SIZE": getattr(default_config, "SCATTER_SIZE", 80),
             "SCATTER_ALPHA": getattr(default_config, "SCATTER_ALPHA", 0.7),
             "LEGEND_LOCATION": getattr(default_config, "LEGEND_LOCATION", "best"),
+            "GRID_STYLE": getattr(default_config, "GRID_STYLE", "--"),
+            "GRID_ALPHA": getattr(default_config, "GRID_ALPHA", 0.3),
+            "OUTPUT_DPI": getattr(default_config, "OUTPUT_DPI", 300),
         }
     
     def _create_widgets(self):
@@ -2486,6 +2597,20 @@ class PlotPropertiesDialog(tk.Toplevel):
         self.alpha_var = tk.StringVar(value=str(self.config_dict.get("SCATTER_ALPHA", 0.7)))
         ttk.Spinbox(markers_frame, from_=0.0, to=1.0, increment=0.1, textvariable=self.alpha_var, width=10).pack(anchor=tk.W, pady=(0, 10))
         
+        # Lines tab
+        lines_frame = ttk.Frame(notebook, padding=10)
+        notebook.add(lines_frame, text="Lines")
+
+        ttk.Label(lines_frame, text="Grid Style:", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.grid_style_var = tk.StringVar(value=self.config_dict.get("GRID_STYLE", "--"))
+        ttk.Combobox(lines_frame, textvariable=self.grid_style_var,
+                     values=["--", ":", "-", "-."],
+                     state="readonly", width=10).pack(anchor=tk.W, pady=(0, 10))
+
+        ttk.Label(lines_frame, text="Grid Opacity (0.0-1.0):", font=("Arial", 9, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        self.grid_alpha_var = tk.StringVar(value=str(self.config_dict.get("GRID_ALPHA", 0.3)))
+        ttk.Spinbox(lines_frame, from_=0.0, to=1.0, increment=0.1, textvariable=self.grid_alpha_var, width=10).pack(anchor=tk.W, pady=(0, 10))
+
         # Colors tab
         colors_frame = ttk.Frame(notebook, padding=10)
         notebook.add(colors_frame, text="Colors")
@@ -2512,35 +2637,57 @@ class PlotPropertiesDialog(tk.Toplevel):
         button_frame = ttk.Frame(main_frame)
         button_frame.pack(fill=tk.X, pady=(10, 0))
         
-        ttk.Button(button_frame, text="Save", command=self._save_config).pack(side=tk.RIGHT, padx=5)
-        ttk.Button(button_frame, text="Cancel", command=self.destroy).pack(side=tk.RIGHT)
+        ttk.Button(button_frame, text="Apply", command=self._apply_config).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(button_frame, text="Cancel", command=self.destroy).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(button_frame, text="Reset to Defaults", command=self._reset_to_defaults).pack(side=tk.LEFT)
     
-    def _save_config(self):
-        """Save the current configuration."""
-        updated_config = {
+    def _build_config_dict(self):
+        """Build a config dict from the current widget values."""
+        return {
             "MARKERS": self.config_dict.get("MARKERS", []),
             "SEABORN_PALETTE": self.palette_var.get(),
             "N_COLORS": int(self.n_colors_var.get()),
             "SCATTER_SIZE": int(self.size_var.get()),
             "SCATTER_ALPHA": float(self.alpha_var.get()),
             "LEGEND_LOCATION": self.legend_var.get(),
-            "GRID_STYLE": self.config_dict.get("GRID_STYLE", "--"),
-            "GRID_ALPHA": self.config_dict.get("GRID_ALPHA", 0.3),
+            "GRID_STYLE": self.grid_style_var.get(),
+            "GRID_ALPHA": float(self.grid_alpha_var.get()),
             "OUTPUT_DPI": self.config_dict.get("OUTPUT_DPI", 300),
         }
+
+    def _apply_config(self):
+        """Save the current configuration and notify the parent."""
+        updated_config = self._build_config_dict()
         
         if self.project and self.project.is_loaded():
             config_path = self.project.get_config_file_path()
             if config_path:
                 try:
                     save_project_config(config_path, updated_config)
-                    messagebox.showinfo("Success", "Plot properties saved to project.")
                 except Exception as e:
                     messagebox.showerror("Error", f"Failed to save config:\n{str(e)}")
-        else:
-            messagebox.showinfo("Info", "Configuration updated. Open/create a project to save permanently.")
-        
+                    return
+
+        # Notify the parent app so it can update plots
+        if self.on_apply:
+            self.on_apply(updated_config)
+
+        messagebox.showinfo("Success", "Plot properties applied.")
         self.destroy()
+
+    def _reset_to_defaults(self):
+        """Reset all fields to the global defaults from ribs_core/config.py."""
+        defaults = self._get_default_config()
+        markers = defaults.get("MARKERS", ["o"])
+        self.marker_var.set(str(markers[0]) if markers else "o")
+        self.size_var.set(str(defaults.get("SCATTER_SIZE", 80)))
+        self.alpha_var.set(str(defaults.get("SCATTER_ALPHA", 0.7)))
+        self.palette_var.set(defaults.get("SEABORN_PALETTE", "husl"))
+        self.n_colors_var.set(str(defaults.get("N_COLORS", 12)))
+        self.legend_var.set(defaults.get("LEGEND_LOCATION", "best"))
+        self.grid_style_var.set(defaults.get("GRID_STYLE", "--"))
+        self.grid_alpha_var.set(str(defaults.get("GRID_ALPHA", 0.3)))
+        self.config_dict = defaults
 
 
 class ImportDialog(tk.Toplevel):
