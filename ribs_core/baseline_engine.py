@@ -234,37 +234,30 @@ class BaselineEngine:
             return 'Blasius'
         return ''
     
-    def identify_variable_type(self, variable: str) -> Tuple[str, str]:
-        """
-        Identify the base variable and its format.
+    @staticmethod
+    def _resolve_prandtl(pr_value: float = None) -> float:
+        """Resolve Prandtl number, falling back to config default if None."""
+        return pr_value if pr_value is not None else config.PREPROCESSOR_PRANDTL_DEFAULT
+    
+    def _get_correlation(self, method: str, expected_variable: str = None) -> dict:
+        """Look up a correlation method and optionally validate its variable type.
         
         Args:
-            variable: Variable name from data
+            method: Correlation method name
+            expected_variable: If provided, validates the correlation is for this variable
             
         Returns:
-            Tuple of (base_variable, format_type)
-            where format_type in: 'raw', 'ratio', 'unknown'
-            and base_variable in: 'Nu', 'f', 'St'
+            Correlation dictionary
+            
+        Raises:
+            ValueError: If method is unknown or variable type doesn't match
         """
-        var_lower = variable.lower()
-        
-        # Identify base variable
-        if 'nu' in var_lower:
-            base = 'Nu'
-        elif 'f' in var_lower and 'ff' not in var_lower:  # 'f' but not 'f/f'
-            base = 'f'
-        elif 'st' in var_lower:
-            base = 'St'
-        else:
-            return variable, 'unknown'
-        
-        # Identify format (raw vs ratio)
-        if '/' in variable or 'ratio' in var_lower or '_0' in variable:
-            fmt = 'ratio'
-        else:
-            fmt = 'raw'
-        
-        return base, fmt
+        if method not in self.CORRELATIONS:
+            raise ValueError(f"Unknown correlation method: {method}")
+        corr = self.CORRELATIONS[method]
+        if expected_variable and corr['variable'] != expected_variable:
+            raise ValueError(f"{method} is for {corr['variable']}, not {expected_variable}")
+        return corr
     
     def convert_stanton_to_nusselt(
         self,
@@ -305,15 +298,8 @@ class BaselineEngine:
         Returns:
             Baseline Nu values
         """
-        if pr_value is None:
-            pr_value = config.PREPROCESSOR_PRANDTL_DEFAULT
-        
-        if method not in self.CORRELATIONS:
-            raise ValueError(f"Unknown correlation method: {method}")
-        
-        corr = self.CORRELATIONS[method]
-        if corr['variable'] != 'Nu':
-            raise ValueError(f"{method} is for {corr['variable']}, not Nu")
+        pr_value = self._resolve_prandtl(pr_value)
+        corr = self._get_correlation(method, 'Nu')
         
         return corr['formula'](re_values, pr_value)
     
@@ -332,12 +318,7 @@ class BaselineEngine:
         Returns:
             Baseline friction factor values
         """
-        if method not in self.CORRELATIONS:
-            raise ValueError(f"Unknown correlation method: {method}")
-        
-        corr = self.CORRELATIONS[method]
-        if corr['variable'] != 'f':
-            raise ValueError(f"{method} is for {corr['variable']}, not f")
+        corr = self._get_correlation(method, 'f')
         
         return corr['formula'](re_values)
     
@@ -400,8 +381,7 @@ class BaselineEngine:
         Returns:
             Back-calculated raw Nu values
         """
-        if pr_value is None:
-            pr_value = config.PREPROCESSOR_PRANDTL_DEFAULT
+        pr_value = self._resolve_prandtl(pr_value)
         
         # Get author's baseline values using their method
         if baseline_method not in self.CORRELATIONS:
@@ -466,8 +446,7 @@ class BaselineEngine:
         Returns:
             Dictionary with processing results
         """
-        if pr_value is None:
-            pr_value = config.PREPROCESSOR_PRANDTL_DEFAULT
+        pr_value = self._resolve_prandtl(pr_value)
         
         result = {
             'variable': row.get('Variable', ''),
@@ -733,8 +712,7 @@ class BaselineEngine:
         Returns:
             Tuple of (processed_df, decision_log_dict, status_message)
         """
-        if pr_value is None:
-            pr_value = config.PREPROCESSOR_PRANDTL_DEFAULT
+        pr_value = self._resolve_prandtl(pr_value)
         
         # Add output columns
         df['Standard_Ratio'] = np.nan

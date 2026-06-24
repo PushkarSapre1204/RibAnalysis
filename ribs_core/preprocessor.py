@@ -310,44 +310,56 @@ class MetaAnalysisPreprocessor:
         removed = int(smooth_mask.sum())
         return df[~smooth_mask].copy(), removed
 
-    def save_clean_outputs(
+    def _load_paper_data(
         self,
-        df: pd.DataFrame,
         paper_dir: Path
-    ) -> str:
+    ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         """
-        Save clean_data.csv and clean_data_log.csv in the paper directory.
+        Load and clean raw data from a paper directory.
+        
+        Handles all data loading and cleaning in one place:
+        - Loads raw_data.csv and manifest.json
+        - Converts N/A strings to NaN
+        - Coerces numeric parameter columns to proper dtypes
+        
+        Downstream engines can assume clean, uniform data.
         
         Args:
-            df: Fully processed DataFrame
-            paper_dir: Paper directory
+            paper_dir: Path to paper directory
             
         Returns:
-            Path to clean_data.csv or empty string on error
+            Tuple of (cleaned_df, manifest_dict)
+            
+        Raises:
+            FileNotFoundError: If required files are missing
         """
-        try:
-            main_df = df[config.STITCHING_MASTER_SCHEMA].copy()
-            main_df['Value'] = df['Standard_Ratio']
-            main_df['Variable'] = df['Standard_Ratio_Method'].apply(
-                self.stitching_engine._map_to_standard_symbol
-            )
-
-            log_df = df[config.STITCHING_LOG_SCHEMA].copy()
-
-            main_path = paper_dir / config.STITCHING_MAIN_FILENAME
-            log_path = paper_dir / config.STITCHING_LOG_FILENAME
-
-            main_df.to_csv(main_path, index=False)
-            log_df.to_csv(log_path, index=False)
-            
-            if self.verbose:
-                logger.info(f"Saved clean outputs for {paper_dir.name}: {main_path}, {log_path}")
-            
-            return str(main_path)
+        raw_data_path = paper_dir / 'raw_data.csv'
+        manifest_path = paper_dir / 'manifest.json'
         
-        except Exception as e:
-            logger.error(f"Error saving clean outputs for {paper_dir.name}: {e}")
-            return ''
+        if not raw_data_path.exists():
+            raise FileNotFoundError(f"Missing raw_data.csv: {raw_data_path}")
+        if not manifest_path.exists():
+            raise FileNotFoundError(f"Missing manifest.json: {manifest_path}")
+        
+        df = pd.read_csv(raw_data_path)
+        with open(manifest_path, 'r') as f:
+            manifest = json.load(f)
+        
+        # Clean data: convert N/A strings to NaN
+        df = df.replace(['N/A', 'NA', 'n/a', 'na', 'None', ''], np.nan)
+        
+        # Coerce numeric parameter columns to proper dtypes
+        numeric_params = ['Reynolds number (Re)', 'P/e', 'e/D', 'Alpha',
+                          'Aspect ratio', 'Number of ribbed walls', 'Value']
+        for col in numeric_params:
+            if col in df.columns:
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+        
+        if self.verbose:
+            logger.info(f"Loaded and cleaned {len(df)} rows from {raw_data_path}")
+        
+        return df, manifest
+
     
     def process_single_paper(
         self,
@@ -377,16 +389,11 @@ class MetaAnalysisPreprocessor:
         try:
             logger.info(f"Processing paper: {paper_dir.name}")
             
-            # Step 1: Load raw inputs
+            # Step 1: Load and clean raw inputs
             print(f"\n{'='*50}")
             print(f"PROCESSING: {paper_dir.name}")
             print(f"{'='*50}")
-            raw_data_path = paper_dir / 'raw_data.csv'
-            manifest_path = paper_dir / 'manifest.json'
-
-            df = pd.read_csv(raw_data_path)
-            with open(manifest_path, 'r') as f:
-                manifest = json.load(f)
+            df, manifest = self._load_paper_data(paper_dir)
 
             # Keep approved manifest exception: add/update paper_number.
             try:
@@ -434,8 +441,13 @@ class MetaAnalysisPreprocessor:
             
             result['baseline_log'] = base_log
 
-            # Step 6: Save clean_data and clean_data_log.
-            clean_data_path = self.save_clean_outputs(df, paper_dir)
+            # Step 6: Save clean_data and clean_data_log via stitching engine.
+            try:
+                self.stitching_engine.stitch_paper(df, paper_dir)
+                clean_data_path = str(paper_dir / config.STITCHING_MAIN_FILENAME)
+            except Exception as e:
+                logger.error(f"Error saving clean outputs for {paper_dir.name}: {e}")
+                clean_data_path = ''
             if not clean_data_path:
                 result['status'] = 'error'
                 result['error'] = 'Failed to save clean output files'

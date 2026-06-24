@@ -210,14 +210,41 @@ def _attach_point_metadata(fig, artist, df_subset, x_axis, y_axis, z_axis=None, 
 
     return artist
 
+def _extract_plot_style(project_config, default_alpha=0.6):
+    """Extract common plot styling from project configuration."""
+    return {
+        'scatter_size': (project_config or {}).get('SCATTER_SIZE', 70),
+        'scatter_alpha': (project_config or {}).get('SCATTER_ALPHA', default_alpha),
+        'legend_loc': (project_config or {}).get('LEGEND_LOCATION', 'best'),
+        'grid_style': (project_config or {}).get('GRID_STYLE', '--'),
+        'grid_alpha': (project_config or {}).get('GRID_ALPHA', 0.3)
+    }
+
+def _prepare_bin_groups(df, bins_config, project_config, sort_by=None):
+    """Prepare dataframe subsets and styles for binned plotting."""
+    bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
+    bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
+    
+    groups = []
+    for bin_dict in bins_config['bins']:
+        bin_num = bin_dict['bin_number']
+        mask = bin_assignment == bin_num
+        if mask.any():
+            subset = df.iloc[np.flatnonzero(mask)].copy()
+            if sort_by:
+                subset = subset.sort_values(sort_by)
+            style = bin_styles[bin_num]
+            label = get_bin_legend_label(bins_config['parameter'], bin_dict)
+            groups.append((subset, style, label))
+    return groups
 
 def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None, project_config=None):
     """Create 2D scatter plot with optional binning."""
-    scatter_size = (project_config or {}).get('SCATTER_SIZE', 70)
-    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
-    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
-    grid_style = (project_config or {}).get('GRID_STYLE', '--')
-    grid_alpha = (project_config or {}).get('GRID_ALPHA', 0.3)
+    style = _extract_plot_style(project_config)
+    scatter_size, scatter_alpha, legend_loc, grid_style, grid_alpha = (
+        style['scatter_size'], style['scatter_alpha'], style['legend_loc'],
+        style['grid_style'], style['grid_alpha']
+    )
 
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
@@ -228,25 +255,17 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
     y_display = y_label if y_label else y_axis
     
     if bins_config and bins_config['enabled']:
-        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
-
-        for bin_dict in bins_config['bins']:
-            bin_num = bin_dict['bin_number']
-            mask = bin_assignment == bin_num
-            if mask.any():
-                style = bin_styles[bin_num]
-                subset = df.iloc[np.flatnonzero(mask)].copy()
-                scatter = ax.scatter(
-                    subset[x_axis],
-                    subset[y_axis],
-                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
-                    alpha=scatter_alpha,
-                    color=style['color'],
-                    marker=style['marker'],
-                    s=scatter_size
-                )
-                _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, None, x_label, y_label, None)
+        for subset, bin_style, label in _prepare_bin_groups(df, bins_config, project_config):
+            scatter = ax.scatter(
+                subset[x_axis],
+                subset[y_axis],
+                label=label,
+                alpha=scatter_alpha,
+                color=bin_style['color'],
+                marker=bin_style['marker'],
+                s=scatter_size
+            )
+            _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, None, x_label, y_label, None)
 
         ax.legend(loc=legend_loc, framealpha=0.9)
     else:
@@ -264,10 +283,11 @@ def create_custom_2d_scatter(df, x_axis, y_axis, x_label=None, y_label=None, bin
 
 def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_config=None, project_config=None):
     """Create 2D line plot with optional binning."""
-    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
-    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
-    grid_style = (project_config or {}).get('GRID_STYLE', '--')
-    grid_alpha = (project_config or {}).get('GRID_ALPHA', 0.3)
+    style = _extract_plot_style(project_config)
+    scatter_alpha, legend_loc, grid_style, grid_alpha = (
+        style['scatter_alpha'], style['legend_loc'],
+        style['grid_style'], style['grid_alpha']
+    )
 
     fig = Figure(figsize=(8, 6), dpi=100)
     ax = fig.add_subplot(111)
@@ -281,26 +301,18 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
     df_sorted = df.sort_values(x_axis)
     
     if bins_config and bins_config['enabled']:
-        bin_assignment = assign_points_to_bins(df_sorted, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
-
-        for bin_dict in bins_config['bins']:
-            bin_num = bin_dict['bin_number']
-            mask = bin_assignment == bin_num
-            if mask.any():
-                style = bin_styles[bin_num]
-                subset = df_sorted[mask].sort_values(x_axis)
-                line = ax.plot(
-                    subset[x_axis],
-                    subset[y_axis],
-                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
-                    marker=style['marker'],
-                    alpha=scatter_alpha,
-                    color=style['color'],
-                    linewidth=2
-                )[0]
-                line.set_pickradius(5)
-                _attach_point_metadata(fig, line, subset, x_axis, y_axis, None, x_label, y_label, None)
+        for subset, bin_style, label in _prepare_bin_groups(df_sorted, bins_config, project_config, sort_by=x_axis):
+            line = ax.plot(
+                subset[x_axis],
+                subset[y_axis],
+                label=label,
+                marker=bin_style['marker'],
+                alpha=scatter_alpha,
+                color=bin_style['color'],
+                linewidth=2
+            )[0]
+            line.set_pickradius(5)
+            _attach_point_metadata(fig, line, subset, x_axis, y_axis, None, x_label, y_label, None)
 
         ax.legend(loc=legend_loc, framealpha=0.9)
     else:
@@ -320,9 +332,10 @@ def create_custom_2d_line(df, x_axis, y_axis, x_label=None, y_label=None, bins_c
 def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=None, z_label=None, bins_config=None, project_config=None):
     """Create 3D scatter plot with optional binning."""
     from mpl_toolkits.mplot3d import Axes3D
-    scatter_size = (project_config or {}).get('SCATTER_SIZE', 70)
-    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.6)
-    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
+    style = _extract_plot_style(project_config)
+    scatter_size, scatter_alpha, legend_loc = (
+        style['scatter_size'], style['scatter_alpha'], style['legend_loc']
+    )
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -334,26 +347,18 @@ def create_custom_3d_scatter(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     fig._clickable_artists = []
     
     if bins_config and bins_config['enabled']:
-        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
-
-        for bin_dict in bins_config['bins']:
-            bin_num = bin_dict['bin_number']
-            mask = bin_assignment == bin_num
-            if mask.any():
-                style = bin_styles[bin_num]
-                subset = df.iloc[np.flatnonzero(mask)].copy()
-                scatter = ax.scatter(
-                    subset[x_axis],
-                    subset[y_axis],
-                    subset[z_axis],
-                    label=get_bin_legend_label(bins_config['parameter'], bin_dict),
-                    alpha=scatter_alpha,
-                    color=style['color'],
-                    marker=style['marker'],
-                    s=scatter_size
-                )
-                _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
+        for subset, bin_style, label in _prepare_bin_groups(df, bins_config, project_config):
+            scatter = ax.scatter(
+                subset[x_axis],
+                subset[y_axis],
+                subset[z_axis],
+                label=label,
+                alpha=scatter_alpha,
+                color=bin_style['color'],
+                marker=bin_style['marker'],
+                s=scatter_size
+            )
+            _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
         ax.legend(loc=legend_loc, framealpha=0.9)
     else:
@@ -374,8 +379,8 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     from mpl_toolkits.mplot3d import Axes3D
     from scipy.interpolate import griddata
     from matplotlib.patches import Patch
-    scatter_alpha = (project_config or {}).get('SCATTER_ALPHA', 0.55)
-    legend_loc = (project_config or {}).get('LEGEND_LOCATION', 'best')
+    style = _extract_plot_style(project_config, default_alpha=0.55)
+    scatter_alpha, legend_loc = style['scatter_alpha'], style['legend_loc']
     
     # Use display labels if provided, otherwise use column names
     x_display = x_label if x_label else x_axis
@@ -387,18 +392,8 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
     fig._clickable_artists = []
     
     if bins_config and bins_config['enabled']:
-        bin_assignment = assign_points_to_bins(df, bins_config['parameter'], bins_config['bins'])
-        bin_styles = get_bin_colors_symbols(len(bins_config['bins']), project_config)
         legend_handles = []
-
-        for bin_dict in bins_config['bins']:
-            bin_num = bin_dict['bin_number']
-            mask = bin_assignment == bin_num
-            if not mask.any():
-                continue
-
-            style = bin_styles[bin_num]
-            subset = df.iloc[np.flatnonzero(mask)].copy()
+        for subset, bin_style, label in _prepare_bin_groups(df, bins_config, project_config):
             x = subset[x_axis].values
             y = subset[y_axis].values
             z = subset[z_axis].values
@@ -417,21 +412,21 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
                     xi,
                     yi,
                     zi,
-                    color=style['color'],
+                    color=bin_style['color'],
                     alpha=0.35,
                     linewidth=0,
                     antialiased=True
                 )
 
-            scatter = ax.scatter(x, y, z, color=style['color'], marker=style['marker'], s=35, alpha=scatter_alpha)
+            scatter = ax.scatter(x, y, z, color=bin_style['color'], marker=bin_style['marker'], s=35, alpha=scatter_alpha)
             _attach_point_metadata(fig, scatter, subset, x_axis, y_axis, z_axis, x_label, y_label, z_label)
 
             legend_handles.append(
                 Patch(
-                    facecolor=style['color'],
-                    edgecolor=style['color'],
+                    facecolor=bin_style['color'],
+                    edgecolor=bin_style['color'],
                     alpha=scatter_alpha,
-                    label=get_bin_legend_label(bins_config['parameter'], bin_dict)
+                    label=label
                 )
             )
 
@@ -469,248 +464,7 @@ def create_custom_3d_surface(df, x_axis, y_axis, z_axis, x_label=None, y_label=N
 # GUI PANELS
 # ============================================================================
 
-class MultiPaperSelector(ttk.Frame):
-    """Panel for selecting and managing multiple papers."""
-    
-    def __init__(self, parent, on_selection_change=None):
-        """
-        Initialize paper selector.
-        
-        Args:
-            parent: Parent widget
-            on_selection_change: Callback when selection changes
-        """
-        super().__init__(parent)
-        self.on_selection_change = on_selection_change
-        self.selected_papers = []
-        self.all_papers = []
-        
-        self._create_widgets()
-    
-    def _create_widgets(self):
-        """Create GUI widgets for paper selection."""
-        # Title
-        title = ttk.Label(self, text="Paper Selection", font=("Arial", 10, "bold"))
-        title.pack(pady=5)
-        
-        # Paper dropdown with search
-        frame_dropdown = ttk.Frame(self)
-        frame_dropdown.pack(fill=tk.X, padx=5, pady=5)
-        
-        ttk.Label(frame_dropdown, text="Available Papers:").pack(side=tk.LEFT)
-        self.paper_var = tk.StringVar()
-        self.paper_dropdown = ttk.Combobox(frame_dropdown, textvariable=self.paper_var, 
-                                           state="readonly", width=40)
-        self.paper_dropdown.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
-        self.paper_dropdown.bind("<<ComboboxSelected>>", self._on_paper_selected)
-        
-        # Buttons frame
-        frame_buttons = ttk.Frame(self)
-        frame_buttons.pack(fill=tk.X, padx=5, pady=5)
-        
-        ttk.Button(frame_buttons, text="Add", 
-                  command=self._add_paper).pack(side=tk.LEFT, padx=2)
-        ttk.Button(frame_buttons, text="Add All", 
-                  command=self._add_all_papers).pack(side=tk.LEFT, padx=2)
-        ttk.Button(frame_buttons, text="Remove", 
-                  command=self._remove_paper).pack(side=tk.LEFT, padx=2)
-        ttk.Button(frame_buttons, text="Clear All", 
-                  command=self._clear_all).pack(side=tk.LEFT, padx=2)
-        
-        # Selected papers listbox
-        ttk.Label(self, text="Selected Papers:").pack(anchor=tk.W, padx=5, pady=(5, 0))
-        
-        frame_listbox = ttk.Frame(self)
-        frame_listbox.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
-        
-        scrollbar = ttk.Scrollbar(frame_listbox)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        
-        self.selected_listbox = tk.Listbox(frame_listbox, yscrollcommand=scrollbar.set, 
-                                           height=6)
-        self.selected_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.config(command=self.selected_listbox.yview)
-    
-    def set_available_papers(self, papers):
-        """Set list of available papers."""
-        self.all_papers = sorted(papers)
-        self.paper_dropdown['values'] = self.all_papers
-    
-    def _on_paper_selected(self, event):
-        """Handle paper selection from dropdown."""
-        pass
-    
-    def _add_paper(self):
-        """Add selected paper to list."""
-        paper = self.paper_var.get()
-        if paper and paper not in self.selected_papers:
-            self.selected_papers.append(paper)
-            self._update_listbox()
-            if self.on_selection_change:
-                self.on_selection_change()
-    
-    def _add_all_papers(self):
-        """Add all papers to selection."""
-        self.selected_papers = self.all_papers.copy()
-        self._update_listbox()
-        if self.on_selection_change:
-            self.on_selection_change()
-    
-    def _remove_paper(self):
-        """Remove selected paper from list."""
-        selection = self.selected_listbox.curselection()
-        if selection:
-            idx = selection[0]
-            self.selected_papers.pop(idx)
-            self._update_listbox()
-            if self.on_selection_change:
-                self.on_selection_change()
-    
-    def _clear_all(self):
-        """Clear all selected papers."""
-        self.selected_papers = []
-        self._update_listbox()
-        if self.on_selection_change:
-            self.on_selection_change()
-    
-    def _update_listbox(self):
-        """Update the listbox display."""
-        self.selected_listbox.delete(0, tk.END)
-        for i, paper in enumerate(self.selected_papers, 1):
-            self.selected_listbox.insert(tk.END, f"{i}. {paper}")
-    
-    def get_selected_papers(self):
-        """Get list of selected papers."""
-        return self.selected_papers.copy()
 
-
-class AxisConfigPanel(ttk.Frame):
-    """Panel for configuring plot axes and type."""
-    
-    def __init__(self, parent, on_config_change=None):
-        """
-        Initialize axis configuration panel.
-        
-        Args:
-            parent: Parent widget
-            on_config_change: Callback when configuration changes
-        """
-        super().__init__(parent)
-        self.on_config_change = on_config_change
-        self.available_columns = []
-        
-        self._create_widgets()
-    
-    def _create_widgets(self):
-        """Create GUI widgets for axis configuration."""
-        # Title
-        title = ttk.Label(self, text="Plot Configuration", font=("Arial", 10, "bold"))
-        title.pack(pady=5)
-        
-        # Plot type frame
-        frame_type = ttk.LabelFrame(self, text="Plot Type", padding=5)
-        frame_type.pack(fill=tk.X, padx=5, pady=5)
-        
-        self.plot_type_var = tk.StringVar(value="2d_scatter")
-        ttk.Radiobutton(frame_type, text="2D", variable=self.plot_type_var, 
-                       value="2d", command=self._on_plot_type_change).pack(anchor=tk.W)
-        ttk.Radiobutton(frame_type, text="3D", variable=self.plot_type_var, 
-                       value="3d", command=self._on_plot_type_change).pack(anchor=tk.W)
-        
-        # Plot mode frame
-        frame_mode = ttk.LabelFrame(self, text="Plot Mode", padding=5)
-        frame_mode.pack(fill=tk.X, padx=5, pady=5)
-        
-        self.plot_mode_var = tk.StringVar(value="scatter")
-        self.mode_buttons = {}
-        
-        self.mode_buttons['scatter'] = ttk.Radiobutton(frame_mode, text="Scatter", 
-                                                        variable=self.plot_mode_var, 
-                                                        value="scatter")
-        self.mode_buttons['scatter'].pack(anchor=tk.W)
-        
-        self.mode_buttons['line'] = ttk.Radiobutton(frame_mode, text="Line", 
-                                                     variable=self.plot_mode_var, 
-                                                     value="line")
-        self.mode_buttons['line'].pack(anchor=tk.W)
-        
-        self.mode_buttons['surface'] = ttk.Radiobutton(frame_mode, text="Surface", 
-                                                        variable=self.plot_mode_var, 
-                                                        value="surface", state=tk.DISABLED)
-        self.mode_buttons['surface'].pack(anchor=tk.W)
-        
-        # Axis selection frame
-        frame_axes = ttk.LabelFrame(self, text="Axes Selection", padding=5)
-        frame_axes.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
-        
-        # X axis
-        ttk.Label(frame_axes, text="X Axis:").grid(row=0, column=0, sticky=tk.W, pady=3)
-        self.x_axis_var = tk.StringVar()
-        self.x_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.x_axis_var, 
-                                            state="readonly", width=20)
-        self.x_axis_dropdown.grid(row=0, column=1, sticky=tk.EW, padx=5)
-        
-        # Y axis
-        ttk.Label(frame_axes, text="Y Axis:").grid(row=1, column=0, sticky=tk.W, pady=3)
-        self.y_axis_var = tk.StringVar()
-        self.y_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.y_axis_var, 
-                                            state="readonly", width=20)
-        self.y_axis_dropdown.grid(row=1, column=1, sticky=tk.EW, padx=5)
-        
-        # Z axis (3D only)
-        ttk.Label(frame_axes, text="Z Axis:").grid(row=2, column=0, sticky=tk.W, pady=3)
-        self.z_axis_var = tk.StringVar()
-        self.z_axis_dropdown = ttk.Combobox(frame_axes, textvariable=self.z_axis_var, 
-                                            state="readonly", width=20)
-        self.z_axis_dropdown.grid(row=2, column=1, sticky=tk.EW, padx=5)
-        self.z_axis_dropdown.config(state=tk.DISABLED)
-        
-        frame_axes.columnconfigure(1, weight=1)
-    
-    def _on_plot_type_change(self):
-        """Handle plot type change (2D vs 3D)."""
-        is_3d = self.plot_type_var.get() == "3d"
-        
-        # Enable/disable Z axis
-        self.z_axis_dropdown.config(state=tk.NORMAL if is_3d else tk.DISABLED)
-        
-        # Update mode buttons
-        self.mode_buttons['line'].config(state=tk.NORMAL if not is_3d else tk.DISABLED)
-        self.mode_buttons['surface'].config(state=tk.NORMAL if is_3d else tk.DISABLED)
-        
-        # Reset mode if needed
-        if is_3d and self.plot_mode_var.get() == "line":
-            self.plot_mode_var.set("scatter")
-        elif not is_3d and self.plot_mode_var.get() == "surface":
-            self.plot_mode_var.set("scatter")
-        
-        if self.on_config_change:
-            self.on_config_change()
-    
-    def set_available_columns(self, columns):
-        """Set list of available columns for axes."""
-        self.available_columns = sorted(columns)
-        self.x_axis_dropdown['values'] = self.available_columns
-        self.y_axis_dropdown['values'] = self.available_columns
-        self.z_axis_dropdown['values'] = self.available_columns
-        
-        # Set defaults
-        if len(self.available_columns) > 0:
-            self.x_axis_dropdown.current(0)
-        if len(self.available_columns) > 1:
-            self.y_axis_dropdown.current(1)
-        if len(self.available_columns) > 2:
-            self.z_axis_dropdown.current(2)
-    
-    def get_config(self):
-        """Get current plot configuration."""
-        return {
-            'plot_type': self.plot_type_var.get(),
-            'plot_mode': self.plot_mode_var.get(),
-            'x_axis': self.x_axis_var.get(),
-            'y_axis': self.y_axis_var.get(),
-            'z_axis': self.z_axis_var.get(),
-        }
 
 
 class BinningConfigPanel(ttk.Frame):
@@ -1605,7 +1359,7 @@ class VisualisierApp(tk.Tk):
 
         edit_menu = tk.Menu(menu_bar, tearoff=0)
         edit_menu.add_command(label="Import Papers", command=lambda: self._import_project_data())
-        edit_menu.add_command(label="Export Figures", command=lambda: self._export_figures())
+        edit_menu.add_command(label="Export Figures", command=lambda: self._save_plot())
         
         view_menu = tk.Menu(menu_bar, tearoff=0)
         view_menu.add_command(label="Plot Properties", command=lambda: self._open_view_config())
@@ -1811,13 +1565,8 @@ class VisualisierApp(tk.Tk):
         for i, paper in enumerate(self.selected_papers, 1):
             self.selected_papers_listbox.insert(tk.END, f"{i}. {paper}")
 
-    def _refresh_axis_dropdowns(self):
-        """Refresh axis dropdowns based on currently selected papers."""
-        if not self.selected_papers:
-            papers_for_symbols = self.all_papers
-        else:
-            papers_for_symbols = self.selected_papers
-
+    def _build_axis_list(self, papers):
+        """Build input/output variables list and update dropdowns."""
         input_vars = [
             'Reynolds number (Re)',
             'P/e',
@@ -1827,7 +1576,7 @@ class VisualisierApp(tk.Tk):
             'Number of ribbed walls'
         ]
 
-        output_vars = data_loader.get_available_symbols(self.df, papers_for_symbols)
+        output_vars = data_loader.get_available_symbols(self.df, papers)
 
         axis_display_list = (
             ['INPUT VARIABLES:'] +
@@ -1844,6 +1593,13 @@ class VisualisierApp(tk.Tk):
         self.x_axis_dropdown['values'] = axis_display_list
         self.y_axis_dropdown['values'] = axis_display_list
         self.z_axis_dropdown['values'] = axis_display_list
+        
+        return input_vars
+
+    def _refresh_axis_dropdowns(self):
+        """Refresh axis dropdowns based on currently selected papers."""
+        papers_for_symbols = self.selected_papers if self.selected_papers else self.all_papers
+        self._build_axis_list(papers_for_symbols)
     
     def _on_plot_type_change(self):
         """Handle plot type change (2D vs 3D)."""
@@ -2034,9 +1790,6 @@ class VisualisierApp(tk.Tk):
         except Exception as e:
             messagebox.showerror("Import Error", f"Failed to import files:\n{e}")
 
-    def _export_figures(self):
-        """Export the currently displayed figure as an image file."""
-        self.plot_display._on_save_click()
 
     def _sync_project_from_ui(self):
         """Store the current UI state into the project model.
@@ -2086,31 +1839,7 @@ class VisualisierApp(tk.Tk):
                 self.all_papers = sorted(self.df['Paper Title'].unique().tolist())
                 self.paper_dropdown['values'] = self.all_papers
 
-            input_vars = [
-                'Reynolds number (Re)',
-                'P/e',
-                'e/D',
-                'Alpha',
-                'Aspect ratio',
-                'Number of ribbed walls'
-            ]
-            output_vars = data_loader.get_available_symbols(self.df, self.all_papers)
-
-            axis_display_list = (
-                ['INPUT VARIABLES:'] +
-                input_vars +
-                ['─────────────────'] +
-                ['OUTPUT VARIABLES:'] +
-                output_vars
-            )
-
-            self.axis_mapping = {col: col for col in input_vars}
-            for symbol in output_vars:
-                self.axis_mapping[symbol] = ('symbol', symbol)
-
-            self.x_axis_dropdown['values'] = axis_display_list
-            self.y_axis_dropdown['values'] = axis_display_list
-            self.z_axis_dropdown['values'] = axis_display_list
+            input_vars = self._build_axis_list(self.all_papers)
             self.binning_panel.set_dataframe(self.df)
             self.binning_panel.set_available_parameters(input_vars)
             self.binning_panel.set_selected_papers(self.selected_papers)
@@ -2138,103 +1867,83 @@ class VisualisierApp(tk.Tk):
         """Callback when bins are set in binning panel."""
         pass
 
+    def _build_plot(self, papers, x_disp, y_disp, z_disp, plot_type, plot_mode, bins_config, show_warnings=True):
+        """Core pipeline to filter data, resolve axes, and dispatch plot creation."""
+        if self.df is None or not papers:
+            if show_warnings: messagebox.showwarning("Missing Data", "No data or papers selected.")
+            return None
+
+        filtered_df = self.df[self.df['Paper Title'].isin(papers)].copy()
+
+        # Resolve axes
+        x_col, x_sym = self._resolve_axis(x_disp)
+        y_col, y_sym = self._resolve_axis(y_disp)
+        z_col, z_sym = self._resolve_axis(z_disp) if z_disp else (None, False)
+
+        if not x_col or not y_col:
+            if show_warnings: messagebox.showwarning("Invalid Axis", "Please select valid X and Y axes.")
+            return None
+        if plot_type == '3d' and not z_col:
+            if show_warnings: messagebox.showwarning("Invalid Axis", "Please select valid Z axis for 3D plots.")
+            return None
+
+        # Prepare labels
+        def get_label(disp, col):
+            return disp if disp and disp not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else col
+        x_label = get_label(x_disp, x_col)
+        y_label = get_label(y_disp, y_col)
+        z_label = get_label(z_disp, z_col) if z_col else None
+
+        if x_sym:
+            filtered_df = filtered_df[filtered_df['Variable'] == x_col].copy()
+            x_col = 'Value'
+        if y_sym:
+            filtered_df = filtered_df[filtered_df['Variable'] == y_col].copy()
+            y_col = 'Value'
+        if z_col and z_sym:
+            filtered_df = filtered_df[filtered_df['Variable'] == z_col].copy()
+            z_col = 'Value'
+
+        if filtered_df.empty:
+            if show_warnings: messagebox.showwarning("No Data", "No data available after filtering.")
+            return None
+
+        axis_cols = [x_col, y_col]
+        if z_col:
+            axis_cols.append(z_col)
+        filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
+
+        if filtered_df.empty:
+            if show_warnings: messagebox.showwarning("No Valid Data", "No valid numeric data available.")
+            return None
+
+        pc = self.project_config or None
+        if plot_type == '2d':
+            if plot_mode == 'scatter':
+                return create_custom_2d_scatter(filtered_df, x_col, y_col, x_label, y_label, bins_config, pc)
+            else:
+                return create_custom_2d_line(filtered_df, x_col, y_col, x_label, y_label, bins_config, pc)
+        else:
+            if plot_mode == 'scatter':
+                return create_custom_3d_scatter(filtered_df, x_col, y_col, z_col, x_label, y_label, z_label, bins_config, pc)
+            else:
+                return create_custom_3d_surface(filtered_df, x_col, y_col, z_col, x_label, y_label, z_label, bins_config, pc)
+
     def _generate_plot(self):
         """Generate plot based on current configuration."""
         try:
-            # Get selected papers
-            if not self.selected_papers:
-                messagebox.showwarning("No Papers", "Please select at least one paper.")
-                return
-
-            if self.df is None:
-                messagebox.showwarning("No Data", "No project data is loaded yet.")
-                return
-
-            # Filter data by selected papers
-            filtered_df = self.df[self.df['Paper Title'].isin(self.selected_papers)].copy()
-
-            # Get axes configuration (display values)
-            x_axis_display = self.x_axis_var.get()
-            y_axis_display = self.y_axis_var.get()
-            z_axis_display = self.z_axis_var.get()
-            plot_type = self.plot_type_var.get()
-            plot_mode = self.plot_mode_var.get()
-
-            # Validate axes
-            if not x_axis_display or not y_axis_display:
-                messagebox.showwarning("Missing Axes", "Please select X and Y axes.")
-                return
-
-            if plot_type == '3d' and not z_axis_display:
-                messagebox.showwarning("Missing Axis", "Please select Z axis for 3D plots.")
-                return
-
-            # Resolve axis display names to actual column names
-            x_axis, x_is_symbol = self._resolve_axis(x_axis_display)
-            y_axis, y_is_symbol = self._resolve_axis(y_axis_display)
-            z_axis, z_is_symbol = self._resolve_axis(z_axis_display) if z_axis_display else (None, False)
-
-            if not x_axis or not y_axis:
-                messagebox.showwarning("Invalid Axis", "Please select valid axes (not section headers).")
-                return
-
-            # Prepare display labels (to preserve original names in plot titles)
-            x_label = x_axis_display if x_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else x_axis
-            y_label = y_axis_display if y_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else y_axis
-            z_label = z_axis_display if z_axis_display and z_axis_display not in [' ', '─────────────────', 'INPUT VARIABLES:', 'OUTPUT VARIABLES:'] else (z_axis if z_axis else None)
-
-            # Filter by symbols if selected
-            if x_is_symbol:
-                filtered_df = filtered_df[filtered_df['Variable'] == x_axis].copy()
-                x_axis = 'Value'
-
-            if y_is_symbol:
-                filtered_df = filtered_df[filtered_df['Variable'] == y_axis].copy()
-                y_axis = 'Value'
-
-            if z_axis and z_is_symbol:
-                filtered_df = filtered_df[filtered_df['Variable'] == z_axis].copy()
-                z_axis = 'Value'
-
-            # Validate that we have data after filtering
-            if filtered_df.empty:
-                messagebox.showwarning("No Data", "No data available for selected papers and symbols.")
-                return
-
-            # Remove rows with NaN values in the axis columns to ensure valid plotting data
-            axis_cols = [x_axis, y_axis]
-            if z_axis:
-                axis_cols.append(z_axis)
-
-            filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
-
-            # Validate we still have data after dropping NaN
-            if filtered_df.empty:
-                messagebox.showwarning(
-                    "No Valid Data",
-                    "No valid numeric data available for the selected axes.\n"
-                    "Some axis columns may contain non-numeric or missing values."
-                )
-                return
-
-            # Prepare binning configuration from panel
-            bins_config = self.binning_panel.get_bins_config()
-
-            # Generate plot (pass project config for styling)
-            pc = self.project_config or None
-            if plot_type == '2d':
-                if plot_mode == 'scatter':
-                    fig = create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
-                else:
-                    fig = create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
-            else:
-                if plot_mode == 'scatter':
-                    fig = create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
-                else:
-                    fig = create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
-
-            self.plot_display.display_plot(fig)
-
+            fig = self._build_plot(
+                self.selected_papers,
+                self.x_axis_var.get(),
+                self.y_axis_var.get(),
+                self.z_axis_var.get(),
+                self.plot_type_var.get(),
+                self.plot_mode_var.get(),
+                self.binning_panel.get_bins_config(),
+                show_warnings=True
+            )
+            if fig:
+                self.plot_display.display_plot(fig)
         except Exception as e:
             messagebox.showerror("Plot Error", f"Failed to generate plot:\n{str(e)}")
 
@@ -2310,18 +2019,7 @@ class VisualisierApp(tk.Tk):
     
     def _save_current_figure(self):
         """Build a FigureSpec from the current UI state (does NOT add to project)."""
-        plot_type = self.plot_type_var.get()
-        plot_mode = self.plot_mode_var.get()
-        plot_representation = f"{plot_type}_{plot_mode}"
-        
-        return FigureSpec(
-            papers_included=self.selected_papers.copy(),
-            x_variable=self.x_axis_var.get(),
-            y_variable=self.y_axis_var.get(),
-            z_variable=self.z_axis_var.get(),
-            plot_representation=plot_representation,
-            binning_data=self.binning_panel.get_bins_config() or {},
-        )
+        return self._build_active_figure_spec()
     
     def _regenerate_figure_from_spec(self, figure_spec):
         """Regenerate a matplotlib Figure from a FigureSpec.
@@ -2329,69 +2027,18 @@ class VisualisierApp(tk.Tk):
         Handles symbol-based output variables correctly by filtering the
         dataframe before passing to plot functions.
         """
-        if self.df is None:
-            return None
-
-        papers = figure_spec.papers_included
-        if not papers:
-            return None
-
-        filtered_df = self.df[self.df['Paper Title'].isin(papers)].copy()
-        if filtered_df.empty:
-            return None
-
-        # Resolve axes — use the same logic as _generate_plot
-        x_axis, x_is_symbol = self._resolve_axis(figure_spec.x_variable) if figure_spec.x_variable else (None, False)
-        y_axis, y_is_symbol = self._resolve_axis(figure_spec.y_variable) if figure_spec.y_variable else (None, False)
-        z_axis, z_is_symbol = self._resolve_axis(figure_spec.z_variable) if figure_spec.z_variable else (None, False)
-
-        if not x_axis or not y_axis:
-            return None
-
-        # Preserve display labels
-        x_label = figure_spec.x_variable
-        y_label = figure_spec.y_variable
-        z_label = figure_spec.z_variable if figure_spec.z_variable else None
-
-        # Filter by symbols (output variables)
-        if x_is_symbol:
-            filtered_df = filtered_df[filtered_df['Variable'] == x_axis].copy()
-            x_axis = 'Value'
-        if y_is_symbol:
-            filtered_df = filtered_df[filtered_df['Variable'] == y_axis].copy()
-            y_axis = 'Value'
-        if z_axis and z_is_symbol:
-            filtered_df = filtered_df[filtered_df['Variable'] == z_axis].copy()
-            z_axis = 'Value'
-
-        # Drop NaN in axis columns
-        axis_cols = [x_axis, y_axis]
-        if z_axis:
-            axis_cols.append(z_axis)
-        filtered_df = filtered_df.dropna(subset=axis_cols, how='any')
-        if filtered_df.empty:
-            return None
-
-        # Binning config (may be dict or None)
-        bins_config = figure_spec.binning_data if figure_spec.binning_data else None
-
-        # Parse plot type and mode
         parts = figure_spec.plot_representation.split('_', 1)
         plot_type = parts[0] if len(parts) > 0 else '2d'
         plot_mode = parts[1] if len(parts) > 1 else 'scatter'
+        bins_config = figure_spec.binning_data if figure_spec.binning_data else None
 
-        pc = self.project_config or None
-
-        if plot_type == '2d':
-            if plot_mode == 'scatter':
-                return create_custom_2d_scatter(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
-            else:
-                return create_custom_2d_line(filtered_df, x_axis, y_axis, x_label, y_label, bins_config, pc)
-        else:
-            if plot_mode == 'scatter':
-                return create_custom_3d_scatter(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
-            else:
-                return create_custom_3d_surface(filtered_df, x_axis, y_axis, z_axis, x_label, y_label, z_label, bins_config, pc)
+        return self._build_plot(
+            figure_spec.papers_included,
+            figure_spec.x_variable,
+            figure_spec.y_variable,
+            figure_spec.z_variable,
+            plot_type, plot_mode, bins_config, show_warnings=False
+        )
 
     def _open_figure_in_tab(self, figure_spec):
         """Open a figure in a new tab based on its FigureSpec."""

@@ -12,7 +12,6 @@ Author: Meta-Analysis Preprocessor
 
 import pandas as pd
 import numpy as np
-import json
 import logging
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
@@ -77,43 +76,6 @@ class GeometricEngine:
                 return None
         
         return None
-        
-    def load_paper_data(self, paper_dir: Path) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-        """
-        Load raw_data.csv and manifest.json from paper directory.
-        
-        Args:
-            paper_dir: Path to paper staging directory
-            
-        Returns:
-            Tuple of (raw_data_df, manifest_dict)
-            
-        Raises:
-            FileNotFoundError: If required files are missing
-            ValueError: If data is invalid
-        """
-        raw_data_path = paper_dir / config.PREPROCESSOR_CLEAN_DATA_FILENAME.replace(
-            'clean_', 'raw_'
-        )
-        manifest_path = paper_dir / 'manifest.json'
-        
-        if not raw_data_path.exists():
-            raise FileNotFoundError(f"Missing raw_data.csv: {raw_data_path}")
-        if not manifest_path.exists():
-            raise FileNotFoundError(f"Missing manifest.json: {manifest_path}")
-        
-        # Load raw data CSV
-        raw_df = pd.read_csv(raw_data_path)
-        
-        # Load manifest JSON
-        with open(manifest_path, 'r') as f:
-            manifest = json.load(f)
-        
-        if self.verbose:
-            logger.info(f"Loaded {len(raw_df)} rows from {raw_data_path}")
-            logger.info(f"Loaded manifest from {manifest_path}")
-        
-        return raw_df, manifest
     
     def extract_manifest_constants(self, manifest: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -280,7 +242,7 @@ class GeometricEngine:
                 continue
             
             # Count non-N/A values
-            non_na_mask = ~df[param].isna() & (df[param] != 'N/A')
+            non_na_mask = ~df[param].isna()
             unique_vals = df.loc[non_na_mask, param].nunique()
             
             # Check if parameter is in varied list (Safety Trigger)
@@ -326,14 +288,12 @@ class GeometricEngine:
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
         
-        # Ensure column can accept numeric values
-        df['Aspect ratio'] = pd.to_numeric(df['Aspect ratio'], errors='coerce')
         
         for idx in df.index:
             val = df.loc[idx, 'Aspect ratio']
             
             # Skip if already has value
-            if pd.notna(val) and val != 'N/A':
+            if pd.notna(val):
                 df.loc[idx, source_col] = 'raw'
                 continue
             
@@ -397,14 +357,12 @@ class GeometricEngine:
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
         
-        # Ensure column can accept numeric values
-        df['e/D'] = pd.to_numeric(df['e/D'], errors='coerce')
         
         for idx in df.index:
             val = df.loc[idx, 'e/D']
             
             # Skip if already has value
-            if pd.notna(val) and val != 'N/A':
+            if pd.notna(val):
                 df.loc[idx, source_col] = 'raw'
                 continue
             
@@ -477,14 +435,12 @@ class GeometricEngine:
         if source_col not in df.columns:
             df[source_col] = 'unfilled'
         
-        # Ensure column can accept numeric values
-        df['P/e'] = pd.to_numeric(df['P/e'], errors='coerce')
         
         for idx in df.index:
             val = df.loc[idx, 'P/e']
             
             # Skip if already has value
-            if pd.notna(val) and val != 'N/A':
+            if pd.notna(val):
                 df.loc[idx, source_col] = 'raw'
                 continue
             
@@ -548,7 +504,7 @@ class GeometricEngine:
             val = df.loc[idx, 'Alpha']
             
             # Skip if already has value
-            if pd.notna(val) and val != 'N/A':
+            if pd.notna(val):
                 df.loc[idx, source_col] = 'raw'
                 continue
             
@@ -600,7 +556,7 @@ class GeometricEngine:
             val = df.loc[idx, 'Geometry']
             
             # Skip if already has value
-            if pd.notna(val) and val != 'N/A':
+            if pd.notna(val):
                 df.loc[idx, source_col] = 'raw'
                 continue
             
@@ -621,83 +577,3 @@ class GeometricEngine:
                 continue
         
         return df
-    
-    def process_paper(
-        self,
-        paper_dir: Path,
-        output_dir: Optional[Path] = None
-    ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-        """
-        Process all geometric parameters for a paper.
-        
-        Main orchestration function that:
-        1. Loads raw_data.csv + manifest.json
-        2. Extracts constants from manifest
-        3. Applies geometric derivations with source tracking
-        4. Returns processed DataFrame + decision log
-        
-        Args:
-            paper_dir: Path to paper staging directory
-            output_dir: Optional directory for decision logs
-            
-        Returns:
-            Tuple of (processed_df, decision_log_dict)
-        """
-        # Load data
-        df, manifest = self.load_paper_data(paper_dir)
-        
-        # Extract constants
-        constants = self.extract_manifest_constants(manifest)
-        
-        # Get varied parameters for Safety Trigger
-        varied = self.get_varied_parameters(manifest)
-        
-        # Classify parameters
-        classification, varied_params = self.classify_parameters(df, manifest)
-        
-        # Apply derivations
-        df = self.derive_aspect_ratio(df, constants, manifest)
-        
-        df = self.derive_relative_roughness(df, constants, manifest)
-        
-        df = self.derive_pitch_to_height(df, constants, manifest)
-        
-        df = self.process_alpha(df, constants, manifest)
-        
-        df = self.process_geometry(df, constants, manifest)
-        
-        # Build decision log
-        decision_log = {
-            'paper': str(paper_dir.name),
-            'timestamp': pd.Timestamp.now().isoformat(),
-            'constants_extracted': constants,
-            'varied_parameters': varied_params,
-            'parameter_classification': classification,
-            'geometric_derivation': {
-                'Aspect_Ratio': {
-                    'filled_count': (df['Aspect_Ratio_Source'] != 'unfilled').sum(),
-                    'sources': df['Aspect_Ratio_Source'].value_counts().to_dict(),
-                },
-                'e/D': {
-                    'filled_count': (df['e/D_Source'] != 'unfilled').sum(),
-                    'sources': df['e/D_Source'].value_counts().to_dict(),
-                },
-                'P/e': {
-                    'filled_count': (df['P/e_Source'] != 'unfilled').sum(),
-                    'sources': df['P/e_Source'].value_counts().to_dict(),
-                },
-                'Alpha': {
-                    'filled_count': (df['Alpha_Source'] != 'unfilled').sum(),
-                    'sources': df['Alpha_Source'].value_counts().to_dict(),
-                },
-                'Geometry': {
-                    'filled_count': (df['Geometry_Source'] != 'unfilled').sum(),
-                    'sources': df['Geometry_Source'].value_counts().to_dict(),
-                },
-            },
-        }
-        
-        if self.verbose:
-            logger.info(f"Completed geometric processing for {paper_dir.name}")
-        
-        return df, decision_log
